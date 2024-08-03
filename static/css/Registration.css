@@ -1,0 +1,23 @@
+body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: rgb(157, 201, 241);
+}
+
+.link1 {
+    cursor: pointer;
+    margin-right: 10%;
+}
+
+.link2 {
+    cursor: pointer;
+}
+
+.Logo {
+    width: 15%;
+    height: auto;
+    margin-left: 43%;
+    border-radius: 100%;
+}
+
