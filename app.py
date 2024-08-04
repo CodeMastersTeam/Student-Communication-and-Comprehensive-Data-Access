@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-
+from Camera import camera
 app = Flask(__name__)
 
 @app.route("/")
