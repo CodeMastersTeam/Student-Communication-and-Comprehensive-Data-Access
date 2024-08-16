@@ -1,3 +1,4 @@
+# Gwapo ako 
 from flask import Flask, render_template, request
 from Database import *
 app = Flask(__name__)
