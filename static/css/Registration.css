@@ -5,6 +5,11 @@ body {
     background-color: rgb(157, 201, 241);
 }
 
+.dark-mode {
+    background-color: black !important;
+    color: white; /* Change text color in dark mode */
+}
+
 .link1 {
     cursor: pointer;
     margin-right: 10%;
@@ -20,4 +25,3 @@ body {
     margin-left: 43%;
     border-radius: 100%;
 }
-

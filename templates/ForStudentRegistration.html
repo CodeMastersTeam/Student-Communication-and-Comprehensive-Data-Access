@@ -4,29 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/ForStudentRegistration.css">
+    <script src="ForStudentRegistration.js"></script>
     <title>Student | Registration</title>
 </head>
 <body>
     <div class="inputs">
         <form action="/Inputs" method="post">
             <input type="text" name="firstname" id="firstname">
-            <label for="firstname">First name</label>
+            <label for="firstname">First name</label><br>
             <input type="text" name="middlename" id="middlename">
-            <label for="middlename">Middle name</label>
+            <label for="middlename">Middle name</label><br>
             <input type="text" name="lastname" id="lastname">
-            <label for="lastname">Last name</label>
+            <label for="lastname">Last name</label><br>
             <input type="text" name="age" id="age">
-            <label for="age">Age</label>
+            <label for="age">Age</label><br>
             <input type="text" name="address" id="address">
-            <label for="address">Address</label>
+            <label for="address">Address</label><br>
             <input type="text" name="sex" id="sex">
-            <label for="sex">Sex</label>
+            <label for="sex">Sex</label><br>
             <input type="text" name="cellphone_number" id="cellphone_number">
-            <label for="cellphone_number">Cellphone number</label>
-            <input type="text" name="Birth_certificate" id="Birth_certificate">
-            <label for="Birth_certificate">Birth certificate</label>
+            <label for="cellphone_number">Cellphone number</label><br>
+            <input type="date" name="Birth_date" id="Birth_date">
+            <label for="Birth_date">Birth date</label><br>
             <input type="text" name="Birth_place" id="Birth_place">
+            <label for="Birth_place">Birth place</label><br>
+            <button type="submit">Submit</button>
         </form>
+        {% if x %}
+        <div class="success">{{ x }}</div>
+        {% endif %}
     </div>
 </body>
 </html>
