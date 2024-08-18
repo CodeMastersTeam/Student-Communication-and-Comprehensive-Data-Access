@@ -5,10 +5,6 @@ body {
     background-color: rgb(157, 201, 241);
 }
 
-.dark-mode {
-    background-color: black !important;
-    color: white; /* Change text color in dark mode */
-}
 
 .link1 {
     cursor: pointer;

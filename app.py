@@ -4,18 +4,34 @@ app = Flask(__name__)
 
 @app.route("/")
 def Home():
-    return render_template("Registration.html")
+    return render_template("Home.html")
 
 @app.route("/Registration_links", methods = ["POST", "GET"])
 def Registration():
     link = request.form.get("link")
     if request.method == "POST":
         if link == "Teacher":
-            return render_template("ForTeacherRegistration.html")
+            return render_template("Teachers.html")
         elif link == "Student":
-            return render_template("ForStudentRegistration.html")
+            return render_template("Students.html")
     else:
-        return render_template("Registration.html")
+        return render_template("Home.html")
+
+@app.route("/Register")
+def Teacher_Register():
+    return render_template("ForTeacherRegistration.html")
+
+@app.route("/Login")
+def Teacher_login():
+    return render_template("ForTeachersLogin.html")
+
+@app.route("/StudentRegister")
+def Student_Register():
+    return render_template("ForStudentRegistration.html")
+
+@app.route("/StudentLogin")
+def Student_Login():
+    return render_template("ForStudentLogin.html")
 
 @app.route("/Inputs", methods = ["GET", "POST"])
 def StudentRegistration():
