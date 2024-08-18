@@ -1,7 +1,8 @@
 from flask import Flask, render_template, request
 from Database import *
 app = Flask(__name__)
-# gwapo ako sa tanan 
+
+# nagdugang comment
 @app.route("/")
 def Home():
     return render_template("Home.html")
