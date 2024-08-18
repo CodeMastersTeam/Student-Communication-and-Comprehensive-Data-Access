@@ -2,7 +2,8 @@ body {
     display: flex;
     flex-direction: column;
     text-align: center;
-    background-color: rgb(157, 201, 241);
+    background-color: #f0e68c;
+    color: #556b2f;
 }
 
 

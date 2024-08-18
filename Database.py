@@ -10,13 +10,13 @@ Connect = mysql.connector.connect(
 db = Connect.cursor()
 
 def ForStudentRegistration(firstname, middlename, lastname, age, address, sex, 
-            cellphone_number, Birth_date, Birth_place):
-    
+            cellphone_number, Birth_date, Birth_place, Course):
+
     q = """INSERT INTO student_informations(firstname, middlename, lastname, age, address, sex, 
             cellphone_number, Birth_date, Birth_place)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
     
-    v = firstname, middlename, lastname, age, address, sex, cellphone_number, Birth_date, Birth_place
+    v = firstname, middlename, lastname, age, address, sex, cellphone_number, Birth_date, Birth_place, Course
 
     db.execute(q, v)
     Connect.commit()

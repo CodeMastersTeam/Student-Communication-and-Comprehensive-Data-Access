@@ -45,10 +45,11 @@ def StudentRegistration():
         cellphone_number = str(request.form["cellphone_number"])
         Birth_date = str(request.form["Birth_date"])
         Birth_place = str(request.form["Birth_place"])
+        Course = str(request.form["Course"])
 
         ForStudentRegistration(
             firstname, middlename, lastname, age, address, sex, 
-            cellphone_number, Birth_date, Birth_place
+            cellphone_number, Birth_date, Birth_place, Course
         )
         
         x = "Registered Successfully!"
