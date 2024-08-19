@@ -12,27 +12,53 @@
         <form action="/Inputs" method="post">
             <input type="text" name="firstname" id="firstname">
             <label for="firstname">First name</label><br>
+
             <input type="text" name="middlename" id="middlename">
             <label for="middlename">Middle name</label><br>
+
             <input type="text" name="lastname" id="lastname">
             <label for="lastname">Last name</label><br>
+
             <input type="number" name="age" id="age">
             <label for="age">Age</label><br>
+
             <input type="text" name="address" id="address">
             <label for="address">Address</label>
+
             <p>Sex: </p>
-            <input type="checkbox" name="sex" id="sex">
-            <label for="sex">Male</label>
-            <input type="checkbox" name="sex" id="sex">
-            <label for="sex">Female</label><br>
+            <input type="radio" name="sex" value="M" id="male">
+            <label for="male">Male</label>
+            <input type="radio" name="sex" value="F" id="female">
+            <label for="female">Female</label><br>
+
             <input type="text" name="cellphone_number" id="cellphone_number">
             <label for="cellphone_number">Cellphone number</label><br>
+
             <input type="date" name="Birth_date" id="Birth_date">
             <label for="Birth_date">Birth date</label><br>
+
             <input type="text" name="Birth_place" id="Birth_place">
             <label for="Birth_place">Birth place</label><br>
-            <input type="text" name="Course" id="Birth_place">
-            <label for="Birth_place">Course</label><br>
+
+            <input type="text" name="Student_Username" id="Username">
+            <label for="Username">Username</label>
+
+            <input type="password" name="Student_Password">
+            <label for="Password">Password</label>
+
+            <p>Course:</p>
+            <input  id="BSIT" type="radio" name = "Course" value = "BSIT">
+            <label for="BSIT">BSIT</label>
+            
+            <input  id="NURSING" type="radio" name = "Course" value = "NURSING">
+            <label for="NURSING">NURSING</label>
+            
+            <input  id="EDUCATION" type="radio" name = "Course" value = "EDUCATION">
+            <label for="EDUCATION">EDUCATION</label>
+            
+            <input  id="MANAGEMENT" type="radio" name = "Course" value = "MANAGEMENT">
+            <label for="MANAGEMENT">MANAGEMENT</label>
+
             <button type="submit">Submit</button>
         </form>
         {% if x %}

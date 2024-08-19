@@ -38,15 +38,18 @@ def locations(app):
             lastname = str(request.form["lastname"])
             age = int(request.form["age"])
             address = str(request.form["address"])
-            sex = str(request.form["sex"])
+            sex = sex = request.form.get("sex")
             cellphone_number = str(request.form["cellphone_number"])
             Birth_date = str(request.form["Birth_date"])
             Birth_place = str(request.form["Birth_place"])
+            Username = str(request.form["Student_Username"])
+            Password = str(request.form["Student_Password"])
             Course = str(request.form["Course"])
+
 
             ForStudentRegistration(
                 firstname, middlename, lastname, age, address, sex, 
-                cellphone_number, Birth_date, Birth_place, Course
+                cellphone_number, Birth_date, Birth_place, Username, Password, Course
             )
 
             x = "Registered Successfully!"
