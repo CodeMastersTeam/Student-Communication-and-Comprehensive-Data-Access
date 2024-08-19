@@ -59,10 +59,6 @@ def locations(app):
             x = "Registration failed!"
             return render_template("ForStudentRegistration.html")
     
-    @app.route("/")
-    def Continue_here():
-        pass # Change later
-
 
 if __name__ == "__main__":
     app.run(debug = True)
