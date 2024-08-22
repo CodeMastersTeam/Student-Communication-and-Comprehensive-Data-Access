@@ -1,11 +1,14 @@
 from Flask_links import locations
 from app import Direct_links
-from flask import Flask, render_template, request
+from flask import Flask
 
 app = Flask(__name__)
 
+app.secret_key = "Gwapo"
+
 Direct_links(app)
 locations(app)
+
 
 
 

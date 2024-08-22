@@ -7,10 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-    Teachers log in
+    <a href="/">Home</a>
+    <form action="/TeacherLogin" method="post">
+        <label for="LoginUsername">Username or Lastname</label>
+        <input type="text" name="LoginUsername" id="LoginUsername">
+        
+        <label for="LoginPassword">Password</label>
+        <input name="LoginPassword" type="password" id="LoginPassword">
 
-
-
+        <button type="submit">Log in</button>
+    </form>
+    
 
 
     <script src="/static/javascript/ForTeacherLogin.js"></script>

@@ -1,0 +1,24 @@
+body {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0e68c;
+    color: #556b2f;
+}
+
+a {
+    text-decoration: none;
+    color: red;
+}
+h1 {
+    margin-top: 10%;
+    text-align: center;
+}
+
+.login-signup {
+    margin-top: 10%;
+    text-align: center;
+    font-size:xx-large;
+}
+.login-signup :nth-child(1) {
+    margin-right: 10%;
+}

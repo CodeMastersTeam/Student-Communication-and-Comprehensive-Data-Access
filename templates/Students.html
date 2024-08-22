@@ -7,44 +7,16 @@
     <title>Document</title>
 </head>
 <body>
-    For students 
-    <a href="/StudentRegister">Register</a>
-    <a href="/StudentLogin">Log in</a>
+    <h1>Welcome!</h1>
+    <div class="login-signup">
+        <a href="/StudentsRegister">Register</a>
+        <a href="/StudentsLogin">Log in</a>
+    </div>
 
 
-    <button onclick="sample()" type="button">Click</button>
-    <p id="x">This here will be changed if the button is clicked!</p>
 
-    <button type="button" onclick="document.getElementById('sample').innerHTML = Date()">Click to view date</button>
-    <p id="sample"></p>
 
-    <button type="button" onclick="this.innerHTML = 'Hello'">click me</button>
-
-    <center>
-        <p style="font-size: xx-large;">
-            <span onmouseout='this.style.color = "blue"' onmouseover="this.style.color='red'" style="color: blue;">S</span>
-            <span onmouseout='this.style.color = "blue"' onmouseover="this.style.color='red'" style="color: blue;">E</span>
-            <span onmouseout='this.style.color = "blue"' onmouseover="this.style.color='red'" style="color: blue;">L</span>
-            <span onmouseout='this.style.color = "blue"' onmouseover="this.style.color='red'" style="color: blue;">W</span>
-            <span onmouseout='this.style.color = "blue"' onmouseover="this.style.color='red'" style="color: blue;">Y</span>
-            <span onmouseout='this.style.color = "blue"' onmouseover="this.style.color='red'" style="color: blue;">N</span>
-        </p>
-    </center>
     
-
-
-
-
-
-    <script>
-        function sample(){
-            let x = document.getElementById("x").innerHTML = "Changed successfully!";
-        }
-
-
-        
-    </script>
-
-    <script src="/static/javascript/Students.js"></script>
+    <script src="/static/javascript/Teachers.js"></script>
 </body>
 </html>

@@ -7,63 +7,60 @@
     <title>Student | Registration</title>
 </head>
 <body>
+    <a href="/">Home</a>
     <div class="inputs">
         <form action="/Inputs" method="post">
-            <input type="text" name="firstname" id="firstname">
+            <input type="text" name="firstname" id="firstname" required>
             <label for="firstname">First name</label><br>
 
-            <input type="text" name="middlename" id="middlename">
+            <input type="text" name="middlename" id="middlename" required>
             <label for="middlename">Middle name</label><br>
 
-            <input type="text" name="lastname" id="lastname">
+            <input type="text" name="lastname" id="lastname" required>
             <label for="lastname">Last name</label><br>
 
-            <input type="number" name="age" id="age">
+            <input type="number" name="age" id="age" required>
             <label for="age">Age</label><br>
 
-            <input type="text" name="address" id="address">
+            <input type="text" name="address" id="address" required>
             <label for="address">Address</label>
 
             <p>Sex: </p>
-            <input type="radio" name="sex" value="M" id="male">
+            <input type="radio" name="sex" value="M" id="male" required>
             <label for="male">Male</label>
-            <input type="radio" name="sex" value="F" id="female">
+            <input type="radio" name="sex" value="F" id="female" required>
             <label for="female">Female</label><br>
 
-            <input type="text" name="cellphone_number" id="cellphone_number">
+            <input type="text" name="cellphone_number" id="cellphone_number" required>
             <label for="cellphone_number">Cellphone number</label><br>
 
-            <input type="date" name="Birth_date" id="Birth_date">
+            <input type="date" name="Birth_date" id="Birth_date" required>
             <label for="Birth_date">Birth date</label><br>
 
-            <input type="text" name="Birth_place" id="Birth_place">
+            <input type="text" name="Birth_place" id="Birth_place" required>
             <label for="Birth_place">Birth place</label><br>
 
-            <input type="text" name="Student_Username" id="Username">
+            <input type="text" name="Student_Username" id="Username" required>
             <label for="Username">Username</label>
 
-            <input type="password" name="Student_Password">
+            <input type="password" name="Student_Password" required>
             <label for="Password">Password</label>
 
             <p>Course:</p>
-            <input  id="BSIT" type="radio" name = "Course" value = "BSIT">
+            <input  id="BSIT" type="radio" name = "Course" value = "BSIT" required>
             <label for="BSIT">BSIT</label>
             
-            <input  id="NURSING" type="radio" name = "Course" value = "NURSING">
+            <input  id="NURSING" type="radio" name = "Course" value = "NURSING" required>
             <label for="NURSING">NURSING</label>
             
-            <input  id="EDUCATION" type="radio" name = "Course" value = "EDUCATION">
+            <input  id="EDUCATION" type="radio" name = "Course" value = "EDUCATION" required>
             <label for="EDUCATION">EDUCATION</label>
             
-            <input  id="MANAGEMENT" type="radio" name = "Course" value = "MANAGEMENT">
+            <input  id="MANAGEMENT" type="radio" name = "Course" value = "MANAGEMENT" required>
             <label for="MANAGEMENT">MANAGEMENT</label>
 
             <button type="submit">Submit</button>
         </form>
-        {% if x %}
-        <div class="success">{{ x }}</div>
-        {% endif %}
-        
     </div>
 
 

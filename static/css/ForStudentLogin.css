@@ -1,0 +1,16 @@
+body {
+    background-color: #C8D6C5;
+    color: #4a7ea1;
+}
+
+#sample {
+    color: blue;
+    display: flex;
+    flex-direction: column;
+}   
+
+
+#sample input, button {
+    height: auto;
+    width: fit-content;
+}

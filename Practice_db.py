@@ -1,15 +1,8 @@
-import mysql.connector
+from werkzeug.security import generate_password_hash, check_password_hash
 
-X = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "",
-    database = "students_teachers_data"
-)
 
-c = X.cursor()
+x = generate_password_hash("Password121")
 
-c.execute("SELECT firstname FROM student_informations")
-
-for i in c:
-    print(i)
+z = "Password121"
+c = check_password_hash(x, z)
+print(c)
