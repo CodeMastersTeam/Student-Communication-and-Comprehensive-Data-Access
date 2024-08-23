@@ -45,18 +45,17 @@ def locations(app):
             Username = str(request.form["Student_Username"])
             Password = str(request.form["Student_Password"])
             Course = str(request.form["Course"])
+            Year = str(request.form["Year"])
 
 
             ForStudentRegistration(
                 firstname, middlename, lastname, age, address, sex, 
-                cellphone_number, Birth_date, Birth_place, Username, Password, Course
+                cellphone_number, Birth_date, Birth_place, Username, Password, Course, Year
             )
 
-            x = "Registered Successfully!"
-            return render_template("ForStudentRegistration.html", x = x)
+            return render_template("ForStudentRegistration.html")
 
         else:
-            x = "Registration failed!"
             return render_template("ForStudentRegistration.html")
         
     
@@ -75,18 +74,17 @@ def locations(app):
             Username = str(request.form["Teacher_Username"])
             Password = str(request.form["Teacher_Password"])
             Course = str(request.form["Course"])
+            Year = str(request.form["Year"])
 
 
             ForTeacherRegistration(
                 firstname, middlename, lastname, age, address, sex, 
-                cellphone_number, Birth_date, Birth_place, Username, Password, Course
+                cellphone_number, Birth_date, Birth_place, Username, Password, Course, Year
             )
 
-            x = "Registered Successfully!"
-            return render_template("ForTeacherRegistration.html", x = x)
+            return render_template("ForTeacherRegistration.html")
 
         else:
-            x = "Registration failed!"
             return render_template("ForTeacherRegistration.html")
 
     @app.route("/StudentsLogin", methods = ["POST"])
@@ -106,22 +104,24 @@ def locations(app):
         
         return render_template("ForStudentLogin.html")
     
-    @app.route("/TeacherLogin", methods = ["POST"])
+    @app.route("/TeacherLogin", methods=["POST"])
     def Teachers_Login():
-        username = request.form["LoginUsername"]
-        password = request.form["LoginPassword"]
-        db.execute("SELECT * FROM password WHERE username = %s AND Password = %s", (username, password))
-        user = db.fetchone()
-        #db.close()
-        if user:
-            flash("Log in sucessfully!")
-            session["Teacher"] = username
-            return redirect(url_for("TeacherLogin"))
+        username = request.form.get("LoginUsername")
+        password = request.form.get("LoginPassword")
+
+        if username and password:
+            db.execute("SELECT * FROM teacher_informations WHERE username = %s AND Password = %s", (username, password))
+            user = db.fetchone()
+            if user:
+                session["Teacher"] = username
+                return render_template("Profile.html")
+            else:
+                flash("Log in failed!")
+                return redirect(url_for("Teacher_login"))
         else:
-            flash("Log in failed!")
-            return redirect(url_for("TeacherLogin"))
-        
-        return render_template("ForTeachersLogin.html")
+            flash("Missing username or password!")
+            return redirect(url_for("Teacher_login"))
+
     
 
 
@@ -129,4 +129,5 @@ def locations(app):
 
 
 if __name__ == "__main__":
+
     app.run(debug = True)
