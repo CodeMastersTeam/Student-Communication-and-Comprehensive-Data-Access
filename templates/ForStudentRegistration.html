@@ -25,7 +25,7 @@
             <input type="text" name="address" id="address" required>
             <label for="address">Address</label>
 
-            <p>Sex: </p>
+            <p>Gender: </p>
             <input type="radio" name="sex" value="M" id="male" required>
             <label for="male">Male</label>
             <input type="radio" name="sex" value="F" id="female" required>
@@ -43,7 +43,10 @@
             <input type="text" name="Student_Username" id="Username" required>
             <label for="Username">Username</label>
 
-            <input type="password" name="Student_Password" required>
+            <input type="password" name="Student_Password1" required>
+            <label for="Password">Password</label>
+
+            <input type="password" name="Student_Password2" required>
             <label for="Password">Password</label>
 
             <p>Course:</p>
@@ -70,7 +73,15 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
 
 
 

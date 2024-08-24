@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, flash, redirect, url_for, session
-from Registration import *
+from Database import *
+
 
 app = Flask(__name__)
 
@@ -43,16 +44,25 @@ def locations(app):
             Birth_date = str(request.form["Birth_date"])
             Birth_place = str(request.form["Birth_place"])
             Username = str(request.form["Student_Username"])
-            Password = str(request.form["Student_Password"])
+            Password1 = str(request.form["Student_Password1"])
+            Password2 = str(request.form["Student_Password2"])
             Course = str(request.form["Course"])
             Year = str(request.form["Year"])
 
+            if Password1 != Password2:
+                flash("Password should be a same!", "error")
+                return render_template("ForStudentRegistration.html")
 
+            if len(Password1) < 8:
+                flash("Password should be more than 8 characters!", "error")
+                return render_template("ForStudentRegistration.html")
+            
+        
             ForStudentRegistration(
                 firstname, middlename, lastname, age, address, sex, 
-                cellphone_number, Birth_date, Birth_place, Username, Password, Course, Year
+                cellphone_number, Birth_date, Birth_place, Username, Password1, Course, Year
             )
-
+            flash("Registered successfully!", "success")
             return render_template("ForStudentRegistration.html")
 
         else:
@@ -72,16 +82,27 @@ def locations(app):
             Birth_date = str(request.form["Birth_date"])
             Birth_place = str(request.form["Birth_place"])
             Username = str(request.form["Teacher_Username"])
-            Password = str(request.form["Teacher_Password"])
+            Password1 = str(request.form["Teacher_Password1"])
+            Password2 = str(request.form["Teacher_Password2"])
             Course = str(request.form["Course"])
             Year = str(request.form["Year"])
+            
+            if Password1 != Password2:
+                flash("Password should be a same!", "error")
+                return render_template("ForStudentRegistration.html")
 
+            if len(Password1) < 8:
+                flash("Password should be more than 8 characters!", "error")
+                return render_template("ForStudentRegistration.html")
 
-            ForTeacherRegistration(
+            else:
+                ForTeacherRegistration(
                 firstname, middlename, lastname, age, address, sex, 
-                cellphone_number, Birth_date, Birth_place, Username, Password, Course, Year
-            )
-
+                cellphone_number, Birth_date, Birth_place, Username, Password1, Course, Year
+                )
+                flash("Registered successfully!", "success")
+                
+            
             return render_template("ForTeacherRegistration.html")
 
         else:
@@ -96,12 +117,12 @@ def locations(app):
         #db.close()
         
         if user:
-            session["Student"] = username
-            return render_template("Profile.html")
+            session["username"] = username
+            return redirect(url_for("Student_Home"))
         else:
-            flash("Incorrect credentials")
+            flash("Incorrect credentials", "error")
             return redirect(url_for("Students_Login"))
-        
+            
         return render_template("ForStudentLogin.html")
     
     @app.route("/TeacherLogin", methods=["POST"])
@@ -113,21 +134,44 @@ def locations(app):
             db.execute("SELECT * FROM teacher_informations WHERE username = %s AND Password = %s", (username, password))
             user = db.fetchone()
             if user:
-                session["Teacher"] = username
-                return render_template("Profile.html")
+                session["username"] = username
+                return redirect(url_for("Teacher_Home"))
             else:
-                flash("Log in failed!")
+                flash("Log in failed!", "error")
                 return redirect(url_for("Teacher_login"))
         else:
             flash("Missing username or password!")
             return redirect(url_for("Teacher_login"))
+    
+    
+    
+    @app.route("/updatepass",methods=["POST","GET"])
+    def updatepass():
+        if request.method == "POST":
+            username = session['username']
+            password1 = request.form['updatepassword1']
+            password2 = request.form['updatepassword2']
+            if password1 != password2:
+                flash("Password should be the same!", "error")
+                return render_template("update.html")
+            
+            if len(password1) < 8:
+                flash("Password should be more than 8 characters!", "error")
+                return render_template("update.html")
+            
+
+            else:
+                db.execute("UPDATE student_informations SET password = %s WHERE username = %s",(password1,username))
+                Connect.commit()
+                flash("Updated sucessfuly!", "success")
+        return render_template("update.html")
+    
+    
+
 
     
 
 
 
-
-
 if __name__ == "__main__":
-
     app.run(debug = True)

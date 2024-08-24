@@ -8,6 +8,9 @@
 </head>
 <body>
     <a href="/">Home</a>
+
+    
+
     <form id="sample" action="/StudentsLogin" method="post">
         <label for="LoginUsername">Username or Lastname</label><br>
         <input type="text" name="LoginUsername" id="LoginUsername"><br>
@@ -17,6 +20,15 @@
 
         <button type="submit">Log in</button>
     </form>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
     
 
 

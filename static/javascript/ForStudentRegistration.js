@@ -1,5 +1,6 @@
-const x = document.getElementsByClassName("success");
-
-x.addEventListener("click", () => {
-    alert("hello!");
-});
+setTimeout(function() {
+    var flashMessages = document.querySelector('.flash-messages');
+    if (flashMessages) {
+        flashMessages.style.display = 'none';
+    }
+}, 3000);

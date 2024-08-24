@@ -1,12 +1,3 @@
-body {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    background-color: #C8D6C5;
-    color: #4a7ea1;
-}
-
-
 .error {
     color: #f44336;
     background-color: #fdecea;
@@ -26,4 +17,3 @@ body {
     border-radius: 5px;
     font-weight: bold;
 }
-

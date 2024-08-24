@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/ForTeachersLogin.css">
+    <link rel="stylesheet" href="/static/css/update.css">
     <title>Document</title>
 </head>
 <body>
-    <a href="/">Home</a>
-    <form action="/TeacherLogin" method="post">
-        <label for="LoginUsername">Username or Lastname</label>
-        <input type="text" name="LoginUsername" id="LoginUsername">
-        
-        <label for="LoginPassword">Password</label>
-        <input name="LoginPassword" type="password" id="LoginPassword">
+    <form action="/updatepass" method="POST">
+        <input type="password" name="updatepassword1" placeholder="Update password">
+        <input type="password" name="updatepassword2" placeholder="confirm password">
 
-        <button type="submit">Log in</button>
+        <input type="submit" value="submit">
     </form>
-    
+
     {% with messages = get_flashed_messages(with_categories=True) %}
     {% if messages %}
         <div class="flash-messages">
@@ -27,7 +23,5 @@
         </div>
     {% endif %}
     {% endwith %}
-
-    <script src="/static/javascript/ForTeacherLogin.js"></script>
 </body>
 </html>

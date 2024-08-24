@@ -43,7 +43,10 @@
             <input type="text" name="Teacher_Username" id="Username" required>
             <label for="Username">Username</label>
 
-            <input type="password" name="Teacher_Password" required>
+            <input type="password" name="Teacher_Password1" required>
+            <label for="Password">Password</label>
+
+            <input type="password" name="Teacher_Password2" required>
             <label for="Password">Password</label>
 
             <p>Course:</p>
@@ -66,12 +69,21 @@
                 <option value="3rd Year">3rd Year</option>
                 <option value="4th Year">4th Year</option>
             </select>
+        
 
             <button type="submit">Submit</button>
         </form>
     </div>
 
-
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
 
 
 
