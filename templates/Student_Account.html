@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Account</title>
+</head>
+<body>
+    
+    <h1>Student Account Section</h1>
+    
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_profile_pic') }}">
+        <label for="profile_picture">Upload Profile Picture:</label>
+        <input type="file" name="profile_pic" accept="image/*">
+        <button type="submit">Upload</button>
+    </form>
+
+    {% if profile_picture %}
+    <img src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture">
+    {% else %}
+    <p>No profile picture uploaded yet.</p>
+    {% endif %}
+    
+    <a href="{{ url_for('Student_logout') }}">Log out</a>
+    <a href="{{ url_for('updatepass') }}">Update Password</a>
+
+</body>
+</html>

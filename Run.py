@@ -4,6 +4,8 @@ from flask import Flask
 
 app = Flask(__name__)
 
+app.config['uploads'] = "static/uploads"
+
 app.secret_key = "Gwapo"
 
 Direct_links(app)

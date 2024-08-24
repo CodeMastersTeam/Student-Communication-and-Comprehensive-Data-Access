@@ -1,7 +1,22 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from Flask_links import locations
 from Database import *
+import os
+import time
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'static/uploads'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    
 app = Flask(__name__)
+app.config['uploads'] = "static/uploads"
 
 
 def Direct_links(app):
@@ -38,9 +53,57 @@ def Direct_links(app):
         username = session['username']
         return render_template("Student_Home_Page.html", username = username)
     
-    @app.route("/Teacher_Home") # Student Home page
-    def Teacher_Home():
-        username = session['username']
-        return render_template("Teacher_Home_Page.html", username = username)
+    @app.route("/Student_Grades")
+    def Student_Grades():
+        username = session["username"]
+        return render_template("Student_Grades.html")
     
+    @app.route("/Student_Schedule")
+    def Student_Schedule():
+        Username = session["username"]
+        return render_template("Student_Schedule.html")
+    
+
+    
+    
+    @app.route('/upload_profile_pic', methods=['POST'])
+    def upload_profile_pic():
+        if 'profile_pic' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+    
+        file = request.files['profile_pic']
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+    
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            unique_filename = f"{session['username']}_{int(time.time())}_{filename}"
+            file_path = os.path.join(UPLOAD_FOLDER, unique_filename)
+            file.save(file_path)
+    
+            # Update the profile picture filename in the database
+            query = "UPDATE student_informations SET profile_picture = %s WHERE username = %s"
+            values = (unique_filename, session['username'])
+            db.execute(query, values)
+            Connect.commit()
+    
+            flash('Profile picture updated successfully')
+            return redirect(url_for('Student_Account'))
+    
+        flash('Invalid file type')
+        return redirect(request.url)
+    
+    @app.route('/Student_Account')
+    def Student_Account():
+        username = session.get('username')
+        if not username:
+            return redirect(url_for('Student_Login'))
+    
+        db.execute("SELECT profile_picture FROM student_informations WHERE username = %s", (username,))
+        user = db.fetchone()
+    
+        profile_picture = user[0] if user and user[0] else None
+        return render_template('Student_Account.html', profile_picture=profile_picture)
     

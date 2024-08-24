@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, flash, redirect, url_for, session
 from Database import *
+import os
 
 
 app = Flask(__name__)
@@ -49,6 +50,12 @@ def locations(app):
             Course = str(request.form["Course"])
             Year = str(request.form["Year"])
 
+            db.execute("SELECT * FROM student_informations WHERE username = %s", (Username,))
+            existing_user = db.fetchone()
+            if existing_user:
+                flash("Username already taken, please choose another one!", "error")
+                return render_template("ForStudentRegistration.html")
+
             if Password1 != Password2:
                 flash("Password should be a same!", "error")
                 return render_template("ForStudentRegistration.html")
@@ -86,14 +93,21 @@ def locations(app):
             Password2 = str(request.form["Teacher_Password2"])
             Course = str(request.form["Course"])
             Year = str(request.form["Year"])
+
+            db.execute("SELECT * FROM teacher_informations WHERE username = %s", (Username,))
+            existing = db.fetchone()
+            if existing:
+                flash("Username already taken, please choose another one!", "error")
+                return render_template("ForTeacherRegistration.html")
+
             
             if Password1 != Password2:
                 flash("Password should be a same!", "error")
-                return render_template("ForStudentRegistration.html")
+                return render_template("ForTeacherRegistration.html")
 
             if len(Password1) < 8:
                 flash("Password should be more than 8 characters!", "error")
-                return render_template("ForStudentRegistration.html")
+                return render_template("ForTeacherRegistration.html")
 
             else:
                 ForTeacherRegistration(
@@ -120,7 +134,7 @@ def locations(app):
             session["username"] = username
             return redirect(url_for("Student_Home"))
         else:
-            flash("Incorrect credentials", "error")
+            flash("Invalid username or password!", "error")
             return redirect(url_for("Students_Login"))
             
         return render_template("ForStudentLogin.html")
@@ -137,7 +151,7 @@ def locations(app):
                 session["username"] = username
                 return redirect(url_for("Teacher_Home"))
             else:
-                flash("Log in failed!", "error")
+                flash("Invalid username or password!", "error")
                 return redirect(url_for("Teacher_login"))
         else:
             flash("Missing username or password!")
@@ -166,10 +180,12 @@ def locations(app):
                 flash("Updated sucessfuly!", "success")
         return render_template("update.html")
     
+
     
 
 
-    
+
+
 
 
 
