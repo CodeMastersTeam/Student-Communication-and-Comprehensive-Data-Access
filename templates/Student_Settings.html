@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/Student_Home_Page.css"> <!-- Shared CSS for navigation and dark mode -->
+    <link rel="stylesheet" href="/static/css/Student_Settings.css"> <!-- Specific CSS for settings -->
+    <title>Student Settings</title>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="top-nav">
+        <div class="nav-container">
+            <a id="Dashboard" href="/Student_Home">Dashboard</a>
+            <a id="Progress" href="/Student_Progress">Progress</a>
+            <a id="Grades" href="/Student_Grades">Grades</a>
+            <a id="Schedule" href="/Student_Schedule">Schedule</a>
+            <a id="Account" href="/Student_Account">Account</a>
+            <a href="/Student_Settings">Settings</a>
+        </div>
+    </header>
+
+    <!-- Dark Mode Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <span id="themeIcon">🌙</span>
+    </div>
+
+    <div class="container">
+        <h1>Student Settings</h1>
+
+        <form method="POST" action="{{ url_for('Student_Settings') }}">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ email }}">
+
+            <label for="notification">Enable Notifications:</label>
+            <input type="checkbox" id="notification" name="notification" {% if notifications_enabled %}checked{% endif %}>
+
+
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+
+    <script src="/static/javascript/Student_Home_Page.js"></script> 
+</body>
+</html>

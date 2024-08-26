@@ -7,48 +7,41 @@
     <title>Student Account</title>
 </head>
 <body>
-    
-    <h1>Student Account Section</h1>
-    
-    <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_profile_pic') }}">
-        <label for="profile_picture">Upload Profile Picture:</label>
-        <input type="file" name="profile_pic" accept="image/*">
-        <button type="submit">Upload</button>
-    </form>
+    <div class="container">
+        <h1>Student Account Section</h1>
 
-    <div class="Circle">
+        <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_profile_pic') }}">
+            <label for="profile_picture">Upload Profile Picture:</label>
+            <input type="file" name="profile_pic" accept="image/*">
+            <button type="submit">Upload</button>
+        </form>
 
+        <div class="profile-picture">
+            {% if profile_picture %}
+            <div class="circle">
+                <img class="Image_Profile" src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture">
+            </div>
+            {% else %}
+            <div class="circle default-image">
+                <img class="Image_Profile" src="/static/img/Logo.png" alt="Default Profile Picture">
+            </div>
+            {% endif %}
+        </div>
 
-    {% if profile_picture %}
-    <div class="circle">
-        <img class="Image_Profile" src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+
+        <a href="{{ url_for('Student_logout') }}">Log out</a>
+        <a href="{{ url_for('updatepass') }}">Update Password</a>
     </div>
 
-    
-    {% else %}
-    <p>No profile picture uploaded yet.</p>
-    {% endif %}
-
-
-
-
-
-    {% with messages = get_flashed_messages(with_categories=True) %}
-    {% if messages %}
-        <div class="flash-messages">
-            {% for category, message in messages %}
-                <p class="{{ category }}">{{ message }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-    {% endwith %}
-
-
-
-    
-    <a href="{{ url_for('Student_logout') }}">Log out</a>
-    <a href="{{ url_for('updatepass') }}">Update Password</a>
     <script src="/static/javascript/Student_Account.js"></script>
-
 </body>
 </html>

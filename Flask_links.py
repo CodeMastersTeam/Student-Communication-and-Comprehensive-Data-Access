@@ -90,9 +90,9 @@ def locations(app):
             cellphone_number = str(request.form["cellphone_number"])
             Birth_date = str(request.form["Birth_date"])
             Birth_place = str(request.form["Birth_place"])
-            Username = str(request.form["Teacher_Username"])
-            Password1 = str(request.form["Teacher_Password1"])
-            Password2 = str(request.form["Teacher_Password2"])
+            Username = str(request.form.get("Teacher_Username"))
+            Password1 = str(request.form.get("Teacher_Password1"))
+            Password2 = str(request.form.get("Teacher_Password2"))
             Course = str(request.form["Course"])
             Year = str(request.form["Year"])
 
@@ -151,7 +151,7 @@ def locations(app):
             user = db.fetchone()
             if user:
                 session["username"] = username
-                return redirect(url_for("Teacher_login"))
+                return redirect(url_for("Teacher_Home_Page"))
             else:
                 flash("These credentials do not match our records.", "error")
                 return redirect(url_for("Teacher_login"))
@@ -180,6 +180,25 @@ def locations(app):
                 flash("Updated sucessfulLy! Please log in again to continue.", "success")
         return render_template("update.html")
     
+    @app.route("/Teacher_updatepass",methods=["POST","GET"])
+    def Teacher_updatepass():
+        if request.method == "POST":
+            username = session['username']
+            password1 = request.form['updatepassword1']
+            password2 = request.form['updatepassword2']
+            if password1 != password2:
+                flash("Password should be the same!", "error")
+                return render_template("Teacher_updatepass.html")
+            
+            if len(password1) < 8:
+                flash("Password should be more than 8 characters!", "error")
+                return render_template("Teacher_updatepass.html")
+            else:
+                db.execute("UPDATE teacher_informations SET password = %s WHERE username = %s",(password1,username))
+                Connect.commit()
+                flash("Updated sucessfulLy! Please log in again to continue.", "success")
+        return render_template("Teacher_updatepass.html")
+    
     @app.route("/Forgot_Pass")
     def Forgot_Pass():
         return render_template("Forgot_Pass.html")
@@ -201,4 +220,4 @@ def locations(app):
 
 
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug = True) 

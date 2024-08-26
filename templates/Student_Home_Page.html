@@ -4,42 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/Student_Home_Page.css">
-    <title>Home</title>
+    <title>Home Dashboard</title>
 </head>
 <body>
-    <user>
-        <center>
-            {% if profile_picture %}
-            <div class="circle">
-                <img class="Image_Profile" src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture">
+    <header class="top-nav">
+        <div class="nav-container">
+            <a id="Dashboard" href="/Student_Home">Dashboard</a>
+            <a id="Progress" href="/Student_Progress">Progress</a>
+            <a id="Grades" href="/Student_Grades">Grades</a>
+            <a id="Schedule" href="/Student_Schedule">Schedule</a>
+            <a id="Account" href="Student_Account">Account</a>
+            <a href="/Student_Settings">Settings</a>
+        </div>
+    </header>
+
+    <div class="theme-toggle" id="themeToggle">
+        <span id="themeIcon">🌙</span>
+    </div>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile">
+                {% if profile_picture %}
+                <div class="circle">
+                    <img class="Image_Profile" src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture">
+                </div>
+                {% else %}
+                <div class="circle default-image">
+                    <img class="Image_Profile" src="/static/img/Dancing_woman.gif" alt="Default Profile Picture">
+                </div>
+                {% endif %}
             </div>
-        
+            
+            <div class="details">
+                <p><b>{{ first_name }} {{ lastname }}</b></p>
+                <p>{{ year }} | {{ course }}</p>
+            </div>
+        </div>
 
-            {% else %}
-            <p>No profile picture uploaded yet.</p>
-            {% endif %}
-
-            <p><b>First name</b></p>
-            <p>Year, Course</p>
-            <hr>
-            <nav>
-                <a id="Dashboard" href="/Student_Home">Dashboard</a>
-                <a href="/Progress">Progress</a>
-                <!-- Add to progress section later!
-                <form action="/Chart" method="post">
-                    <button type="submit" class="Show_PieChart">Progress</button>
-                </form>-->
-                <a id="Grades" href="/Student_Grades">Grades</a><br>
-                <a id="Schedule" href="/Student_Schedule">Schedule</a><br>
-                <a id="Account" href="Student_Account">Account</a>
-                <hr>
-                <a href="">Settings</a>
-            </nav>
-        </center>
-    </user>
-    
-
-
+        <div class="dashboard-content">
+            <section class="summary">
+                <h2>Dashboard Summary</h2>
+                <div class="cards">
+                    <div class="card">
+                        <h3>Upcoming Events</h3>
+                        <p>View your upcoming events and deadlines.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Recent Grades</h3>
+                        <p>Check out your latest grades and feedback.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Course Overview</h3>
+                        <p>Get a quick overview of your courses and progress.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
 
     <script src="/static/javascript/Student_Home_Page.js"></script>
 </body>

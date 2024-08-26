@@ -7,7 +7,7 @@ import time
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = 'static/uploads'
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'jfif'}
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -42,6 +42,9 @@ def Direct_links(app):
     def Teacher_login(): 
         return render_template("ForTeachersLogin.html") # Teacher Log In Page
 
+    @app.route("/Teacher_Home_Page")
+    def Teacher_Home_Page(): 
+        return render_template("Teacher_Home_Page.html") # Teacher Home Page
     
     @app.route('/logout') # Log out
     def Student_logout():
@@ -49,14 +52,29 @@ def Direct_links(app):
         return redirect(url_for("Home"))
 
    
-    @app.route("/Student_Home") # Student Home page
+    @app.route("/Student_Home")
     def Student_Home():
-        username = session['username']
+        username = session.get('username')
+        if not username:
+            return redirect(url_for('Student_Login'))
+
         db.execute("SELECT profile_picture FROM student_informations WHERE username = %s", (username,))
         user = db.fetchone()
     
         profile_picture = user[0] if user and user[0] else None
-        return render_template("Student_Home_Page.html", username = username, profile_picture = profile_picture)
+        first_name, lastname, year, course = Student_Profiles(username) 
+        return render_template("Student_Home_Page.html", username=username, profile_picture=profile_picture,
+                                                    first_name=first_name,
+                                                    lastname=lastname, 
+                                                    year=year, 
+                                                    course=course)
+
+
+    @app.route("/Student_Progress")
+    def Student_Progress():
+        username = session["username"]
+        return render_template("Student_Progress.html")
+    
     
     @app.route("/Student_Grades")
     def Student_Grades():
@@ -68,37 +86,46 @@ def Direct_links(app):
         Username = session["username"]
         return render_template("Student_Schedule.html")
     
-
+    @app.route("/Student_Settings", methods = ["POST", "GET"])
+    def Student_Settings():
+        Username = session["username"]
+        return render_template("Student_Settings.html")
     
+
     
     @app.route('/upload_profile_pic', methods=['POST', "GET"])
     def upload_profile_pic():
-        if 'profile_pic' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-    
-        file = request.files['profile_pic']
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-    
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            unique_filename = f"{session['username']}_{int(time.time())}_{filename}"
-            file_path = os.path.join(UPLOAD_FOLDER, unique_filename)
-            file.save(file_path)
-    
-            # Update the profile picture filename in the database
-            query = "UPDATE student_informations SET profile_picture = %s WHERE username = %s"
-            values = (unique_filename, session['username'])
-            db.execute(query, values)
-            Connect.commit()
-    
-            flash('Profile picture updated successfully')
+        if request.method == 'POST':
+            if 'profile_pic' not in request.files:
+                flash('No file part')
+                return redirect(url_for('Student_Account'))
+
+            file = request.files['profile_pic']
+
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(url_for('Student_Account'))
+
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                unique_filename = f"{session['username']}_{int(time.time())}_{filename}"
+                file_path = os.path.join(UPLOAD_FOLDER, unique_filename)
+                file.save(file_path)
+
+                query = "UPDATE student_informations SET profile_picture = %s WHERE username = %s"
+                values = (unique_filename, session['username'])
+                db.execute(query, values)
+                Connect.commit()
+
+                flash('Profile picture updated successfully')
+                return redirect(url_for('Student_Account'))
+
+            flash('Invalid file type')
             return redirect(url_for('Student_Account'))
-    
-        flash('Invalid file type')
-        return redirect(request.url)
+
+        return redirect(url_for('Student_Account'))
+
+
     
     @app.route('/Student_Account')
     def Student_Account():
@@ -110,6 +137,7 @@ def Direct_links(app):
         user = db.fetchone()
     
         profile_picture = user[0] if user and user[0] else None
+        
         return render_template('Student_Account.html', profile_picture=profile_picture)
     
     @app.route("/Chart", methods = ["POST"])

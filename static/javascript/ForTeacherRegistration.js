@@ -26,16 +26,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to show flash messages
     function showFlashMessage(message, type = 'success') {
-        flashMessages.textContent = message;
-        flashMessages.className = `flash-messages ${type} visible`; // Ensure correct class names
-        flashMessages.style.display = 'block'; // Ensure display is set to block
+        flashMessages.innerHTML = `<p class="${type}">${message}</p>`;
+        flashMessages.style.display = 'block';
 
         setTimeout(() => {
-            flashMessages.classList.remove('visible');
-            flashMessages.style.display = 'none'; // Hide again after timeout
-        }, 3000); // Auto-hide after 3 seconds
+            flashMessages.style.display = 'none';
+        }, 3000); // Hide the message after 3 seconds
     }
 
-    // Clear any existing flash messages on page load
-    flashMessages.style.display = 'none';
+    // Show any flash messages on page load (if they exist)
+    if (flashMessages && flashMessages.innerHTML.trim() !== '') {
+        flashMessages.style.display = 'block';
+        setTimeout(() => {
+            flashMessages.style.display = 'none';
+        }, 3000);
+    } else {
+        flashMessages.style.display = 'none';
+    }
 });

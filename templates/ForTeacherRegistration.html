@@ -16,10 +16,18 @@
         <span id="themeIcon">🌙</span>
     </div>
 
-    <div class="flash-messages" id="flashMessages"></div>
+    <div class="flash-messages" id="flashMessages">
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 
     <div class="inputs">
-        <form action="/Inputs" method="post">
+        <form action="/TeacherInputs" method="post">
             <label for="firstname">First name</label>
             <input type="text" name="firstname" id="firstname" required>
 
@@ -51,13 +59,13 @@
             <input type="text" name="Birth_place" id="Birth_place" required>
 
             <label for="Username">Username</label>
-            <input type="text" name="Student_Username" id="Username" required>
+            <input type="text" name="Teacher_Username" id="Username" required>
 
             <label for="Password">Password</label>
-            <input type="password" name="Student_Password1" required>
+            <input type="password" name="Teacher_Password1" required>
 
             <label for="Password">Confirm Password</label>
-            <input type="password" name="Student_Password2" required>
+            <input type="password" name="Teacher_Password2" required>
 
             <label for="Course">Course</label>
             <select name="Course" id="Course" required>

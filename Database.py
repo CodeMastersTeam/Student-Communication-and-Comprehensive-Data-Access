@@ -36,4 +36,22 @@ def ForTeacherRegistration(firstname, middlename, lastname, age, address, Sex,
     Connect.commit()
     return
 
+def Student_Profiles(username):
+    first_name = "SELECT firstname FROM student_informations WHERE username = %s"
+    last_name = "SELECT lastname FROM student_informations WHERE username = %s"
+    year = "SELECT Year FROM student_informations WHERE username = %s"
+    course = "SELECT Course FROM student_informations WHERE username = %s"
 
+    db.execute(first_name, (username,))
+    first_name = db.fetchone()[0] 
+
+    db.execute(last_name, (username,))
+    last_name = db.fetchone()[0]
+
+    db.execute(year, (username,))
+    Year = db.fetchone()[0]
+
+    db.execute(course, (username,))
+    Course = db.fetchone()[0]
+
+    return first_name, last_name, Year, Course
