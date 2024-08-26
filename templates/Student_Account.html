@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/Student_Account.css">
     <title>Student Account</title>
 </head>
 <body>
@@ -15,14 +16,39 @@
         <button type="submit">Upload</button>
     </form>
 
+    <div class="Circle">
+
+
     {% if profile_picture %}
-    <img src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture">
+    <div class="circle">
+        <img class="Image_Profile" src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture">
+    </div>
+
+    
     {% else %}
     <p>No profile picture uploaded yet.</p>
     {% endif %}
+
+
+
+
+
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% endwith %}
+
+
+
     
     <a href="{{ url_for('Student_logout') }}">Log out</a>
     <a href="{{ url_for('updatepass') }}">Update Password</a>
+    <script src="/static/javascript/Student_Account.js"></script>
 
 </body>
 </html>

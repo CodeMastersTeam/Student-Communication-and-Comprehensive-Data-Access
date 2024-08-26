@@ -7,18 +7,21 @@
     <title>Home</title>
 </head>
 <body> 
-    <img class="Logo" src="/static/img/Logo.png" alt="Logo">
-    <h1 id="LogoName">University of Sample School</h1>
-    <div class="WelcomeMessage">
-        <h1>Registration Platform for students and teachers</h1>
-        <p>Note: Change later. Way pa may naisip dn. 🤣🤣</p>
-    </div>
-    <div class="Options_For_Teachers_And_Students">
-        <h3>What are you?</h3>
-        <form action="/Registration_links" method="post">
-            <button class="link1" type="submit" name="link" value="Teacher">Teacher</button>
-            <button class="link2" type="submit" name="link" value="Student">Student</button>
-        </form>
+    <div class="container">
+        <header class="header">
+            <img class="logo" src="/static/img/Logo.png" alt="Logo">
+            <h1 id="LogoName">PHINMA EDUCATION <br><sub>Making lives better through education</sub></h1>
+        </header>
+        <main>
+            <h2 class="AcademicSample">Academic Information Management System</h2>
+            <div class="options">
+                <form action="/Registration_links" method="post">
+                    <button class="link link-main" type="submit" name="link" value="Main">Go to main website</button>
+                    <button class="link link-teacher" type="submit" name="link" value="Teacher">Teacher</button>
+                    <button class="link link-student" type="submit" name="link" value="Student">Student</button>
+                </form>
+            </div>
+        </main>
     </div>
 
     <script src="/static/javascript/Home.js"></script>

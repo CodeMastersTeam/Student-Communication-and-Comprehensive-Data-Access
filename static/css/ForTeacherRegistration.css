@@ -1,26 +1,210 @@
-.inputs {
-    width: fit-content;
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    
+    align-items: center;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.error {
-    color: #f44336;
-    background-color: #fdecea;
-    border: 1px solid #f44336;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
+/* Light Mode */
+body.light-mode {
+    background-color: #ffffff; /* Bright background for light mode */
+    color: #333333;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212; /* Dark background for dark mode */
+    color: #d1d1d1;
+}
+
+/* Navbar */
+.navbar {
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--navbar-bg-color);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s;
+}
+
+/* Light Mode Navbar */
+body.light-mode .navbar {
+    --navbar-bg-color: #ffffff; /* Light background for navbar */
+    --border-color: #e0e0e0; /* Subtle border for separation */
+}
+
+/* Dark Mode Navbar */
+body.dark-mode .navbar {
+    --navbar-bg-color: #2C2C2C; /* Darker gray for dark mode */
+    --border-color: #444; /* Darker border for separation */
+}
+
+/* Navbar Links */
+.navbar .nav-link {
+    margin: 0 1rem;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+/* Light Mode Links */
+body.light-mode .nav-link {
+    color: #333333; /* Dark text for links */
+}
+
+/* Dark Mode Links */
+body.dark-mode .nav-link {
+    color: white;
+}
+
+.navbar .nav-link:hover {
+    color: #ffcc00; /* Highlight color for hover */
+}
+
+/* Flash Messages */
+.flash-messages {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 300px;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: none; /* Start hidden */
+    z-index: 1000; /* Ensure it's above other elements */
+    transition: opacity 0.3s, background-color 0.3s, color 0.3s;
+    font-size: 1.2rem;
+    text-align: center; /* Center text inside flash messages */
+}
+
+/* Flash Message Types */
+.flash-messages.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.flash-messages.error {
+    background-color: #f44336;
+    color: white;
+}
+
+body.dark-mode .flash-messages {
+    background-color: #333;
+    color: #ddd;
+}
+
+/* Input Forms */
+.inputs {
+    width: 100%;
+    max-width: 600px;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light Mode Form */
+body.light-mode .inputs {
+    background-color: #ffffff; /* Bright background for light mode */
+    color: #333333;
+}
+
+/* Dark Mode Form */
+body.dark-mode .inputs {
+    background-color: #1e1e1e; /* Dark background for dark mode */
+    color: #d1d1d1;
+}
+
+/* Input Fields */
+.inputs label {
+    display: block;
+    margin-bottom: 0.5rem;
     font-weight: bold;
 }
 
-.success {
-    color: #4CAF50;
-    background-color: #e7f6e7;
-    border: 1px solid #4CAF50;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    font-weight: bold;
+.inputs input,
+.inputs select {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Light Mode Inputs */
+body.light-mode .inputs input,
+body.light-mode .inputs select {
+    background-color: #f9f9f9;
+    color: #333333;
+}
+
+/* Dark Mode Inputs */
+body.dark-mode .inputs input,
+body.dark-mode .inputs select {
+    background-color: #333333;
+    color: #dddddd;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #444;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+/* Dark Mode Buttons */
+body.dark-mode button {
+    background-color: #555;
+}
+
+body.dark-mode button:hover {
+    background-color: #444;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    z-index: 1000;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem;
+    }
+
+    .navbar .nav-link {
+        font-size: 1rem;
+    }
+
+    .inputs {
+        padding: 1rem;
+    }
+
+    .inputs input,
+    .inputs select {
+        padding: 0.5rem;
+    }
 }

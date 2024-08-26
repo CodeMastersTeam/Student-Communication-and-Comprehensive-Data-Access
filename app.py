@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
+import matplotlib.pyplot as plt
 from Flask_links import locations
 from Database import *
 import os
@@ -51,7 +52,11 @@ def Direct_links(app):
     @app.route("/Student_Home") # Student Home page
     def Student_Home():
         username = session['username']
-        return render_template("Student_Home_Page.html", username = username)
+        db.execute("SELECT profile_picture FROM student_informations WHERE username = %s", (username,))
+        user = db.fetchone()
+    
+        profile_picture = user[0] if user and user[0] else None
+        return render_template("Student_Home_Page.html", username = username, profile_picture = profile_picture)
     
     @app.route("/Student_Grades")
     def Student_Grades():
@@ -66,7 +71,7 @@ def Direct_links(app):
 
     
     
-    @app.route('/upload_profile_pic', methods=['POST'])
+    @app.route('/upload_profile_pic', methods=['POST', "GET"])
     def upload_profile_pic():
         if 'profile_pic' not in request.files:
             flash('No file part')
@@ -107,3 +112,30 @@ def Direct_links(app):
         profile_picture = user[0] if user and user[0] else None
         return render_template('Student_Account.html', profile_picture=profile_picture)
     
+    @app.route("/Chart", methods = ["POST"])
+    def Chart():
+        my_data = [0.20, 0.40, 0.20, 0.15, 0.05]
+        my_labels = ["Quiz", "Practical exam", "Project", "Modules", "Attendance"]
+        my_colors = ["lightblue", "lightsteelblue", "silver", "cyan", "gold"] 
+
+        def format_label(pct, all_values):
+        
+            if pct.is_integer():
+                return "{:0f}%".format(pct) 
+            else:
+                return "{:.0f}%".format(pct)  
+
+        plt.pie(
+            my_data,
+            labels=my_labels,
+            autopct=lambda pct: format_label(pct, my_data), 
+            startangle=15,
+            shadow=True,
+            colors=my_colors, 
+        )
+
+        plt.title("My Tasks")
+        plt.axis("equal") 
+        plt.show()
+
+        return redirect(url_for("Student_Home"))

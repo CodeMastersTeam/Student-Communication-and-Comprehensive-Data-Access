@@ -7,12 +7,39 @@
     <title>Home</title>
 </head>
 <body>
-    <nav class="navbar">
-            <a href="/Student_Grades">Grades</a>
-            <a href="/Student_Schedule">Schedule</a>
-            <a href="Student_Account">Account</a>
-    </nav>
+    <user>
+        <center>
+            {% if profile_picture %}
+            <div class="circle">
+                <img class="Image_Profile" src="{{ url_for('static', filename='uploads/' + profile_picture) }}" alt="Profile Picture">
+            </div>
+        
+
+            {% else %}
+            <p>No profile picture uploaded yet.</p>
+            {% endif %}
+
+            <p><b>First name</b></p>
+            <p>Year, Course</p>
+            <hr>
+            <nav>
+                <a id="Dashboard" href="/Student_Home">Dashboard</a>
+                <a href="/Progress">Progress</a>
+                <!-- Add to progress section later!
+                <form action="/Chart" method="post">
+                    <button type="submit" class="Show_PieChart">Progress</button>
+                </form>-->
+                <a id="Grades" href="/Student_Grades">Grades</a><br>
+                <a id="Schedule" href="/Student_Schedule">Schedule</a><br>
+                <a id="Account" href="Student_Account">Account</a>
+                <hr>
+                <a href="">Settings</a>
+            </nav>
+        </center>
+    </user>
     
+
+
 
     <script src="/static/javascript/Student_Home_Page.js"></script>
 </body>

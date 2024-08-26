@@ -4,7 +4,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
-app.config['uploads'] = "static/uploads"
+app.config['uploads'] = "static/uploads"    
 
 app.secret_key = "Gwapo"
 
@@ -13,6 +13,5 @@ locations(app)
 
 
 
- 
 if __name__ == "__main__":
     app.run(debug = True)

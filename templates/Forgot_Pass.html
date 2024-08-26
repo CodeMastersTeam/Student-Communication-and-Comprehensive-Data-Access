@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/update.css">
-    <title>Document</title>
+    <title>Recover Password</title>
 </head>
 <body>
-    <form action="/updatepass" method="POST">
-        <input type="password" name="updatepassword1" placeholder="Update password">
-        <input type="password" name="updatepassword2" placeholder="confirm password">
-
-        <input type="submit" value="submit">
+    <form action="/RecoverPass" method="post">
+        <label for="username">Please enter your username</label>
+        <input type="text" name="username" id="username">
+        <button type="submit">Recover password</button>
     </form>
-
     {% with messages = get_flashed_messages(with_categories=True) %}
     {% if messages %}
         <div class="flash-messages">
             {% for category, message in messages %}
                 <p class="{{ category }}">{{ message }}</p>
-                <a href="/logout">Log in</a>
             {% endfor %}
         </div>
     {% endif %}
     {% endwith %}
+    
+    <a href="/StudentsLogin">Back to log in</a>
+    <a href="Inputs">Create account</a>
 </body>
 </html>

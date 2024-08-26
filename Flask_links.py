@@ -28,6 +28,8 @@ def locations(app):
                 return render_template("Teachers.html")
             elif link == "Student":
                 return render_template("Students.html")
+            elif link == "Main":
+                return render_template("Main.html")
         else:
             return render_template("Home.html")
 
@@ -134,7 +136,7 @@ def locations(app):
             session["username"] = username
             return redirect(url_for("Student_Home"))
         else:
-            flash("Invalid username or password!", "error")
+            flash("These credentials do not match our records.", "error")
             return redirect(url_for("Students_Login"))
             
         return render_template("ForStudentLogin.html")
@@ -149,12 +151,12 @@ def locations(app):
             user = db.fetchone()
             if user:
                 session["username"] = username
-                return redirect(url_for("Teacher_Home"))
+                return redirect(url_for("Teacher_login"))
             else:
-                flash("Invalid username or password!", "error")
+                flash("These credentials do not match our records.", "error")
                 return redirect(url_for("Teacher_login"))
         else:
-            flash("Missing username or password!")
+            flash("These credentials do not match our records.", "error")
             return redirect(url_for("Teacher_login"))
     
     
@@ -172,18 +174,27 @@ def locations(app):
             if len(password1) < 8:
                 flash("Password should be more than 8 characters!", "error")
                 return render_template("update.html")
-            
-
             else:
                 db.execute("UPDATE student_informations SET password = %s WHERE username = %s",(password1,username))
                 Connect.commit()
-                flash("Updated sucessfuly!", "success")
+                flash("Updated sucessfulLy! Please log in again to continue.", "success")
         return render_template("update.html")
     
+    @app.route("/Forgot_Pass")
+    def Forgot_Pass():
+        return render_template("Forgot_Pass.html")
 
-    
-
-
+    @app.route("/RecoverPass", methods = ["POST"])
+    def RecoverPass():
+        userrname = request.form["username"]
+        db.execute(f"SELECT * FROM student_informations WHERE username = '{userrname}'")
+        user = db.fetchone()
+        if user != None:
+            session["username"] = userrname
+            return redirect(url_for("updatepass"))
+        else:
+            flash("Email not found! Please create a new account instead", "error")
+            return redirect(url_for("Forgot_Pass"))
 
 
 

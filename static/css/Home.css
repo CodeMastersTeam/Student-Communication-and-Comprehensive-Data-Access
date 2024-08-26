@@ -1,24 +1,101 @@
 body {
+    background-color: #e9ecef; 
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.container {
     text-align: center;
-    background-color: #C8D6C5;
-    color: #4a7ea1;
+    background: #ffffff; 
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 80%;
+    width: 600px;
 }
 
 
-.link1 {
-    cursor: pointer;
-    margin-right: 10%;
+.header {
+    margin-bottom: 20px;
 }
 
-.link2 {
-    cursor: pointer;
-}
-
-.Logo {
-    width: 15%;
+.logo {
+    width: 100px; 
     height: auto;
-    margin-left: 43%;
-    border-radius: 100%;
+}
+
+#LogoName {
+    font-size: 1.4rem;
+    color: #333333;
+    margin: 10px 0;
+}
+
+#LogoName sub {
+    display: block;
+    font-size: 0.9rem;
+    color: #777777;
+}
+
+
+.AcademicSample {
+    font-size: 1.6rem;
+    color: #333333;
+    margin: 20px 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+.options {
+    margin-top: 20px;
+}
+
+
+.link {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 12px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 6px;
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    color: #ffffff;
+}
+
+
+.link-main {
+    background-color: #007bff;
+    border: 1px solid #0056b3;
+}
+
+.link-teacher {
+    background-color: #6c757d; 
+    border: 1px solid #5a6268;
+}
+
+.link-student {
+    background-color: #343a40; 
+    border: 1px solid #23272b;
+}
+
+
+.link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+.link:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5);
 }

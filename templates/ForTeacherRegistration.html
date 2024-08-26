@@ -4,63 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/ForTeacherRegistration.css">
-    <title>Teacher | Registration</title>
+    <title>Student | Registration</title>
 </head>
 <body>
-    <a href="/">Home</a>
+    <div class="navbar">
+        <a href="/" class="nav-link">Home</a>
+        <a href="/Login" class="nav-link">Log In</a>
+    </div>
+
+    <div class="theme-toggle" id="themeToggle">
+        <span id="themeIcon">🌙</span>
+    </div>
+
+    <div class="flash-messages" id="flashMessages"></div>
+
     <div class="inputs">
-        <form action="/TeacherInputs" method="post">
+        <form action="/Inputs" method="post">
+            <label for="firstname">First name</label>
             <input type="text" name="firstname" id="firstname" required>
-            <label for="firstname">First name</label><br>
 
+            <label for="middlename">Middle name</label>
             <input type="text" name="middlename" id="middlename" required>
-            <label for="middlename">Middle name</label><br>
 
+            <label for="lastname">Last name</label>
             <input type="text" name="lastname" id="lastname" required>
-            <label for="lastname">Last name</label><br>
 
+            <label for="age">Age</label>
             <input type="number" name="age" id="age" required>
-            <label for="age">Age</label><br>
 
-            <input type="text" name="address" id="address" required>
             <label for="address">Address</label>
+            <input type="text" name="address" id="address" required>
 
-            <p>Sex: </p>
-            <input type="radio" name="sex" value="M" id="male" required>
-            <label for="male">Male</label>
-            <input type="radio" name="sex" value="F" id="female" required>
-            <label for="female">Female</label><br>
+            <label for="sex">Gender</label>
+            <select name="sex" id="sex" required>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
 
+            <label for="cellphone_number">Cellphone number</label>
             <input type="text" name="cellphone_number" id="cellphone_number" required>
-            <label for="cellphone_number">Cellphone number</label><br>
 
+            <label for="Birth_date">Birth date</label>
             <input type="date" name="Birth_date" id="Birth_date" required>
-            <label for="Birth_date">Birth date</label><br>
 
+            <label for="Birth_place">Birth place</label>
             <input type="text" name="Birth_place" id="Birth_place" required>
-            <label for="Birth_place">Birth place</label><br>
 
-            <input type="text" name="Teacher_Username" id="Username" required>
             <label for="Username">Username</label>
+            <input type="text" name="Student_Username" id="Username" required>
 
-            <input type="password" name="Teacher_Password1" required>
             <label for="Password">Password</label>
+            <input type="password" name="Student_Password1" required>
 
-            <input type="password" name="Teacher_Password2" required>
-            <label for="Password">Password</label>
+            <label for="Password">Confirm Password</label>
+            <input type="password" name="Student_Password2" required>
 
-            <p>Course:</p>
-            <input  id="BSIT" type="radio" name = "Course" value = "BSIT" required>
-            <label for="BSIT">BSIT</label>
-            
-            <input  id="NURSING" type="radio" name = "Course" value = "NURSING" required>
-            <label for="NURSING">NURSING</label>
-            
-            <input  id="EDUCATION" type="radio" name = "Course" value = "EDUCATION" required>
-            <label for="EDUCATION">EDUCATION</label>
-            
-            <input  id="MANAGEMENT" type="radio" name = "Course" value = "MANAGEMENT" required>
-            <label for="MANAGEMENT">MANAGEMENT</label>
+            <label for="Course">Course</label>
+            <select name="Course" id="Course" required>
+                <option value="BSIT">BSIT</option>
+                <option value="NURSING">Nursing</option>
+                <option value="EDUCATION">Education</option>
+                <option value="MANAGEMENT">Management</option>
+            </select>
 
             <label for="Year">Year</label>
             <select name="Year" id="Year" required>
@@ -69,29 +74,10 @@
                 <option value="3rd Year">3rd Year</option>
                 <option value="4th Year">4th Year</option>
             </select>
-        
 
-            <button type="submit">Submit</button>
+            <button type="submit">Register</button>
         </form>
     </div>
-
-    {% with messages = get_flashed_messages(with_categories=True) %}
-    {% if messages %}
-        <div class="flash-messages">
-            {% for category, message in messages %}
-                <p class="{{ category }}">{{ message }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-    {% endwith %}
-
-
-
-
-
-
-
-
     <script src="/static/javascript/ForTeacherRegistration.js"></script>
 </body>
 </html>

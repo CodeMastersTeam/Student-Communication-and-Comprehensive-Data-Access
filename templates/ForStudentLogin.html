@@ -4,33 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/ForStudentLogin.css">
-    <title>Document</title>
+    <title>Student Login</title>
 </head>
 <body>
-    <a href="/">Home</a>
+    <header>
+        <a href="/" class="home-link">Home</a>
+        <h1>Student Login</h1>
+    </header>
 
-    
+    <main>
+        <form action="/StudentsLogin" method="post" class="login-form">
+            <label for="LoginUsername">Username or Email</label><br>
+            <input type="text" name="LoginUsername" id="LoginUsername" required><br>
+            
+            <label for="LoginPassword">Password</label><br>
+            <input name="LoginPassword" type="password" id="LoginPassword" required>
 
-    <form id="sample" action="/StudentsLogin" method="post">
-        <label for="LoginUsername">Username or Lastname</label><br>
-        <input type="text" name="LoginUsername" id="LoginUsername"><br>
-        
-        <label for="LoginPassword">Password</label><br>
-        <input name="LoginPassword" type="password" id="LoginPassword">
+            <button type="submit">Log In</button>
+        </form>
 
-        <button type="submit">Log in</button>
-    </form>
-    {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                    <p class="{{ category }}">{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
-    
+        <div class="flash-messages">
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
 
+        <div class="additional-links">
+            <a href="/StudentsRegister">Create an account</a>
+            <a href="/Forgot_Pass">Forgot password?</a>
+        </div>
+    </main>
 
     <script src="/static/javascript/ForStudentLogin.js"></script>
 </body>

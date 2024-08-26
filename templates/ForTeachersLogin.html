@@ -4,30 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/ForTeachersLogin.css">
-    <title>Document</title>
+    <title>Teacher Login</title>
 </head>
 <body>
-    <a href="/">Home</a>
-    <form action="/TeacherLogin" method="post">
-        <label for="LoginUsername">Username or Lastname</label>
-        <input type="text" name="LoginUsername" id="LoginUsername">
-        
-        <label for="LoginPassword">Password</label>
-        <input name="LoginPassword" type="password" id="LoginPassword">
-
-        <button type="submit">Log in</button>
-    </form>
+    <header>
+        <a href="/" class="home-link">Home</a>
+    </header>
     
-    {% with messages = get_flashed_messages(with_categories=True) %}
-    {% if messages %}
-        <div class="flash-messages">
-            {% for category, message in messages %}
-                <p class="{{ category }}">{{ message }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-    {% endwith %}
+    <main>
+        <form action="/TeacherLogin" method="post" class="login-form">
+            <label for="LoginUsername">Username or Lastname</label>
+            <input type="text" name="LoginUsername" id="LoginUsername">
+            
+            <label for="LoginPassword">Password</label>
+            <input name="LoginPassword" type="password" id="LoginPassword">
 
-    <script src="/static/javascript/ForTeacherLogin.js"></script>
+            <button type="submit">Log in</button>
+
+            <div class="additional-links">
+                <a href="/TeacherInputs">Create an Account</a>
+                <a href="">Forgot Password?</a>
+            </div>
+        </form>
+        
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% endwith %}
+    </main>
+
+    <script src="/static/javascript/ForTeachersLogin.js"></script>
 </body>
 </html>
