@@ -175,38 +175,21 @@ def locations(app):
                 flash("Password should be more than 8 characters!", "error")
                 return render_template("update.html")
             else:
-                db.execute("UPDATE student_informations SET password = %s WHERE username = %s",(password1,username))
+                db.execute("UPDATE teacher_informations SET password = %s WHERE username = %s",(password1,username))
                 Connect.commit()
                 flash("Updated sucessfulLy! Please log in again to continue.", "success")
         return render_template("update.html")
     
-    @app.route("/Teacher_updatepass",methods=["POST","GET"])
-    def Teacher_updatepass():
-        if request.method == "POST":
-            username = session['username']
-            password1 = request.form['updatepassword1']
-            password2 = request.form['updatepassword2']
-            if password1 != password2:
-                flash("Password should be the same!", "error")
-                return render_template("Teacher_updatepass.html")
-            
-            if len(password1) < 8:
-                flash("Password should be more than 8 characters!", "error")
-                return render_template("Teacher_updatepass.html")
-            else:
-                db.execute("UPDATE teacher_informations SET password = %s WHERE username = %s",(password1,username))
-                Connect.commit()
-                flash("Updated sucessfulLy! Please log in again to continue.", "success")
-        return render_template("Teacher_updatepass.html")
     
     @app.route("/Forgot_Pass")
     def Forgot_Pass():
         return render_template("Forgot_Pass.html")
 
-    @app.route("/RecoverPass", methods = ["POST"])
-    def RecoverPass():
+
+    @app.route("/TeacherRecoverPass", methods = ["POST"])
+    def TeacherRecoverPass():
         userrname = request.form["username"]
-        db.execute(f"SELECT * FROM student_informations WHERE username = '{userrname}'")
+        db.execute(f"SELECT * FROM teacher_informations WHERE username = '{userrname}'")
         user = db.fetchone()
         if user != None:
             session["username"] = userrname
@@ -214,9 +197,6 @@ def locations(app):
         else:
             flash("Email not found! Please create a new account instead", "error")
             return redirect(url_for("Forgot_Pass"))
-
-
-
 
 
 if __name__ == "__main__":

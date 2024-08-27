@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/Student_Home_Page.css"> <!-- Shared CSS for navigation and dark mode -->
-    <link rel="stylesheet" href="/static/css/Student_Settings.css"> <!-- Specific CSS for settings -->
+    <link rel="stylesheet" href="/static/css/Student_Home_Page.css">
+    <link rel="stylesheet" href="/static/css/Student_Settngs.css"> 
     <title>Student Settings</title>
 </head>
 <body>
-    <!-- Navigation Bar -->
     <header class="top-nav">
         <div class="nav-container">
             <a id="Dashboard" href="/Student_Home">Dashboard</a>
@@ -20,7 +19,6 @@
         </div>
     </header>
 
-    <!-- Dark Mode Toggle -->
     <div class="theme-toggle" id="themeToggle">
         <span id="themeIcon">🌙</span>
     </div>
@@ -39,7 +37,14 @@
             <button type="submit">Save Changes</button>
         </form>
     </div>
+    <a href="{{ url_for('Student_logout') }}">Log out</a>
+    <a href="">Update Password</a>
 
-    <script src="/static/javascript/Student_Home_Page.js"></script> 
+    <center>
+        <img class="imggg" src="/static/img/Dancing_woman.gif" alt="">
+    </center>
+
+    <script src="/static/javascript/Student_Home_Page.js"></script>
+    <script src="/static/javascript/Student_Settings.js"></script>
 </body>
 </html>

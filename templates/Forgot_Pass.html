@@ -6,7 +6,7 @@
     <title>Recover Password</title>
 </head>
 <body>
-    <form action="/RecoverPass" method="post">
+    <form action="/TeacherRecoverPass" method="post">
         <label for="username">Please enter your username</label>
         <input type="text" name="username" id="username">
         <button type="submit">Recover password</button>
@@ -21,7 +21,7 @@
     {% endif %}
     {% endwith %}
     
-    <a href="/StudentsLogin">Back to log in</a>
-    <a href="Inputs">Create account</a>
+    <a href="/Login">Back to log in</a>
+    <a href="/TeacherInputs">Create account</a>
 </body>
 </html>
