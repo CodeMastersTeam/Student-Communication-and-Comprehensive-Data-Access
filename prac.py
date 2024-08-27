@@ -10,7 +10,7 @@
 #db = Connect.cursor()
 #
 #username = "Selwyn"
-#q = f"SELECT firstname from student_informations where username = '{username}'"
+#q = f"SELECT firstname from students where username = '{username}'"
 #
 #db.execute(q)
 #

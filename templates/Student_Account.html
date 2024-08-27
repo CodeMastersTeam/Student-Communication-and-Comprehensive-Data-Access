@@ -19,10 +19,6 @@
         </div>
     </header>
 
-    <div class="theme-toggle" id="themeToggle">
-        <span id="themeIcon">🌙</span>
-    </div>
-
     <div class="container">
         <div class="profile-picture-upload">
             <h2>Update Profile Picture</h2>
@@ -43,12 +39,12 @@
             </div>
             {% else %}
             <div class="circle default-image">
-                <img class="Image_Profile" src="/static/img/Logo.png" alt="Default Profile Picture">
+                <img class="Image_Profile" src="/static/img/Dancing_woman.gif" alt="Default Profile Picture">
             </div>
             {% endif %}
         </div>
 
-        <form method="POST" action="{{ url_for('Student_Account') }}">
+        <form method="POST" action="/Update_Student_info">
             <h3>Personal Information</h3>
             <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname" value="{{ firstname }}">
@@ -75,6 +71,12 @@
             <label for="cellphone_number">Cellphone Number:</label>
             <input type="text" id="cellphone_number" name="cellphone_number" value="{{ cellphone_number }}">
 
+            <label for="Birth_place">Birth place:</label>
+            <input type="text" id="Birth_place" name="Birth_place" value="{{ Birth_place }}">
+
+            <label for="Birth_date">Birth date:</label>
+            <input type="date" id="Birth_date" name="Birth_date" value="{{ Birth_date }}" class="date-picker">            
+
             <h3>Account Management</h3>
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" value="{{ username }}">
@@ -85,13 +87,24 @@
             <button type="submit">Update Information</button>
         </form>
 
+        
+
         <div class="readonly-section">
             <h3>Educational Information</h3>
             <label for="course">Course:</label>
-            <input type="text" id="course" name="course" value="{{ course }}" readonly>
-
+            <input type="text" id="course" name="course" value="{{ course }}" placeholder="{{ course }}" readonly>
             <label for="year">Year:</label>
-            <input type="text" id="year" name="year" value="{{ year }}" readonly>
+            {% set year_display = year %}
+            {% if year == 1 %}
+                {% set year_display = "1st year" %}
+            {% elif year == 2 %}
+                {% set year_display = "2nd year" %}
+            {% elif year == 3 %}
+                {% set year_display = "3rd year" %}
+            {% elif year == 4 %}
+                {% set year_display = "4th year" %}
+            {% endif %}
+            <input type="text" id="year" name="year" value="{{ year_display }}" placeholder="{{ year_display }}" readonly>
         </div>
 
         {% with messages = get_flashed_messages(with_categories=True) %}

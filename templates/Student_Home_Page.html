@@ -37,9 +37,20 @@
             </div>
             
             <div class="details">
+                {% set year_display = year %}
+                {% if year == 1 %}
+                    {% set year_display = "1st year" %}
+                {% elif year == 2 %}
+                    {% set year_display = "2nd year" %}
+                {% elif year == 3 %}
+                    {% set year_display = "3rd year" %}
+                {% elif year == 4 %}
+                    {% set year_display = "4th year" %}
+                {% endif %}
                 <p><b>{{ first_name }} {{ lastname }}</b></p>
-                <p>{{ year }} | {{ course }}</p>
+                <p>{{ year_display }} | {{ course }}</p>
             </div>
+            
         </div>
 
         <div class="dashboard-content">

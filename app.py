@@ -58,11 +58,12 @@ def Direct_links(app):
         if not username:
             return redirect(url_for('Student_Login'))
 
-        db.execute("SELECT profile_picture FROM student_informations WHERE username = %s", (username,))
+        db.execute("SELECT profile_picture FROM students WHERE username = %s", (username,))
         user = db.fetchone()
     
         profile_picture = user[0] if user and user[0] else None
-        first_name, lastname, year, course = Student_Profiles(username) 
+        first_name, lastname, year, course = Student_Profiles(username)
+
         return render_template("Student_Home_Page.html", username=username, profile_picture=profile_picture,
                                                     first_name=first_name,
                                                     lastname=lastname, 
@@ -112,7 +113,7 @@ def Direct_links(app):
                 file_path = os.path.join(UPLOAD_FOLDER, unique_filename)
                 file.save(file_path)
 
-                query = "UPDATE student_informations SET profile_picture = %s WHERE username = %s"
+                query = "UPDATE students SET profile_picture = %s WHERE username = %s"
                 values = (unique_filename, session['username'])
                 db.execute(query, values)
                 Connect.commit()
@@ -133,7 +134,7 @@ def Direct_links(app):
         if not username:
             return redirect(url_for('Student_Login'))
     
-        db.execute("SELECT profile_picture FROM student_informations WHERE username = %s", (username,))
+        db.execute("SELECT profile_picture FROM students WHERE username = %s", (username,))
         user = db.fetchone()
     
         profile_picture = user[0] if user and user[0] else None

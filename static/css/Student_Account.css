@@ -1,40 +1,37 @@
-/* General Body Styling */
 body {
     font-family: Arial, sans-serif;
-    color: black; /* Default text color */
-    background-color: white; /* Default background color */
+    color: black;  
+    background-color: white;  
     margin: 0;
     padding: 0;
 }
 
-/* Dark Mode Styling */
 body.dark-mode {
     color: white;
-    background-color: #121212; /* Dark background for dark mode */
+    background-color: #121212;
 }
 
 body.dark-mode .container {
-    background-color: #1e1e1e; /* Dark background for container */
-    color: white; /* Text color for dark mode */
+    background-color: #1e1e1e;
+    color: white; 
 }
 
 body.dark-mode .profile-picture-upload button,
 body.dark-mode button {
-    background-color: #333; /* Button background for dark mode */
-    color: white; /* Button text color for dark mode */
+    background-color: #333; 
+    color: white; 
 }
 
 body.dark-mode .profile-picture-upload button:hover,
 body.dark-mode button:hover {
-    background-color: #555; /* Button hover background for dark mode */
+    background-color: #555; 
 }
 
 body.dark-mode .readonly-section input[readonly] {
-    background-color: #333; /* Read-only field background for dark mode */
-    color: white; /* Text color for read-only fields in dark mode */
+    background-color: #333; 
+    color: white; 
 }
 
-/* General Container Styling */
 .container {
     max-width: 800px;
     margin: 80px auto;
@@ -45,7 +42,6 @@ body.dark-mode .readonly-section input[readonly] {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Profile Picture Upload Section */
 .profile-picture-upload {
     margin-bottom: 30px;
     text-align: center;
@@ -77,7 +73,6 @@ body.dark-mode .readonly-section input[readonly] {
     background-color: darkblue;
 }
 
-/* Profile Picture Display */
 .profile-picture {
     display: flex;
     justify-content: center;
@@ -98,7 +93,6 @@ body.dark-mode .readonly-section input[readonly] {
     object-fit: cover;
 }
 
-/* Default Image */
 .default-image {
     background-color: #eee;
     display: flex;
@@ -111,7 +105,6 @@ body.dark-mode .readonly-section input[readonly] {
     height: 80%;
 }
 
-/* Form Styling */
 form {
     margin-bottom: 20px;
 }
@@ -133,7 +126,6 @@ select {
     box-sizing: border-box;
 }
 
-/* Button Styling */
 button {
     padding: 10px 20px;
     background-color: blue;
@@ -147,14 +139,12 @@ button:hover {
     background-color: darkblue;
 }
 
-/* Read-Only Fields */
 input[readonly] {
     background-color: #f5f5f5;
     border: 1px solid #ccc;
     cursor: not-allowed;
 }
 
-/* Media Queries for Responsiveness */
 @media (max-width: 600px) {
     .container {
         padding: 10px;
@@ -166,7 +156,6 @@ input[readonly] {
     }
 }
 
-/* Styling the profile picture upload form */
 .profile-picture-upload form {
     display: flex;
     flex-direction: column;
@@ -186,12 +175,10 @@ input[readonly] {
     gap: 10px;
 }
 
-/* Hide the default file input */
 .custom-file-upload input[type="file"] {
     display: none;
 }
 
-/* Style the label to look like a button */
 .custom-file-upload label {
     padding: 10px 20px;
     background-color: #007BFF;
@@ -207,14 +194,12 @@ input[readonly] {
     background-color: #0056b3;
 }
 
-/* Style for the file name display */
 .custom-file-upload #file-name {
     font-family: Arial, sans-serif;
     font-size: 14px;
     color: #555;
 }
 
-/* Style the Upload button */
 .profile-picture-upload button {
     padding: 10px 20px;
     background-color: #28a745;
@@ -227,4 +212,19 @@ input[readonly] {
 
 .profile-picture-upload button:hover {
     background-color: #218838;
+}
+
+.date-picker {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.date-picker:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
