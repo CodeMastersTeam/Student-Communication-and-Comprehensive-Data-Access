@@ -44,7 +44,7 @@
             {% endif %}
         </div>
 
-        <form method="POST" action="/Update_Student_info">
+        <form method="POST" action="/update_student_info">
             <h3>Personal Information</h3>
             <label for="firstname">First Name:</label>
             <input type="text" id="firstname" name="firstname" value="{{ firstname }}">
@@ -82,9 +82,21 @@
             <input type="text" id="username" name="username" value="{{ username }}">
 
             <label for="password">New Password:</label>
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" value="{{ password }}">
 
             <button type="submit">Update Information</button>
+        </form>
+
+        <form method="POST" action="{{ url_for('delete_account') }}" onsubmit="return confirmDeletion()">
+            <h3>Delete Account</h3>
+            <p>Please confirm by typing your full name and username:</p>
+            <label for="confirm_firstname">First Name:</label>
+            <input type="text" id="confirm_firstname" name="confirm_firstname">
+            <label for="confirm_lastname">Last Name:</label>
+            <input type="text" id="confirm_lastname" name="confirm_lastname">
+            <label for="confirm_username">Username:</label>
+            <input type="text" id="confirm_username" name="confirm_username">
+            <button type="submit">Delete Account</button>
         </form>
 
         
@@ -107,15 +119,15 @@
             <input type="text" id="year" name="year" value="{{ year_display }}" placeholder="{{ year_display }}" readonly>
         </div>
 
-        {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                    <p class="{{ category }}">{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {% endwith %}
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}        
     </div>
 
     <script src="/static/javascript/Student_Account.js"></script>

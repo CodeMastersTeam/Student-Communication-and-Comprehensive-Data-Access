@@ -131,6 +131,7 @@ def Direct_links(app):
     @app.route('/Student_Account')
     def Student_Account():
         username = session.get('username')
+        first_name, lastname, year, course = Student_Profiles(username)
         if not username:
             return redirect(url_for('Student_Login'))
     
@@ -139,7 +140,7 @@ def Direct_links(app):
     
         profile_picture = user[0] if user and user[0] else None
         
-        return render_template('Student_Account.html', profile_picture=profile_picture)
+        return render_template('Student_Account.html', profile_picture=profile_picture,  year = year, course = course)
     
     @app.route("/Chart", methods = ["POST"])
     def Chart():

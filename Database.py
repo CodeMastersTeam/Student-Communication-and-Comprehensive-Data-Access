@@ -74,38 +74,3 @@ def Student_Profiles(username):
 
     return first_name, last_name, year, course
 
-
-import mysql.connector
-
-def Update_Student_Data(firstname, middlename, lastname, age, sex, address, cellphone_number, Birth_date, Birth_place, Username, Password):
-    try:
-        query = """
-        UPDATE students 
-        SET firstname = %s, 
-            middlename = %s, 
-            lastname = %s, 
-            age = %s, 
-            sex = %s, 
-            address = %s, 
-            cellphone_number = %s, 
-            birth_date = %s, 
-            birth_place = %s, 
-            password = %s
-        WHERE username = %s;
-        """
-        
-        values = (firstname, middlename, lastname, age, sex, address, cellphone_number, Birth_date, Birth_place, Password, Username)
-        
-        db.execute(query, values)
-        
-        Connect.commit()
-
-        print("Student data updated successfully!")
-
-    except mysql.connector.Error as error:
-        print(f"Error: {error}")
-        Connect.rollback() 
-
-    finally:
-        db.close()
-        Connect.close()

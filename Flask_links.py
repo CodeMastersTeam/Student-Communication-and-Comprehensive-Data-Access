@@ -212,25 +212,79 @@ def locations(app):
             flash("Email not found! Please create a new account instead", "error")
             return redirect(url_for("Forgot_Pass"))
 
-    @app.route("/Update_Student_info", methods = ["POST"])
-    def Update_Student_info():
-        username = session["username"]
-        first_name, lastname, year, course = Student_Profiles(username)
 
-        if request.method == "POST":
-            firstname = str(request.form["firstname"])
-            middlename = str(request.form["middlename"])
-            lastname = str(request.form["lastname"])
-            age = request.form["age"]
-            sex = sex = request.form.get("sex")
-            address = str(request.form["address"])
-            cellphone_number = str(request.form["cellphone_number"])
-            Birth_date = str(request.form["Birth_date"])
-            Birth_place = str(request.form["Birth_place"])
-            Username = str(request.form.get("Teacher_Username"))
-            Password = str(request.form.get("Teacher_Password"))
+    @app.route("/update_student_info", methods=["POST"])
+    def update_student_info():
+        if 'username' not in session:
+            return redirect(url_for('Student_Login'))
 
-            return render_template("Student_Account.html", year = year, course = course)
-        return redirect(url_for("Student_Account"))
+        username = session['username']
+        firstname = request.form.get('firstname')
+        middlename = request.form.get('middlename')
+        lastname = request.form.get('lastname')
+        age = request.form.get('age')
+        sex = request.form.get('sex')
+        address = request.form.get('address')
+        cellphone_number = request.form.get('cellphone_number')
+        birth_date = request.form.get('Birth_date')
+        birth_place = request.form.get('Birth_place')
+        Username = request.form.get("username")
+        password = request.form.get("password")
+        profile_picture = None 
+
+        try:
+            if username == "" or firstname == "" or middlename == "" or lastname == "" or age == "" or sex == "" or address == "" or \
+                cellphone_number == "" or birth_date == "" or birth_place == "" or Username == "" or password == "" or profile_picture== "":
+                flash("Kompletoha tanan! Di pwede kulang! 😤😤😤", "Error")
+                return redirect(url_for('Student_Account'))
+
+            db.execute("""
+                UPDATE students
+                SET firstname = %s, middlename = %s, lastname = %s, age = %s, sex = %s, address = %s, 
+                    cellphone_number = %s, birth_date = %s, birth_place = %s, username = %s, password = %s
+                WHERE username = %s
+            """, (firstname, middlename, lastname, age, sex, address, cellphone_number, birth_date, birth_place, Username, password, username))
+            Connect.commit()
+
+        except Exception as e:
+            flash(f"An error occurred: {e}", "error")
+
+        return redirect(url_for('Student_Account'))
+
+    @app.route("/delete_account", methods=["POST"])
+    def delete_account():
+        if 'username' not in session:
+            return redirect(url_for('Student_Login'))
+
+        username = session['username']
+        confirm_firstname = request.form.get('confirm_firstname')
+        confirm_lastname = request.form.get('confirm_lastname')
+        confirm_username = request.form.get('confirm_username')
+
+        db.execute("SELECT firstname, lastname FROM students WHERE username = %s", (username,))
+        actual_firstname, actual_lastname = db.fetchone()
+
+        if (confirm_firstname != actual_firstname or confirm_lastname != actual_lastname or 
+            confirm_username != username):
+            flash("Confirmation details do not match.", "error")
+            return redirect(url_for('Student_Account'))
+
+        try:
+            db.execute("DELETE FROM students WHERE username = %s", (username,))
+            Connect.commit()
+            session.pop('username', None)
+        except Exception as e:
+            flash(f"An error occurred: {e}", "error")
+
+        return redirect(url_for('Home'))
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
+
+
+
+
 if __name__ == "__main__":
     app.run(debug = True) 

@@ -145,6 +145,87 @@ input[readonly] {
     cursor: not-allowed;
 }
 
+
+.flash-messages {
+    position: fixed;
+    top: 20px; 
+    left: 50%;
+    transform: translateX(-50%);  
+    width: 40%; 
+    z-index: 1000;  
+    padding: 10px;
+    text-align: center;
+    font-size: 15px; 
+}
+
+ 
+@media (max-width: 768px) {
+    .flash-messages {
+        width: 65%;  
+    }
+}
+
+ 
+@media (max-width: 480px) {
+    .flash-messages {
+        width: 90%;  
+        font-size: 16px; 
+        padding: 10px; 
+    }
+}
+
+.flash-messages p {
+    margin: 0;
+    padding: 0;
+}
+
+.flash-messages p {
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+    font-weight: bold;
+}
+
+.error {
+    color: #f44336;
+    background-color: #fdecea;
+    border: 1px solid #f44336;
+}
+
+.success {
+    color: #4CAF50;
+    background-color: #e7f6e7;
+    border: 1px solid #4CAF50;
+}
+
+.additional-links {
+    margin-top: 1rem;
+    font-size: 0.9rem; 
+    text-align: center;
+}
+
+.additional-links a {
+    color: #0056b3;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+.additional-links a:hover {
+    text-decoration: underline;
+}
+
+.flash-messages {
+    margin-top: 1rem;
+}
+
+.flash-messages p {
+    padding: 1rem;
+    border-radius: 4px;
+    margin: 0.5rem 0;
+    font-weight: bold;
+}
+
+
 @media (max-width: 600px) {
     .container {
         padding: 10px;
