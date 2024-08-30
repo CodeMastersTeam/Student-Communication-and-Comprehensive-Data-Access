@@ -100,7 +100,7 @@ def locations(app):
             lastname = str(request.form["lastname"])
             age = request.form["age"]
             address = str(request.form["address"])
-            sex = sex = request.form.get("sex")
+            sex = request.form.get("sex")
             cellphone_number = str(request.form["cellphone_number"])
             Birth_date = str(request.form["Birth_date"])
             Birth_place = str(request.form["Birth_place"])
@@ -217,7 +217,7 @@ def locations(app):
     def update_student_info():
         if 'username' not in session:
             return redirect(url_for('Student_Login'))
-
+    
         username = session['username']
         firstname = request.form.get('firstname')
         middlename = request.form.get('middlename')
@@ -230,14 +230,14 @@ def locations(app):
         birth_place = request.form.get('Birth_place')
         Username = request.form.get("username")
         password = request.form.get("password")
-        profile_picture = None 
-
+        profile_picture = None
+    
         try:
-            if username == "" or firstname == "" or middlename == "" or lastname == "" or age == "" or sex == "" or address == "" or \
-                cellphone_number == "" or birth_date == "" or birth_place == "" or Username == "" or password == "" or profile_picture== "":
-                flash("Kompletoha tanan! Di pwede kulang! 😤😤😤", "Error")
+            if not all([username, firstname, middlename, lastname, age, sex, address, cellphone_number, birth_date, birth_place, Username, password]):
+                flash("Kompletoha tanan! Di pwede kulang!", "Error")
                 return redirect(url_for('Student_Account'))
-
+            
+            # Update student info
             db.execute("""
                 UPDATE students
                 SET firstname = %s, middlename = %s, lastname = %s, age = %s, sex = %s, address = %s, 
@@ -245,11 +245,13 @@ def locations(app):
                 WHERE username = %s
             """, (firstname, middlename, lastname, age, sex, address, cellphone_number, birth_date, birth_place, Username, password, username))
             Connect.commit()
-
+            session['username'] = Username  
+    
         except Exception as e:
             flash(f"An error occurred: {e}", "error")
-
+    
         return redirect(url_for('Student_Account'))
+
 
     @app.route("/delete_account", methods=["POST"])
     def delete_account():
@@ -277,12 +279,6 @@ def locations(app):
             flash(f"An error occurred: {e}", "error")
 
         return redirect(url_for('Home'))
-
-if __name__ == "__main__":
-    app.run(debug=True)
-
-
-
 
 
 

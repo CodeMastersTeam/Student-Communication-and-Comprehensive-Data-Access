@@ -1,0 +1,250 @@
+/* Body section */
+body{ 
+    background-color: aliceblue; 
+}
+
+/* All links inside the body section */
+body a{ 
+    text-decoration: none; /* Removes underline from all links */
+}
+
+/* <div class="navbar"> SECTION */
+.navbar{ 
+    display: flex; 
+    flex-wrap: wrap;  
+    justify-content: space-between;  
+    align-items: center; 
+    padding: 10px;  
+    background-color: #f0f0f0;  
+}
+
+/* <div class="navbar"> LINKS */
+.navbar a { 
+    text-decoration: none; 
+    color: rgb(34, 96, 230);  
+}
+
+/* login & Sign In */
+.loginsignoutlinks{ 
+    display: flex;  
+    flex-wrap: wrap; 
+    gap: 10px;  
+}
+
+/* login & Sign In LINKS */
+.loginsignoutlinks{ 
+    margin-left: 10px;  
+}
+
+/* Latest Updates section */
+.vvc{ 
+    display: flex;  
+    justify-content: center;  
+    text-align: center; 
+    margin-top: 5%;  
+    color: rgb(41, 127, 240);  
+    font-size: 200%;  
+}
+
+/* New AI model section */
+.theleft{ 
+    display: flex;  
+    justify-content: center;  
+    margin-top: 3%;  
+    margin-left: 6.5%;  
+}
+
+/* New AI model section */
+.theleft sup{ 
+    color: rgb(41, 127, 240);  
+    font-size: large;  
+}
+
+/* Safety in storage & New Challenges section */
+.theleft2{ 
+    margin-right: 10%; 
+    margin-left: 20%;  
+}
+
+/* Now available: & Artificial Intellegence Course section */
+.LEFT p{ 
+    color: blue;  
+    font-size: x-large;  
+    margin-left: 10%; 
+}
+
+/* video section */
+.ff{ 
+    height: 50%;  
+    width: 80%;  
+    display: flex;  
+    margin-left: 13%; 
+}
+
+/* <p class="ppa">Accelerate responsible, ... section */
+.ppa{ 
+    font-size: larger;  
+    color: rgb(22, 21, 124);  
+    margin-left: 15%;  
+}
+
+/* Try for free & View product details section */
+.xx{ 
+    display: flex;  
+    font-size: larger; 
+    margin-left: 20%; 
+    margin-bottom: 3%;  
+}
+
+/* Try for free button */
+.btn-blww{  
+    background-color: #095ece;  
+    color: white;  
+    padding: 1% 2%;  
+    border: none;  
+    cursor: pointer;  
+    padding-right: 5%;  
+}
+
+/* Hover effect for Try for free button */
+.btn-blww:hover{ 
+  scale: 1.1;  
+}
+
+/* View product details button */
+.btn-blw{ 
+  background-color: #095ece;  
+  padding: 1% 2%;  
+  color: white;  
+  cursor: pointer; 
+  border: none; 
+  padding-right: 5%;  
+}
+
+/* Hover effect for View product details button */
+.btn-blw:hover{ 
+  scale: 1.1;  
+}
+
+/* Browse our technology section */
+.Browseourtech{ 
+    text-align: center;  
+    color: rgb(22, 21, 124);  
+    margin-top: 15%;  
+    font-size: xx-large;  
+}
+
+/* <p class="fromourflagship">From our flagship products for enterprise... section */
+.fromourflagship{ 
+    text-align: center;  
+}
+
+/* <footer class="footerrz"> section */
+.footerrz{ 
+    background-color: rgb(200, 235, 235);  
+}
+
+/* Table Heads in footer section */
+.footerrz th { 
+    width: 40%;   
+    text-align: left;  
+    height: 60%; 
+}
+
+/* <table class="tablee"> section */
+.tablee{ 
+    margin-top: 10%; 
+    margin-bottom: 5%;  
+    margin-left: 10%; 
+}
+
+/* Links inside the table */
+.tablee a{ 
+    padding-bottom: 10%s; 
+}   
+
+/* Privacy Policy, Terms of Service & copyright section */
+.lastt{ 
+    display: flex;  
+    flex-direction: column; 
+    text-align: center; 
+}
+
+/* For screens that has maximum width of 375 pixels */
+@media only screen and (max-width: 375px) { 
+  /* <div class="navbar"> section */
+  .navbar { 
+    margin-right: 10px;  
+    position: relative;  
+    display: flex;  
+    flex-direction: column;  
+    align-items: center;  
+  }
+
+  /* Home.html, Foundational.html, Advanced Courses.html, Guides.html */
+  .c1a, .c11, .c12, .c13 { 
+    display: block;  
+    margin: 10px 0;  
+  }
+
+  /* video section */
+  .ff {  
+    right: auto; 
+    top: auto;  
+    height: auto; 
+  }
+  
+  /* For portfolios section */
+  .kko{ 
+    position: static;  
+    display: block;  
+    text-align: center;  
+    margin: 10px auto; 
+  }
+  /* New AI model section */
+  .theleft{  
+    position: static; 
+    display: block; 
+    text-align: center;  
+    margin: 10px auto;  
+  }
+  /* View product details button */
+  .btn-blw{ 
+    position: static;  
+    display: block;  
+    text-align: center;  
+    margin: 10px auto;  
+  }
+  /* Try for free button */
+  .btn-blww{  
+    position: static; 
+    display: block;  
+    text-align: center;  
+    margin: 10px auto;  
+  }
+  /* Try for free & View product details section */
+  .xx{ 
+    position: static;  
+    display: block;  
+    text-align: center; 
+    margin: 10px auto;  
+  }
+ 
+  /* Privacy Policy, Terms of Service & copyright section */
+  .lastt{ 
+    position: static;  
+    display: block; 
+    text-align: center;  
+    margin: 10px auto;  
+  }
+
+  /* <table class="tablee"> section */
+  .tablee { 
+    width: 90%;  
+    left: 5%;  
+    position: static; 
+    display: block;  
+    text-align: center;  
+    margin: 10px auto;  
+  }
+}

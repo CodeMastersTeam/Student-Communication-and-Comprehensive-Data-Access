@@ -74,3 +74,4 @@ def Student_Profiles(username):
 
     return first_name, last_name, year, course
 
+ 

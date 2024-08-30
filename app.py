@@ -80,7 +80,10 @@ def Direct_links(app):
     @app.route("/Student_Grades")
     def Student_Grades():
         username = session["username"]
-        return render_template("Student_Grades.html")
+        if username == None:
+            return redirect(url_for("Student_logout"))
+        else:
+            return render_template("Student_Grades.html")
     
     @app.route("/Student_Schedule")
     def Student_Schedule():
@@ -92,8 +95,62 @@ def Direct_links(app):
         Username = session["username"]
         return render_template("Student_Settings.html")
     
+    @app.route("/FreeCourse")
+    def FreeCourse():
+        return render_template("HomeFrontend.html")
 
+    @app.route("/Machine_Learning")
+    def Machine_Learning():
+        return render_template("HomeFrontend.html")
+
+    @app.route("/Foundational")
+    def Foundational():
+        return render_template("Foundational.html")
+
+    @app.route("/AdvancedCourses")
+    def AdvancedCourses():
+        return render_template("Advanced Courses.html")
+
+    @app.route("/Guides")
+    def Guides():
+        return render_template("Guides.html")
+
+    @app.route("/Programmers")
+    def Programmers():
+        return render_template("Programmers.html")
+
+    @app.route("/intro_ML")
+    def intro_ML():
+        return render_template("Introduction_to_machine_learning.html")
     
+    @app.route("/Machine_Learning_Crash_Course")
+    def ml():
+        return render_template("Machine_Learning_Crash_Course.html")
+    
+    @app.route("/Supervised_Learning")
+    def Supervised_Learning():
+        return render_template("Supervised-Learning.html")
+    
+    @app.route("/norman_portfolio")
+    def norman_portfolio():
+        return render_template("norman-portfolio.html")
+    
+    @app.route("/Pami_Portfolio")
+    def Pami_Portfolio():
+        return render_template("Pami-Portfolio.html")
+    
+    @app.route("/PINAKAGWAPO")
+    def PINAKAGWAPO():
+        return render_template("Selwyn-Portfolio.html")
+    
+    @app.route("/Dolly")
+    def Dolly():
+        return render_template("Dolly Mae Mape - Portfolio.html")
+    
+    @app.route("/Mharby")
+    def Mharby():
+        return render_template("Mharby-Portfolio.html")
+
     @app.route('/upload_profile_pic', methods=['POST', "GET"])
     def upload_profile_pic():
         if request.method == 'POST':
@@ -131,7 +188,6 @@ def Direct_links(app):
     @app.route('/Student_Account')
     def Student_Account():
         username = session.get('username')
-        first_name, lastname, year, course = Student_Profiles(username)
         if not username:
             return redirect(url_for('Student_Login'))
     
@@ -139,8 +195,14 @@ def Direct_links(app):
         user = db.fetchone()
     
         profile_picture = user[0] if user and user[0] else None
-        
-        return render_template('Student_Account.html', profile_picture=profile_picture,  year = year, course = course)
+    
+        first_name, lastname, year, course = Student_Profiles(username)
+        if first_name is None:
+            flash("Error fetching student profile", "error")
+            return redirect(url_for('Student_Login'))
+    
+        return render_template('Student_Account.html', profile_picture=profile_picture, year=year, course=course)
+
     
     @app.route("/Chart", methods = ["POST"])
     def Chart():

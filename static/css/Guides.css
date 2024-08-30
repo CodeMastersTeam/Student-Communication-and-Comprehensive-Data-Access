@@ -1,0 +1,173 @@
+body{
+    background-color: aliceblue;
+    text-align: center;
+}
+body a{
+    text-decoration: none;
+}
+body a:hover{
+    color: rgb(226, 24, 40);
+}
+body button{
+    background-color: transparent;
+}
+body button:hover{
+    scale: 1.1;
+}
+.topmiddle{
+    display: flex;
+}
+.topmiddle-a{
+    text-decoration: none; 
+    color: rgb(34, 96, 230);
+    display: flex;
+}
+.topmiddle-h1{
+    font-family: Georgia, 'Times New Roman', Times, serif; 
+    color: rgb(34, 96, 230);
+    margin-left: 22%;
+    margin-top: 5%;
+    display: flex;
+}
+.firstt{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5%;
+    font-size: large;
+    color:rgb(34, 96, 230);
+}
+.firstt-p{
+    font-size: large; 
+    color:rgb(34, 96, 230); 
+}
+.a1{
+    margin-left: 5%;
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 20%;
+}
+.a2{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 20%;
+}
+.a3{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 20%;
+}
+.first3 img{
+    display: flex;
+    width: 100%;
+}
+.first3 a{
+    display: flex;
+}
+.first3{
+    display: flex;
+    justify-items: center;
+}
+.first3 button{
+    border: none;
+    align-items: center;
+}
+.a4{
+    display: flex;
+    flex-direction: column;
+    margin-left: 18%;
+    width: 30%;
+    height: 20%;
+}
+.a5{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 20%;
+}
+.fourtosix img{
+    display: flex;
+    width: 100%;
+    border-color: aliceblue;
+}
+.fourtosix a{
+    display: flex;
+}
+.fourtosix{
+    display: flex;
+    margin-top: 5%;
+}
+.fourtosix button{
+    border: none;
+    display: flex;
+    align-items: center;
+}
+.aa { /* For h1's in buttons*/
+    text-align: left;
+    color: blue;
+    cursor: pointer;
+}
+.nn{
+    color: white;
+    border: 1% solid black;
+    padding: 1%;
+    width: fit-content;
+    background-color: blue;
+    border-radius: 10%;
+}
+.p-a1{
+    text-align: center;
+    font-size: medium;
+    color: rgb(201, 31, 136);
+}
+.footerrz{
+    background-color: aqua;
+}
+.footerrz th {
+    width: 40%; 
+    text-align: left;
+    height: 60%;
+}
+.tablee{
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+.tablee a{
+    padding-bottom: 10%s;
+}
+@media only screen and (max-width: 820px){
+    body{
+    }
+    .topmiddle{
+        display: flex;
+        flex-direction: column;
+        font-size:x-small;
+    }
+    .topmiddle-h1{
+        text-align: center;
+    }
+    .firstt-p{
+        margin: 0 10%;
+        text-align: left;
+        font-size: small;
+    }
+    .first3{
+        display: flex;
+        margin: 5% 3%;
+    }
+    .first3 button, .fourtosix button{
+        background-color: transparent;
+    }
+    .aa{
+        font-size: smaller;
+    }
+    .p-a1, .nn{
+        font-size: x-small;
+        text-align: left;
+    }
+    .footerrz{
+        font-size: xx-small;
+    }
+}

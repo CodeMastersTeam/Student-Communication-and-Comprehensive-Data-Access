@@ -1,0 +1,436 @@
+body{
+    background-color: aliceblue;
+    font-family:sans-serif;
+    font-size: 100%;
+}
+body a{
+    text-decoration: none;
+    color: rgb(34, 96, 230);
+}
+body li{
+    color: rgb(21, 51, 221);
+}
+.c1a{
+    display: flex;
+    text-align: left;
+    color: rgb(34, 96, 230); 
+}
+.a1{
+    display: flex;
+    justify-content: center;
+    color: rgb(34, 96, 230);
+}
+.super1link{
+    text-decoration: none;
+    color: rgb(34, 96, 230);
+}
+.cbg{
+    text-align: center;
+}
+.lc{
+    display: flex;
+    margin-left: 10%;
+    margin-top: 10%;
+    font-weight: bolder;
+}
+.lc1{
+    font-size: larger;
+    display: flex;
+    flex-direction: column;
+    margin-left: 15%;
+    margin-top: 2%;
+}
+.h1a{
+    display: flex;
+    justify-content: center;
+}
+.h1a h1{
+    color: rgb(34, 96, 230);
+}
+.st{
+    display: flex;
+    justify-content: center;
+    margin-left: 12%;
+    margin-right: 10%;
+    font-size: larger;
+}
+.st2{
+    display: flex;
+    justify-content: center;
+    margin-left: 12%;
+    margin-right: 10%;
+    font-size: larger;
+}
+.st3{
+    display: flex;
+    justify-content: center;
+    margin-left: 12%;
+    margin-right: 10%;
+    font-size: larger;
+}
+.st4{
+    display: flex;
+    justify-content: center;
+    margin-left: 12%;
+    margin-right: 10%;
+    font-size: larger;
+}
+.st5{
+    display: flex;
+    justify-content: center;
+    margin-left: 12%;
+    margin-right: 10%;
+    font-size: larger;
+}
+.vid{
+    display: flex;
+    justify-content: center;
+}
+.vid video{
+    border: 1px solid blue;
+    display: flex;
+    height: fit-content;
+    width: 70%;
+    margin-top: 5%;
+}
+.types{
+    display: flex;
+    justify-content: center;
+    margin-top: 15%;
+    color: rgb(34, 96, 230);
+}
+.below-types{
+    display: flex;
+    justify-content: center;
+    font-size: larger;
+}
+.supervised-generative{
+    display: flex;
+    margin-left: 12%;
+    margin-top: 3%;
+    flex-direction: column;
+    font-size: larger;
+}
+.supervised{
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+    color: rgb(34, 96, 230);
+}
+.super1{
+    display: flex;
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: larger;
+}
+.super2{
+    display: flex;
+    margin-left: 10%;
+    font-size: larger;
+}
+.Regression{
+    display: flex;
+    margin-left: 13%;
+    margin-top: 10%;
+    color: rgb(34, 96, 230);
+}
+.adjust-1{
+    color: rgb(230, 44, 60);
+}
+.reression1-1{
+    display: flex;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.regexplain{
+    font-size: larger;
+}
+.regexplain a{
+    text-decoration: none;
+    color: rgb(34, 96, 230);
+}
+.abovetable{
+    display: flex;
+    margin-left: 10%;
+    font-size: larger;
+}
+.tabl2-2{
+    margin-top: 10%;
+    margin-bottom: 5%;
+    text-align: center;
+    margin-left: 10%;
+}
+.classification{
+    display: flex;
+    margin-left: 13%;
+    color: rgb(34, 96, 230);
+}
+.spr1-1{
+    display: flex;
+    margin-left: 10%;
+    margin-right: 12%;
+    font-size: larger;
+}
+.spr2-2{
+    display: flex;
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: larger;
+}
+.vidd2{
+    display: flex;
+    justify-content: center;
+}
+.vidd2 video{
+    border: 1px solid blue;
+    display: flex;
+    height: fit-content;
+    width: 70%;
+    margin-top: 5%;
+}
+.Unsupervised{
+    display: flex;
+    margin-top: 15%;
+    justify-content: center;
+    color: rgb(34, 96, 230);
+}
+.suppr11{
+    display: flex;
+    margin-top: 5%;
+    margin-left: 10%;
+    font-size: larger;
+}
+.suprr1 a{
+    text-decoration: none;
+    color: rgb(34, 96, 230);
+}
+.suprr22{
+    display: flex;
+    margin-left: 10%;
+    font-size: larger;
+}
+.suprr2 a{
+    text-decoration: none;
+    color: rgb(34, 96, 230);
+}
+.first2{
+    display: flex;
+    justify-content: center;
+}
+.first2 img{
+    width: 30%;
+    height: fit-content;
+}
+.cluspic1{
+    margin-right: 7%;
+}
+.below-pic1{
+    margin-left: 10%;
+}
+.first2-1{
+    display: flex;
+    margin-left: 13%;
+}
+.last2{
+    display: flex;
+    justify-content: center;
+}
+.last2 img{
+    width: 30%;
+    height: fit-content;
+}
+.lastpic1{
+    margin-right: 7%;
+}
+.last2-2{
+    display: flex;
+    margin-left: 13%;
+}
+.below-pic4{
+    margin-left: 5%;
+}
+
+.clusexplain{
+    display: flex;
+    margin-left: 10%;
+    margin-right: 5%;
+    margin-top: 5%;
+    font-size: larger;
+}
+.Reinforcementlrng{
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+    color: rgb(34, 96, 230);
+}
+.rainrain{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    margin-right: 5%;
+}
+.GenerativeAI{
+    display: flex;
+    justify-content: center;
+    color: rgb(34, 96, 230);
+}
+.genExplain{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.listtss{
+    display: flex;
+    margin-left: 10%;
+}
+.listtss li{
+    color: rgb(21, 170, 145);
+    list-style-type: decimal;
+}
+.belowtablee{
+    display: flex;
+    margin-left: 10%;
+    margin-top: 5%;
+    font-size: 100%;
+}
+.M-O-E{
+    display: flex;
+    margin-top: 5%;
+    color: rgb(34, 96, 230);
+    margin-left: 10%;
+}
+.s12{
+    margin-left: 17%;
+}
+.s13{
+    margin-left: 33%;
+}
+.s1-1{
+    display: flex;
+}
+.secondd{
+    display: flex;
+    margin-left: 10%;
+}
+.s1-2{
+    margin-left: 12%;
+    display: flex;
+}
+.s1-3{
+    margin-left: 14%;
+    margin-right: 1%;
+    display: flex;
+    flex-direction: column;
+}
+.third{
+    display: flex;
+    margin-left: 10%;
+}
+.Text-to-image1{
+    display: flex;
+    margin-left: 10%;
+}
+.Text-to-image2{
+    left: 60%;
+    position: absolute;
+    top: 457.3rem;
+    height: 150px;
+    width: 160px;
+}
+.seperate{
+    display: flex;
+    flex-direction: column;
+}
+.seperate img{
+    display: flex;
+    margin-left: 38%;
+    margin-top: 3%;
+    width: 30%;
+    height: fit-content;
+}
+.Text-to-image-source{
+    margin-left: 38%;
+}
+.Text-to-image-source a{
+    text-decoration: none;
+}
+.fourth{
+    display: flex;
+    margin-left: 10%;
+}
+.Text-to-video1{
+    margin-left: 10%;
+}
+.inside{
+    display: flex;
+    flex-direction: column;
+    margin-left: 7.5%;
+    margin-top: 2%;
+}
+.imagettext{
+    display: flex;
+    margin-left: 10%;
+}
+.imagettext img{
+    margin-top: 1.5%;
+    margin-left: 10%;
+}
+.Image-to-text2{
+    margin-left: 25%;
+    margin-top: 6%;
+}
+.generativexpln{
+    display: flex;
+    margin-left: 5%;
+    margin-right: 10%;
+    margin-top: 10%;
+}
+.generativelst{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10%;
+}
+.Produce{
+    display: flex;
+    margin-left: 5%;
+    margin-right: 10%;
+}
+.Generativeexp{
+    display: flex;
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-right: 10%;  
+}
+.next-previus{
+    display: flex;
+    margin-left: 5%;
+    margin-top: 5%;
+    text-align: center;
+}
+.next-link{
+    margin-left: 60%;
+}
+.footerrz{
+    background-color: aqua;
+}
+.footerrz th {
+    width: 40%; 
+    text-align: left;
+    height: 60%;
+}
+.tablee{
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+.tablee a{
+    padding-bottom: 10%s;
+}   
+.lastt{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+@media only screen and(max-width:00 /*Check and resolution settings bwas!!*/){
+    
+}
