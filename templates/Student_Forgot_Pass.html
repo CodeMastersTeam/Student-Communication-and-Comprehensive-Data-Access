@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/Student_Forgot_Pass.css">
+    <title>Recover Password</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="form-container">
+            <form action="/Student_RecoverPass" method="post" class="recover-form">
+                <h1>Forgot Password?</h1>
+                <p>Enter your username and we'll help you recover your password.</p>
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="Enter your username" required>
+                <button type="submit">Recover Password</button>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <div class="navigation-buttons">
+                <a href="/StudentsLogin" class="link">Back to log in</a>
+                <a href="/Inputs" class="link">Create account</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/javascript/Student_Forgot_Pass.js"></script>
+    <script src="/static/javascript"></script>
+</body>
+</html>

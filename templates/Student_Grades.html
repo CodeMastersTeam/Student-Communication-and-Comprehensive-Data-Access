@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/static/css/Student_Home_Page.css">
     <link rel="stylesheet" href="/static/css/Student_Grades.css">
     <title>Grades</title>
+    <link rel="stylesheet" href="/static/css/student_grades.css">
 </head>
 <body>
     <header class="top-nav">
@@ -14,10 +15,64 @@
             <a id="Progress" href="/Student_Progress">Progress</a>
             <a id="Grades" href="/Student_Grades">Grades</a>
             <a id="Schedule" href="/Student_Schedule">Schedule</a>
-            <a id="Account" href="Student_Account">Account</a>
+            <a id="Account" href="/View_Student_Infos">Account</a>
             <a href="/Student_Settings">Settings</a>
         </div>
     </header>
+    <br><br><br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>Subject Code</th>
+                <th>Subject Name</th>
+                <th>Prelim</th>
+                <th>Midterm</th>
+                <th>Finals</th>
+                <th>Teacher</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subjects in Student_Subjects1 %}
+            <tr>
+                <td>{{ subjects[3] }}</td> 
+                <td>{{ subjects[2] }}</td>
+                <td>{{ subjects[4] }}</td>
+                <td>{{ subjects[5] }}</td>
+                <td>{{ subjects[6] }}</td>
+                <td>{{ subjects[7] }}</td>
+                <td><button class="message-btn" onclick="window.location.href='/message_teacher/{{ subjects[7] }}'">Message</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>        
+    </table>
+    <br><br><br><br>
+    <table>
+        <thead>
+            <tr>
+                <th>Subject Code</th>
+                <th>Subject Name</th>
+                <th>Prelim</th>
+                <th>Midterm</th>
+                <th>Finals</th>
+                <th>Teacher</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in Student_Subjects2 %}
+            <tr>
+                <td>{{ subject[3] }}</td> 
+                <td>{{ subject[2] }}</td>
+                <td>{{ subject[4] }}</td>
+                <td>{{ subject[5] }}</td>
+                <td>{{ subject[6] }}</td>
+                <td>{{ subject[7] }}</td>
+                <td><button class="message-btn" onclick="window.location.href='/message_teacher/{{ subject[7] }}'">Message</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
     <script src="/static/javascript/Student_Home_Page.js"></script>
     <script src="/static/javascript/Student_Grades.js"></script>

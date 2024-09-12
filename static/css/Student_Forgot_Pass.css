@@ -1,0 +1,128 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background: url('/static/img/ivan-aleksic-PDRFeeDniCk-unsplash.jpg') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8); 
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    max-width: 27%;
+    width: 100%;
+}
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recover-form h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.recover-form p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.recover-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.recover-form input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.recover-form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #6B73FF;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.recover-form button:hover {
+    background-color: #000DFF;
+}
+
+.flash-messages {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #ffebcc;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    border-radius: 8px;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    width: 100%;
+}
+
+.navigation-buttons .link {
+    width: 48%;
+    padding: 12px 0;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    background-color: #6B73FF;
+    color: white;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navigation-buttons .link:hover {
+    background-color: #000DFF;
+    transform: translateY(-3px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+    }
+
+    .navigation-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navigation-buttons .link {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}

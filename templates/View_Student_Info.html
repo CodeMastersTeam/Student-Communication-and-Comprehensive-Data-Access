@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/View_Student_Info.css">
+    <link rel="stylesheet" href="/static/css/Student_Home_Page.css">
+    <title>Student Information</title>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-container">
+            <a id="Dashboard" href="/Student_Home">Dashboard</a>
+            <a id="Progress" href="/Student_Progress">Progress</a>
+            <a id="Grades" href="/Student_Grades">Grades</a>
+            <a id="Schedule" href="/Student_Schedule">Schedule</a>
+            <a id="Account" href="/View_Student_Infos">Account</a>
+            <a href="/FreeCourse" target="_blank">More Courses</a>
+            <a href="/Student_Settings">Settings</a>&nbsp;
+        </div>
+    </header>
+
+    <div class="infos">
+        <br><br><br>
+        <center> 
+            <h1>Personal Information</h1>
+
+            <form method="POST" action="{{ url_for('upload_profile_picture') }}" enctype="multipart/form-data">
+                <input type="file" name="profile_picture" accept="image/*">
+                <button type="submit">Upload Profile Picture</button>
+            </form>
+            {% if profile_picture %}
+                <img src="{{ url_for('static', filename='uploads/' ~ profile_picture) }}" alt="Profile Picture">
+            {% else %}
+                <img src="{{ url_for('static', filename='img/Dancing_woman.gif') }}" alt="">
+            {% endif %}
+       
+            
+            <div class="editable-section">
+                <p>
+                    Firstname: 
+                    <span class="editable-field" id="firstname">{{ firstname }}</span>
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('firstname')">
+                </p>
+                <form class="edit-form" id="edit-firstname-form" method="POST" action="/update_student_info">
+                    <input type="hidden" name="field_name" value="firstname">
+                    <input type="text" name="new_value" value="{{ firstname }}">
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="cancelEdit('edit-firstname-form')">Cancel</button>
+                </form>
+                
+                
+            </div>
+
+            <div class="editable-section">
+                <p>
+                    Middlename: 
+                    <span class="editable-field" id="middlename">{{ middlename }}</span>
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('middlename')">
+                </p>
+                <form class="edit-form" id="edit-middlename-form" method="POST" action="/update_student_info">
+                    <input type="hidden" name="field_name" value="middlename">
+                    <input type="text" name="new_value" value="{{ middlename }}">
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="cancelEdit('edit-middlename-form')">Cancel</button>
+                </form>
+            </div>
+
+            <div class="editable-section">
+                <p>
+                    Lastname: 
+                    <span class="editable-field" id="lastname">{{ lastname }}</span>
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('lastname')">
+                </p>
+                <form class="edit-form" id="edit-lastname-form" method="POST" action="/update_student_info">
+                    <input type="hidden" name="field_name" value="lastname">
+                    <input type="text" name="new_value" value="{{ lastname }}">
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="cancelEdit('edit-lastname-form')">Cancel</button>
+                </form>
+            </div>
+
+            <div class="editable-section">
+                <p>
+                    Age: 
+                    <span class="editable-field" id="age">{{ age }}</span>
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('age')">
+                </p>
+                <form class="edit-form" id="edit-age-form" method="POST" action="/update_student_info">
+                    <input type="hidden" name="field_name" value="age">
+                    <input type="number" name="new_value" value="{{ age }}">
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="cancelEdit('edit-age-form')">Cancel</button>
+                </form>
+            </div>
+
+            <div class="editable-section">
+                <p>
+                    Address: 
+                    <span class="editable-field" id="address">{{ address }}</span>
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('address')">
+                </p>
+                <form class="edit-form" id="edit-address-form" method="POST" action="/update_student_info">
+                    <input type="hidden" name="field_name" value="address">
+                    <input type="text" name="new_value" value="{{ address }}">
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="cancelEdit('edit-address-form')">Cancel</button>
+                </form>
+            </div>
+
+            <div class="editable-section">
+                <p>
+                    Sex: 
+                    <span class="editable-field" id="sex">{{ sex }}</span>
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('sex')">
+                </p>
+                <form class="edit-form" id="edit-sex-form" method="POST" action="/update_student_info">
+                    <input type="hidden" name="field_name" value="sex">
+                    <select name="new_value">
+                        <option value="Male" {{ 'selected' if sex == 'Male' }}>Male</option>
+                        <option value="Female" {{ 'selected' if sex == 'Female' }}>Female</option>
+                        <option value="Other" {{ 'selected' if sex == 'Other' }}>Other</option>
+                    </select>
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="cancelEdit('edit-sex-form')">Cancel</button>
+                </form>
+            </div>
+
+            <div class="editable-section">
+                <p>
+                    Cellphone Number: 
+                    <span class="editable-field" id="cellphone_number">{{ cellphone_number }}</span>
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('cellphone_number')">
+                </p>
+                <form class="edit-form" id="edit-cellphone_number-form" method="POST" action="/update_student_info">
+                    <input type="hidden" name="field_name" value="cellphone_number">
+                    <input type="number" name="new_value" value="{{ cellphone_number }}">
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="cancelEdit('edit-cellphone_number-form')">Cancel</button>
+                </form>
+            </div>
+
+            <div class="editable-section">
+                <p>
+                    Birth Date: 
+                    <span class="editable-field" id="birth_date">{{ birth_date }}</span>
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('birth_date')">
+                </p>
+                <form class="edit-form" id="edit-birth_date-form" method="POST" action="/update_student_info">
+                    <input type="hidden" name="field_name" value="birth_date">
+                    <input type="date" name="new_value" value="{{ birth_date }}">
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="cancelEdit('edit-birth_date-form')">Cancel</button>
+                </form>
+            </div>
+
+            <div class="editable-section">
+                <p>
+                    Birth Place: 
+                    <span class="editable-field" id="birth_place">{{ birth_place }}</span>
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('birth_place')">
+                </p>
+                <form class="edit-form" id="edit-birth_place-form" method="POST" action="/update_student_info">
+                    <input type="hidden" name="field_name" value="birth_place">
+                    <input type="text" name="new_value" value="{{ birth_place }}">
+                    <button type="submit">Save</button>
+                    <button type="button" onclick="cancelEdit('edit-birth_place-form')">Cancel</button>
+                </form>
+            </div>
+        </center>
+    </div>
+
+    
+
+    <script src="/static/javascript/View_Student_Info.js"></script>
+    <script src="/static/javascript/Student_Home_Page.js"></script>
+</body>
+</html>

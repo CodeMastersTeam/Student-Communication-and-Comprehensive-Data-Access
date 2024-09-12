@@ -7,37 +7,40 @@
     <title>Teacher Login</title>
 </head>
 <body>
-    <header>
-        <a href="/" class="home-link">Home</a>
-    </header>
-    
-    <main>
-        <form action="/TeacherLogin" method="post" class="login-form">
-            <label for="LoginUsername">Username</label>
-            <input type="text" name="LoginUsername" id="LoginUsername">
-            
-            <label for="LoginPassword">Password</label>
-            <input name="LoginPassword" type="password" id="LoginPassword">
+    <div class="container">
+        <header class="header">
+            <a href="/" class="home-link">Home</a>
+            <h1>Teacher Log In</h1>
+        </header>
 
-            <button type="submit">Log in</button>
+        <main>
+            <form action="/TeacherLogin" method="post" class="login-form">
+                <label for="LoginUsername">Username or Email</label>
+                <input type="text" name="LoginUsername" id="LoginUsername" placeholder="Enter your username or email" required>
+                
+                <label for="LoginPassword">Password</label>
+                <input name="LoginPassword" type="password" id="LoginPassword" placeholder="Enter your password" required>
+
+                <button type="submit">Log In</button>
+            </form>
+
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
 
             <div class="additional-links">
-                <a href="/TeacherInputs">Create an Account</a>
-                <a href="/Forgot_Pass">Forgot Password?</a>
+                <a href="/TeacherInputs" class="link">Create an account</a>
+                <a href="/Forgot_Pass" class="link">Forgot password?</a>
             </div>
-        </form>
-        
-        {% with messages = get_flashed_messages(with_categories=True) %}
-        {% if messages %}
-            <div class="flash-messages">
-                {% for category, message in messages %}
-                    <p class="{{ category }}">{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-        {% endwith %}
-    </main>
+        </main>
+    </div>
 
-    <script src="/static/javascript/ForTeachersLogin.js"></script>
+    <script src="/static/javascript/ForStudentLogin.js"></script>
 </body>
 </html>

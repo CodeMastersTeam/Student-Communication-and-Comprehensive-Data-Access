@@ -3,17 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Home Page</title>
+    <title>Teacher's Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-nav {
+            background-color: #2c3e50;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .top-nav a:hover {
+            background-color: #34495e;
+        }
+
+        .top-nav a.active {
+            background-color: #e74c3c;
+        }
+
+        .top-nav-right {
+            float: right;
+        }
+
+        /* Responsive for small screens */
+        @media screen and (max-width: 600px) {
+            .top-nav a, .top-nav-right {
+                float: none;
+                display: block;
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body>
-    
-    <p>user: {{ session["username"] }}</p>
-    <h1>Teacher_Home_Page</h1>
-    
-    <a href="/logout">Log out</a>
-    <a href="/updatepass">update password</a>
 
+    <header class="top-nav">
+        <a href="/Teacher_Dashboard" class="active">Dashboard</a>
+        <a href="/Teacher_Classes">Classes</a>
+        <a href="/Teacher_Gradebook">Gradebook</a>
+        <a href="/Teacher_Schedule">Schedule</a>
+        <a href="/Teacher_Messages">Messages</a>
+        <a href="/Teacher_Resources">Resources</a>
 
+        <div class="top-nav-right">
+            <a href="/Teacher_Settings">Settings</a>
+            <a href="/Teacher_Logout">Logout</a>
+        </div>
+    </header>
+
+    <center><br><br><br><br><br><br>
+        <form action="/Teachers_Show_Student_Grades" method="post">
+            <button type="submit">View Grade</button>
+        </form>
+        {{ X }}
+        <form action="/Teacher_Update_Student_Grades" method="post">
+            <br><br><br><br>
+            <input name="student_id" type="text" placeholder="student_id"><br>
+            <input name="subject_id" type="text" placeholder="subject_id"><br>
+            <input name="grade" type="text" placeholder="grade"><br>
+            <input name="semester_id" type="text" placeholder="semester_id"><br>
+            <input name="year_id," type="text" placeholder="year_id"><br>
+            <input type="text" name="assessment_period" placeholder="assessment_period">
+            <button type="submit">Submit</button>
+        </form> 
+    </center>
+    
 
 </body>
 </html>

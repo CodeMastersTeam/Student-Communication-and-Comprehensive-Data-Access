@@ -1,0 +1,9 @@
+body{
+    color: blue;
+}
+body a{
+    text-decoration: none;
+}
+body a :hover{
+    color: aqua;
+}

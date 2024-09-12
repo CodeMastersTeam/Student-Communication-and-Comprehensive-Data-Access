@@ -7,38 +7,41 @@
     <title>Student Login</title>
 </head>
 <body>
-    <header>
-        <a href="/" class="home-link">Home</a>
-        <h1>Student Login</h1>
-    </header>
+    <div class="container">
+        <header class="header">
+            <a href="/" class="home-link">Home</a>
+            <h1>Student Log In</h1>
+        </header>
 
-    <main>
-        <form action="/StudentsLogin" method="post" class="login-form">
-            <label for="LoginUsername">Username or Email</label><br>
-            <input type="text" name="LoginUsername" id="LoginUsername" required><br>
-            
-            <label for="LoginPassword">Password</label><br>
-            <input name="LoginPassword" type="password" id="LoginPassword" required>
+        <main>
+            <form action="/StudentsLogin" method="post" class="login-form">
+                <label for="LoginUsername">Username or Email</label>
+                <input type="text" name="LoginUsername" id="LoginUsername" placeholder="Enter your username or email" required>
+                
+                <label for="LoginPassword">Password</label>
+                <input name="LoginPassword" type="password" id="LoginPassword" placeholder="Enter your password" required>
 
-            <button type="submit">Log In</button>
-        </form>
+                <button type="submit">Log In</button>
+            </form>
 
-        <div class="flash-messages">
-            {% with messages = get_flashed_messages(with_categories=True) %}
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=True) %}
                 {% if messages %}
                     {% for category, message in messages %}
                         <p class="{{ category }}">{{ message }}</p>
                     {% endfor %}
                 {% endif %}
-            {% endwith %}
-        </div>
+                {% endwith %}
+            </div>
 
-        <div class="additional-links">
-            <a href="/StudentsRegister">Create an account</a>
-            <a href="">Forgot password?</a>
-        </div>
-    </main>
+            <div class="additional-links">
+                <a href="/StudentsRegister" class="link">Create an account</a>
+                <a href="/Student_Forgot_Pass" class="link">Forgot password?</a>
+            </div>
+        </main>
+    </div>
 
     <script src="/static/javascript/ForStudentLogin.js"></script>
 </body>
 </html>
+

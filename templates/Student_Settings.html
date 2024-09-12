@@ -14,32 +14,45 @@
             <a id="Progress" href="/Student_Progress">Progress</a>
             <a id="Grades" href="/Student_Grades">Grades</a>
             <a id="Schedule" href="/Student_Schedule">Schedule</a>
-            <a id="Account" href="/Student_Account">Account</a>
+            <a id="Account" href="/View_Student_Infos">Account</a>
             <a href="/Student_Settings">Settings</a>
         </div>
     </header>
-    
-    <div class="container">
-        <h1>Student Settings</h1>
+    <div class="settings-container">
+        <section>
+            <h3>Delete Account</h3>
+            <form method="POST" action="{{ url_for('delete_account') }}">
+                <div class="form-group">
+                    <label for="confirm_firstname">Confirm First Name:</label>
+                    <input type="text" id="confirm_firstname" name="confirm_firstname" placeholder="Enter your first name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm_lastname">Confirm Last Name:</label>
+                    <input type="text" id="confirm_lastname" name="confirm_lastname" placeholder="Enter your last name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm_username">Confirm Username:</label>
+                    <input type="text" id="confirm_username" name="confirm_username" placeholder="Enter your username">
+                </div>
 
-        <form method="POST" action="{{ url_for('Student_Settings') }}">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" value="{{ email }}">
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password:</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Enter your password">
+                </div>
+                
+                <p class="warning">
+                    Warning: Deleting your account is permanent and cannot be undone. All your data will be lost.
+                </p>
+                
+                <button type="submit" onclick="return confirmDelete()">Delete Account</button>
+            </form>
+        </section>
 
-            <label for="notification">Enable Notifications:</label>
-            <input type="checkbox" id="notification" name="notification" {% if notifications_enabled %}checked{% endif %}>
-
-
-            <button type="submit">Save Changes</button>
-        </form>
+        <a class="sample" href="{{ url_for('Student_logout') }}">Log out</a>
     </div>
-    <a href="{{ url_for('Student_logout') }}">Log out</a>
-    
-    <center>
-        <img class="imggg" src="/static/img/Dancing_woman.gif" alt="">
-    </center>
-
-    <script src="/static/javascript/Student_Home_Page.js"></script>
     <script src="/static/javascript/Student_Settings.js"></script>
+    <script src="/static/javascript/Student_Home_Page.js"></script>
 </body>
 </html>

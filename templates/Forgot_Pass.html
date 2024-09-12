@@ -3,25 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/ForgotPass.css">
     <title>Recover Password</title>
 </head>
 <body>
-    <form action="/TeacherRecoverPass" method="post">
-        <label for="username">Please enter your username</label>
-        <input type="text" name="username" id="username">
-        <button type="submit">Recover password</button>
-    </form>
-    {% with messages = get_flashed_messages(with_categories=True) %}
-    {% if messages %}
-        <div class="flash-messages">
-            {% for category, message in messages %}
-                <p class="{{ category }}">{{ message }}</p>
-            {% endfor %}
+    <div class="container">
+        <div class="form-container">
+            <form action="/TeacherRecoverPass" method="post" class="recover-form">
+                <h1>Forgot Password?</h1>
+                <p>Enter your username and we'll help you recover your password.</p>
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="Enter your username" required>
+                <button type="submit">Recover Password</button>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <p class="{{ category }}">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <div class="navigation-buttons">
+                <a href="/Login" class="link">Back to log in</a>
+                <a href="/TeacherInputs" class="link">Create account</a>
+            </div>
         </div>
-    {% endif %}
-    {% endwith %}
-    
-    <a href="/Login">Back to log in</a>
-    <a href="/TeacherInputs">Create account</a>
+    </div>
+
+    <script src="/static/javascript/Student_Forgot_Pass.js"></script>
 </body>
 </html>
