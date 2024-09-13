@@ -46,7 +46,8 @@ class Data:
 
         @self.app.route("/Teacher_Home_Page")
         def Teacher_Home_Page(): 
-            return render_template("Teacher_Home_Page.html") # Teacher Home Page
+            username = session["username"]
+            return render_template("Teacher_Home_Page.html")
 
         @self.app.route('/logout') # Log out
         def Student_logout():
@@ -99,10 +100,6 @@ class Data:
                 
                 Student_Subjects1 = fetch_student_grades(username, 1)
                 Student_Subjects2 = fetch_student_grades(username, 2)
-
-
-
-
 
                 return render_template("Student_Grades.html",  Student_Subjects1 = Student_Subjects1, 
                                                                 Student_Subjects2 = Student_Subjects2)
@@ -334,6 +331,42 @@ class Data:
             else:
                 flash("These credentials do not match our records.", "error")
                 return redirect(url_for("Teacher_login"))
+        
+
+        @self.app.route("/Teacher_Classes")
+        def Teacher_Classes():
+            username = session["username"]
+            return render_template("Teacher_Classes.html")
+        
+        @self.app.route("/Teacher_Gradebook")
+        def Teacher_Gradebook():
+            username = session["username"]
+            return render_template("/Teacher_Gradebook.html")
+        
+        @self.app.route("/Teacher_Schedule")
+        def Teacher_Schedule():
+            username = session["username"]
+            return render_template("/Teacher_Schedule.html")
+
+        @self.app.route("/Teacher_Messages")
+        def Teacher_Messages():
+            username = session["username"]
+            return render_template("/Teacher_Messages.html")
+        
+        @self.app.route("/Teacher_Resources")
+        def Teacher_Resources():
+            username = session["username"]
+            return render_template("/Teacher_Resources.html")
+        
+
+        @self.app.route("/Teacher_Settings")
+        def Teacher_Settings():
+            username = session["username"]
+            return render_template("/Teacher_Settings.html")
+
+
+
+
 
         @self.app.route("/updatepass",methods=["POST","GET"])
         def updatepass():
@@ -371,47 +404,6 @@ class Data:
                 flash("Email not found! Please create a new account instead", "error")
                 return redirect(url_for("Forgot_Pass"))
 
-
-        @self.app.route("/Teacher_Update_Student_Grades", methods = ["POST", "GET"])
-        def Teacher_Update_Student_Grades():
-            username = session["username"]
-            if not username:
-                return redirect(url_for("logout"))
-            else:
-                if request.method == "POST":
-                    student_id = request.form.get("student_id") 
-                    subject_id = request.form.get("subject_id")
-                    grade = request.form.get("grade")
-                    semester_id = request.form.get("semester_id")
-                    year_id = request.form.get("year_id")
-                    assessment_period = request.form.get("assessment_period")
-
-                    success = Update_Student_Grades(student_id, 
-                                                    subject_id, 
-                                                    grade, 
-                                                    semester_id, 
-                                                    year_id, 
-                                                    assessment_period)
-
-                    if not success:
-                        flash("Update grades failed!", "error")
-                        return redirect(url_for("Teacher_Home_Page"))
-                    else:
-                        flash("Updated successfully!", "success")
-                        return redirect(url_for("Teacher_Home_Page"))
-                    
-                else:
-                    flash("Updating failed!", "error")
-                    return redirect(url_for("Teacher_Home_Page"))
-
-
-
-                #TODO Teachers Sections Student_Grades
-        @self.app.route("/Teachers_Show_Student_Grades", methods = ["POST", "GET"])
-        def Teachers_Show_Student_Grades():
-            if request.method == "POST":
-                X = Teachers_Section_Display_Students_Grades()
-            return render_template("Teacher_Home_Page.html", X = X)
 
 
         @self.app.route("/delete_account", methods=["POST"])

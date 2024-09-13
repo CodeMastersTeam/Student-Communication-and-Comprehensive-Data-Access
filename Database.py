@@ -82,26 +82,6 @@ def Student_Profiles(username):
 
     return first_name, last_name, year, course
 
-def Teachers_Section_Display_Students_Grades():
-    q = ''' SELECT grade FROM student_grades'''
-    db.execute(q)
-    z = []
-    x = db.fetchall()
-    z.append(x)
-    for i in z:
-        return i
-
-                                                                                #prelim, midterm, finals
-def Update_Student_Grades(student_id, subject_id, grade, semester_id, year_id, assessment_period): 
-    q = ''' INSERT INTO student_grades(student_id, subject_id, grade, semester_id, year_id, assessment_period) 
-        VALUES (%s, %s, %s, %s, %s, %s)'''
-    
-    v = student_id, subject_id, grade, semester_id, year_id, assessment_period
-
-    db.execute(q, v)
-    Connect.commit()
-    return student_id, subject_id, grade, semester_id, year_id, assessment_period
-
 
 def fetch_student_grades(username, semester_id):
     Connect = mysql.connector.connect(
