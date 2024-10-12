@@ -4,12 +4,12 @@ from Database import *
 import os
 import time
 from werkzeug.utils import secure_filename
-
+ 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'jfif'}
 
 if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
+    os.makedirs(UPLOAD_FOLDER) 
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -552,16 +552,6 @@ class Data:
             else:
                 flash("Email not found! Please create a new account instead", "error")
                 return redirect(url_for("Student_Forgot_Pass"))
-
-
-        
-
-
-
-
-
-
-
 
 
     def run(self):

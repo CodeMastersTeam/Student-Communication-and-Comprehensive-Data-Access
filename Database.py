@@ -144,5 +144,3 @@ def Teacher_Sections_View_Students():
     a.append(students)
     for i in a:
         print(i)
-
-
