@@ -194,3 +194,7 @@ def Student_name(id):
         student_names = f'{i[0]} {i[1]}'
         return student_names
     
+def Student_profile_picture(username):
+    q = '''SELECT profile_picture FROM students WHERE username = %s'''
+    db.execute(q, (username, ))
+    return db.fetchone()[0]

@@ -24,23 +24,22 @@
         <br><br><br>
         <center> 
             <h1>Personal Information</h1>
-
+            {% if profile_picture %}
+                <img src="{{ url_for('static', filename='uploads/' ~ profile_picture) }}" alt="Profile Picture">
+            {% else %}
+                <img class="Image_Profile" src="/static/img/clustering-02.png" alt="Profile Picture">
+            {% endif %}
             <form method="POST" action="{{ url_for('upload_profile_picture') }}" enctype="multipart/form-data">
                 <input type="file" name="profile_picture" accept="image/*">
                 <button type="submit">Upload Profile Picture</button>
             </form>
-            {% if profile_picture %}
-                <img src="{{ url_for('static', filename='uploads/' ~ profile_picture) }}" alt="Profile Picture">
-            {% else %}
-                <img src="{{ url_for('static', filename='img/Dancing_woman.gif') }}" alt="">
-            {% endif %}
-
             <form action="/camera" method="post">
                 <button value="Camera" name="Camera" type="submit">Take a photo instead</button>
-                {% if img %}
-                <img src="{{ url_for('static', filename='New Uploads/' ~ file_name) }}" alt="Profile Picture">
-                {% endif %}
             </form>
+            
+
+
+
        
             
             <div class="editable-section">

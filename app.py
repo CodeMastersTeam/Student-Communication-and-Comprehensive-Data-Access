@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-import matplotlib.pyplot as plt#
-#import plotly.express as px
+import matplotlib.pyplot as plt
 from Database import *
 import os, random, cv2
 import time
 from werkzeug.utils import secure_filename
- 
+from ultralytics import YOLO
+
+model = YOLO('yolo11n.pt')
+
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'jfif'}
 
@@ -458,10 +460,12 @@ class Data:
                 (student_id, firstname, middlename, lastname, age, address, sex, 
                  cellphone_number, birth_date, birth_place, username, password, 
                  profile_picture, year, course_name) = student_info
+                profile_picture = Student_profile_picture(username)
             else:
                 firstname = middlename = lastname = age = address = sex = \
                 cellphone_number = birth_date = birth_place = username = password = \
                 profile_picture = year = course_name = None
+                profile_picture = Student_profile_picture(username)
 
             return render_template('View_Student_Info.html',    
                                    firstname=firstname,
@@ -492,41 +496,47 @@ class Data:
 
             Connect.commit()
 
-            flash(f"{field_name.capitalize()} updated successfully.")
+            flash(f"{field_name.capitalize()} updated successfully.", "success")
 
-            return redirect(url_for('view_student_infos'))
+            return render_template("View_Student_Info.html")
         
-        @self.app.route("/camera", methods = ['POST', 'GET']) #TODO
+        @self.app.route("/camera", methods=['POST', 'GET'])
         def camera():
-            username = session["username"]
-            cam = cv2.VideoCapture(0)
+            username = session.get("username")
+            cam = cv2.VideoCapture(1)
 
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 ret, frame = cam.read()
                 if not ret:
                     break
+
+                pred = model(frame)[0]
+                xx = pred.plot()
+                cv2.imshow("Camera", xx)
                 
-                
-                cv2.imshow("Gwapo ako", frame)
+                #cv2.imshow("Gwapo ako", frame)
 
                 if cv2.waitKey(1) & 0xFF == ord('s'):
-                    file_name = "static/New Uploads/" +str(random.randint(1, 10000)) + ".jpg" 
-                    cv2.imwrite(file_name, frame)
+                    profile_picture = "static/uploads/" + str(random.randint(1, 10000)) + ".jpg" 
+                    cv2.imwrite(profile_picture, frame)
 
-                    img = cv2.imread(file_name)
+                    img = cv2.imread(profile_picture)
                     cv2.imshow("New saved Image", img)
 
-                    username = session['username']
+                    profile_picture = profile_picture.split('/')[-1]
                     query = "UPDATE students SET profile_picture = %s WHERE username = %s"
-                    db.execute(query, (file_name, username))
+                    db.execute(query, (profile_picture, username))
                     Connect.commit()
-
-                    flash("Profile picture updated successfully!")
 
             cam.release()
             cv2.destroyAllWindows()
-            
-            return render_template("View_Student_Info.html")
+
+            q = '''SELECT profile_picture FROM students WHERE username = %s'''
+            db.execute(q, (username,))
+            profile_picture = db.fetchone()[0]
+
+            return render_template("Student_Home_Page.html", profile_picture=profile_picture)
+
 
 
         @self.app.route('/upload_profile_picture', methods=['POST'])
@@ -544,9 +554,9 @@ class Data:
                 db.execute(query, (filename, username))
                 Connect.commit()
 
-                flash("Profile picture updated successfully!")
+                flash("Profile picture updated successfully!", "success")
             else:
-                flash("Invalid file type. Please upload an image.")
+                flash("Invalid file type. Please upload an image.", "danger")
 
             return redirect(url_for('view_student_infos'))
 
