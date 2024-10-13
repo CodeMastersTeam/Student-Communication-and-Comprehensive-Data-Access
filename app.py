@@ -484,8 +484,8 @@ class Data:
         def update_student_info():
             username = session.get('username')
 
-            field_name = request.form['field_name']  
-            new_value = request.form['new_value'] 
+            field_name = request.form.get('field_name')  
+            new_value = request.form.get('new_value') 
 
             query = f"UPDATE students SET {field_name} = %s WHERE username = %s"
             db.execute(query, (new_value, username))
@@ -499,7 +499,7 @@ class Data:
         @self.app.route("/camera", methods = ['POST', 'GET']) #TODO
         def camera():
             username = session["username"]
-            cam = cv2.VideoCapture(1)
+            cam = cv2.VideoCapture(0)
 
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 ret, frame = cam.read()
@@ -510,7 +510,7 @@ class Data:
                 cv2.imshow("Gwapo ako", frame)
 
                 if cv2.waitKey(1) & 0xFF == ord('s'):
-                    file_name = "static/New Uploads/" + "Image " +str(random.randint(1, 10000)) + ".jpg" 
+                    file_name = "static/New Uploads/" +str(random.randint(1, 10000)) + ".jpg" 
                     cv2.imwrite(file_name, frame)
 
                     img = cv2.imread(file_name)
@@ -526,7 +526,7 @@ class Data:
             cam.release()
             cv2.destroyAllWindows()
             
-            return redirect(url_for("update_student_info"))
+            return render_template("View_Student_Info.html")
 
 
         @self.app.route('/upload_profile_picture', methods=['POST'])
