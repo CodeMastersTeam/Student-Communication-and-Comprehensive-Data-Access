@@ -1,8 +1,8 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 import matplotlib.pyplot as plt#
-import plotly.express as px
+#import plotly.express as px
 from Database import *
-import os
+import os, random, cv2
 import time
 from werkzeug.utils import secure_filename
  
@@ -480,7 +480,7 @@ class Data:
                                    course_name=course_name)
 
 
-        @self.app.route('/update_student_info', methods=['POST'])
+        @self.app.route('/update_student_info', methods=['POST', 'GET'])
         def update_student_info():
             username = session.get('username')
 
@@ -495,6 +495,38 @@ class Data:
             flash(f"{field_name.capitalize()} updated successfully.")
 
             return redirect(url_for('view_student_infos'))
+        
+        @self.app.route("/camera", methods = ['POST', 'GET']) #TODO
+        def camera():
+            username = session["username"]
+            cam = cv2.VideoCapture(1)
+
+            while cv2.waitKey(1) & 0xFF != ord('q'):
+                ret, frame = cam.read()
+                if not ret:
+                    break
+                
+                
+                cv2.imshow("Gwapo ako", frame)
+
+                if cv2.waitKey(1) & 0xFF == ord('s'):
+                    file_name = "static/New Uploads/" + "Image " +str(random.randint(1, 10000)) + ".jpg" 
+                    cv2.imwrite(file_name, frame)
+
+                    img = cv2.imread(file_name)
+                    cv2.imshow("New saved Image", img)
+
+                    username = session['username']
+                    query = "UPDATE students SET profile_picture = %s WHERE username = %s"
+                    db.execute(query, (file_name, username))
+                    Connect.commit()
+
+                    flash("Profile picture updated successfully!")
+
+            cam.release()
+            cv2.destroyAllWindows()
+            
+            return redirect(url_for("update_student_info"))
 
 
         @self.app.route('/upload_profile_picture', methods=['POST'])
