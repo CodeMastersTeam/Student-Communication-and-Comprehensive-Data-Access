@@ -1,4 +1,5 @@
 import mysql.connector 
+from mysql.connector import Error
 
 Connect = mysql.connector.connect(
     host = "localhost",
@@ -139,8 +140,57 @@ def Teacher_Sections_View_Students():
 
     q = '''  SELECT * FROM students where course_id = 1  '''
     db.execute(q)
-    a = []
-    students = db.fetchall()
-    a.append(students)
-    for i in a:
-        print(i)
+
+
+
+def get_teacher_name(teacher_id):
+    try:
+        query = "SELECT firstname AND lastname FROM teachers WHERE teacher_id = %s"
+        db.execute(query, (teacher_id,))
+        result = db.fetchone()
+        if result:
+            return result[0]  
+        return None
+    except Error as e:
+        print(f"Error: {e}")
+        return None
+
+def Insert_Text_In_Messenger(Teacher_ID, Student_ID, message_Text, Message_Date = None):
+    q = '''INSERT INTO messages(teacher_id, student_id, message_text, message_date)
+           VALUES
+           (%s, %s, %s, %s)'''
+    db.execute(q, (Teacher_ID, Student_ID, message_Text, Message_Date))
+    Connect.commit()
+
+def Recieve_Text_In_Messenger(Teacher_ID, Student_ID, message_Text = None, Message_Date = None):
+    q = '''SELECT message_text, message_date FROM messages WHERE teacher_id = %s AND student_id = %s'''
+    c = (Teacher_ID, Student_ID)
+    db.execute(q, c)
+    ans = db.fetchall()
+    return ans
+
+def Delete_Text_In_Messenger(Teacher_ID = None, Student_ID = None, message_Text = None, Message_Date = None):
+    q = '''DELETE FROM messages'''
+    c = db.execute(q)
+    if c:
+        pass
+        #print("\n\nMessages deleted successfully!\n\n")
+    else:pass
+        #print("\n\nMessage is Empty!\n\n")
+
+def Teacher_Name():
+    q = '''SELECT firstname, lastname FROM teachers WHERE teacher_id = 1'''
+    db.execute(q)
+    res = db.fetchall()
+    for i in res:
+        teacher_names = f'{i[0]} {i[1]}'
+        return teacher_names
+    
+def Student_name(id):
+    q = '''SELECT firstname, lastname FROM students WHERE student_id = %s'''
+    c = (id)
+    db.execute(q,c)
+    for i in db.fetchone():
+        student_names = f'{i[0]} {i[1]}'
+        return student_names
+    

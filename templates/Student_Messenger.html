@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/Student_Home_Page.css">
+    <link rel="stylesheet" href="/static/css/Student_Messenger.css">
+    <title>Students | Messages</title>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-container">
+            <a id="Dashboard" href="/Student_Home">Dashboard</a>
+            <a id="Progress" href="/Student_Progress">Progress</a>
+            <a id="Grades" href="/Student_Grades">Grades</a>
+            <a id="Schedule" href="/Student_Schedule">Schedule</a>
+            <a id="Account" href="/View_Student_Infos">Account</a>
+            <a href="/Student_Settings">Settings</a>
+        </div>
+    </header>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <img src="/static/img/Dancing_woman.gif" alt="Teacher Profile" class="profile-pic">
+            <span class="teacher-name">{{ teacher_name }}</span>
+            <form action="/Messenger" method="post" class="delete-form">
+                <button id="delete-btn" name="action" value="delete" type="submit">Delete Conversation</button>
+            </form>
+        </div>
+
+        <div class="chat-window">
+            {% if x %}
+                {% for message in x %}
+                    {% if user == teacher_name %}
+                        <div class="message-left">
+                            <p>{{ message[0] }}</p>
+                        </div>
+                    {% else %}
+                        <div class="message-right">
+                            <p>{{ message[0] }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <form action="/Messenger" method="post" class="message-input-container">
+            <div class="message-input-wrapper">
+                <input type="text" name="INpts" id="message-box" placeholder="Type your message..." maxlength="250">
+                <button id="send-btn" name="action" value="send" type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="/static/javascript/Student_Home_Page.js"></script>
+</body>
+</html>

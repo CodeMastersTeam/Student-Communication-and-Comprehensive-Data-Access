@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt#
+import plotly.express as px
 from Database import *
 import os
 import time
@@ -552,6 +553,48 @@ class Data:
             else:
                 flash("Email not found! Please create a new account instead", "error")
                 return redirect(url_for("Student_Forgot_Pass"))
+
+    
+
+        @self.app.route("/Messenger", methods=["POST", "GET"])
+        def Messenger():
+            if "username" not in session:
+                return redirect(url_for("Student_Home"))
+
+            user = session["username"] 
+            teacher_name = Teacher_Name()
+
+            user_id = 1
+            teacher_id = 1
+
+            chat_partner_id = teacher_id if user != teacher_name else user_id  
+
+            if request.method == "POST":
+                action = request.form.get("action")
+
+                if action == "send":
+                    message = request.form.get("INpts", "").strip()
+                    if not message:
+                        flash("Message cannot be empty", "error")
+                        return redirect(url_for("Messenger"))
+
+                    Insert_Text_In_Messenger(user_id, chat_partner_id, message)
+
+                elif action == "delete":
+                    Delete_Text_In_Messenger(user_id, chat_partner_id)
+
+            chat_history = Recieve_Text_In_Messenger(user_id, chat_partner_id)
+
+            return render_template("Student_Messenger.html", x=chat_history, teacher_name=teacher_name)
+
+        #TODO 
+        @self.app.route("/Progress")
+        def Progress():
+            pass
+
+
+
+
 
 
     def run(self):
