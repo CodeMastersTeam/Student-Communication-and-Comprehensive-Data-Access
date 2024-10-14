@@ -1,0 +1,104 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+header {
+    background-color: #0044cc; /* Deep blue for header */
+    color: #fff;
+    padding: 10px 0;
+}
+
+.logo {
+    display: inline-block;
+    font-size: 2em;
+    margin: 0;
+}
+
+nav {
+    float: right;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-left: 20px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero {
+    background-image: url('12.jpg'); /* Ensure this image is high quality */
+    background-size: cover;
+    background-position: center;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+}
+
+.hero-content {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.cta-button {
+    background-color: #ff4081; /* Pink for call to action */
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.info-section {
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+}
+
+.info-section h2 {
+    margin-top: 0;
+}
+
+.programs-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.programs-list article {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px;
+    flex: 1 1 30%; /* Flexbox for responsive grid */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #0044cc;
+    color: #fff;
+}

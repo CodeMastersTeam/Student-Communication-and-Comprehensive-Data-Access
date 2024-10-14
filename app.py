@@ -103,9 +103,59 @@ class Data:
                 
                 Student_Subjects1 = fetch_student_grades(username, 1)
                 Student_Subjects2 = fetch_student_grades(username, 2)
+                
+                department = {1:"BSIT", 2: "NURSING", 3: "Business Administration", 4: "EDUCATION", 5: "Secondary Education"}
+            
+                user = session["username"]
+                sample = student_year_course_id(user)
+                y, c = sample[0], sample[1]
+
+                teacher_name = Teacher_details(y, department[c])
+    
+                Teacher_Fullname = f'{teacher_name[2]} {teacher_name[3]}' 
 
                 return render_template("Student_Grades.html",  Student_Subjects1 = Student_Subjects1, 
-                                                                Student_Subjects2 = Student_Subjects2)
+                                                                Student_Subjects2 = Student_Subjects2, A = Teacher_Fullname)
+            
+        
+
+
+
+
+        #TODO  Continue here immediatly
+        @self.app.route("/Student_Schdule")
+        def Student_Schdule():
+            username = session.get("username")
+            if username == None:
+                return redirect(url_for("Student_logout"))
+            else:
+                
+                Student_Subjects1 = fetch_student_grades(username, 1)
+                Student_Subjects2 = fetch_student_grades(username, 2)
+                
+                department = {1:"BSIT", 2: "NURSING", 3: "Business Administration", 4: "EDUCATION", 5: "Secondary Education"}
+            
+                user = session["username"]
+                sample = student_year_course_id(user)
+                y, c = sample[0], sample[1]
+
+                teacher_name = Teacher_details(y, department[c])
+    
+                Teacher_Fullname = f'{teacher_name[2]} {teacher_name[3]}' 
+
+                return render_template("Student_Schedule.html",  Student_Subjects1 = Student_Subjects1, 
+                                                                Student_Subjects2 = Student_Subjects2, A = Teacher_Fullname)
+
+
+
+
+
+
+
+
+
+
+
 
         @self.app.route("/Student_Schedule")
         def Student_Schedule():
@@ -302,11 +352,22 @@ class Data:
 
         @self.app.route("/StudentsLogin", methods = ["POST"])
         def Students_Login():
+            Connect = mysql.connector.connect(
+            host = "localhost",
+            user = "root",
+            password = "",
+            database = "for_finals_2nd_year_project"
+        )
+
+            db = Connect.cursor()
+
             username = request.form["LoginUsername"]
             password = request.form["LoginPassword"]
             db.execute("SELECT * FROM students WHERE username = %s AND Password = %s", (username, password))
             user = db.fetchone()
-            #db.close()
+            
+            Connect.close()
+            db.close()
 
             if user:
                 session["username"] = username
@@ -404,7 +465,7 @@ class Data:
                 session["username"] = userrname
                 return redirect(url_for("updatepass"))
             else:
-                flash("Email not found! Please create a new account instead", "error")
+                flash("Username not found! Please create a new account instead", "error")
                 return redirect(url_for("Forgot_Pass"))
 
 
@@ -438,6 +499,13 @@ class Data:
 
         @self.app.route("/View_Student_Infos", methods=['GET'])
         def view_student_infos():
+            Connect = mysql.connector.connect(
+            host = "localhost",
+            user = "root",
+            password = "",
+            database = "for_finals_2nd_year_project"
+)              
+            db = Connect.cursor()
             username = session.get("username")
             if not username:
                 return redirect(url_for("Student_logout"))
@@ -455,6 +523,8 @@ class Data:
 
             db.execute(q, (username,))
             student_info = db.fetchone()
+            db.close()
+            Connect.close()
 
             if student_info:
                 (student_id, firstname, middlename, lastname, age, address, sex, 
@@ -502,6 +572,14 @@ class Data:
         
         @self.app.route("/camera", methods=['POST', 'GET'])
         def camera():
+            Connect = mysql.connector.connect(
+            host = "localhost",
+            user = "root",
+            password = "",
+            database = "for_finals_2nd_year_project"
+        )
+
+            db = Connect.cursor()
             username = session.get("username")
             cam = cv2.VideoCapture(1)
 
@@ -510,11 +588,11 @@ class Data:
                 if not ret:
                     break
 
-                pred = model(frame)[0]
-                xx = pred.plot()
-                cv2.imshow("Camera", xx)
+                #pred = model(frame)[0]
+                #xx = pred.plot()
+                #cv2.imshow("Camera", xx)
                 
-                #cv2.imshow("Gwapo ako", frame)
+                cv2.imshow("Gwapo ako", frame)
 
                 if cv2.waitKey(1) & 0xFF == ord('s'):
                     profile_picture = "static/uploads/" + str(random.randint(1, 10000)) + ".jpg" 
@@ -534,13 +612,23 @@ class Data:
             q = '''SELECT profile_picture FROM students WHERE username = %s'''
             db.execute(q, (username,))
             profile_picture = db.fetchone()[0]
+            db.close()
+            Connect.close()
 
-            return render_template("Student_Home_Page.html", profile_picture=profile_picture)
+            return redirect(url_for("Student_Home"))
 
 
 
         @self.app.route('/upload_profile_picture', methods=['POST'])
         def upload_profile_picture():
+            Connect = mysql.connector.connect(
+            host = "localhost",
+            user = "root",
+            password = "",
+            database = "for_finals_2nd_year_project"
+        )
+
+            db = Connect.cursor()
             if 'username' not in session:
                 return redirect(url_for('Student_Login'))
 
@@ -553,6 +641,9 @@ class Data:
                 query = "UPDATE students SET profile_picture = %s WHERE username = %s"
                 db.execute(query, (filename, username))
                 Connect.commit()
+                db.close()
+                Connect.close()
+
 
                 flash("Profile picture updated successfully!", "success")
             else:
@@ -576,6 +667,8 @@ class Data:
                 else:
                     db.execute("UPDATE students SET password = %s WHERE username = %s",(password1,username))
                     Connect.commit()
+                    db.close()
+                    Connect.close()
                     flash("Updated sucessfulLy! Please log in again to continue.", "success")
             return render_template("Studentupdatepass.html")
         
@@ -593,23 +686,33 @@ class Data:
                 session["username"] = userrname
                 return redirect(url_for("Studentupdatepass"))
             else:
-                flash("Email not found! Please create a new account instead", "error")
+                flash("Username not found! Please create a new account instead", "error")
                 return redirect(url_for("Student_Forgot_Pass"))
 
     
-
         @self.app.route("/Messenger", methods=["POST", "GET"])
         def Messenger():
+            username = session['username']
             if "username" not in session:
                 return redirect(url_for("Student_Home"))
+            
+            department = {1:"BSIT", 2: "NURSING", 3: "Business Administration", 4: "EDUCATION", 5: "Secondary Education"}
+            
+            user = session["username"]
+            sample = student_year_course_id(user)
+            y, c = sample[0], sample[1]
+            print(f"year: {y}, course_id: {c}")
+            print("year", sample)
 
-            user = session["username"] 
-            teacher_name = Teacher_Name()
+            user_id = student_id(username)
+            teacher_name = Teacher_details(y, department[c])
 
-            user_id = 1
-            teacher_id = 1
+            Teacher_Fullname = f'{teacher_name[2]} {teacher_name[3]}'  
+            
+            teacher_ = teacher_user_id(y, department[c])
+            teacher_id = teacher_[0]
 
-            chat_partner_id = teacher_id if user != teacher_name else user_id  
+            chat_partner_id = teacher_id if user != teacher_id else user_id  
 
             if request.method == "POST":
                 action = request.form.get("action")
@@ -623,11 +726,11 @@ class Data:
                     Insert_Text_In_Messenger(user_id, chat_partner_id, message)
 
                 elif action == "delete":
-                    Delete_Text_In_Messenger(user_id, chat_partner_id)
+                    Delete_Text_In_Messenger()
 
             chat_history = Recieve_Text_In_Messenger(user_id, chat_partner_id)
 
-            return render_template("Student_Messenger.html", x=chat_history, teacher_name=teacher_name)
+            return render_template("Student_Messenger.html", x=chat_history, teacher_name=Teacher_Fullname)
 
         #TODO 
         @self.app.route("/Progress")

@@ -2,11 +2,129 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/static/css/Main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main</title>
+    <title>Welcome to Ambot</title>
+    <link rel="stylesheet" href="/static/css/Main.css">
 </head>
 <body>
-    
+    <header>
+        <div class="container">
+            <a href=""><h1 class="logo">Our College</h1></a>
+            <nav>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#programs">Programs</a></li>
+                    <li><a href="#admissions">Admissions</a></li>
+                    <li><a href="#student-life">Student Life</a></li>
+                    <li><a href="#contact">Contact Us</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Your Future Starts Here</h2>
+                <p>Join a community of innovators and leaders.</p>
+                <a href="/Registration_links" class="cta-button">Apply Now</a>
+            </div>
+        </section>
+
+        <section id="about" class="info-section">
+            <h2>About Us</h2>
+            <p>We are dedicated to fostering a culture of learning, growth, and achievement.</p>
+        </section>
+
+        <section id="info" class="info-section">
+            <h2>Welcome to University of Iloilo</h2>
+            
+            <div id="admissions">
+                <h3>Admissions</h3>
+                <p>Find everything you need to know about applying to our university.</p>
+                <h4>Overview</h4>
+                <p>The application process is straightforward and designed to help you showcase your strengths.</p>
+                <h4>Requirements</h4>
+                <ul>
+                    <li>Pretty face</li>
+                    <li>Long hair</li>
+                    <li>Must be single</li>
+                    <li>Sexy</li>
+                    <li>2 letters of recommendation</li>
+                </ul>
+                <h4>How to Apply</h4>
+                <p>Follow these steps to complete your application:</p>
+                <ol>
+                    <li>Complete the online registration.</li>
+        
+                </ol>
+                <h4>FAQs</h4>
+                <p><strong>What if I miss the application deadline?</strong> Contact <a href="https://www.facebook.com/profile.php?id=61566267074228" target="_blank">Ruzel</a> to discuss your options.</p>
+                <p><strong>Are there scholarships available for incoming students?</strong> Yes, we offer a range of scholarships based on looks and sense of humor.</p>
+            </div>
+        
+            <div id="student-life">
+                <h3>Student Life</h3>
+                <p>Explore clubs, events, and activities that make our campus vibrant.</p>
+                <h4>Clubs and Organizations</h4>
+                <p>Join a variety of student-led clubs to enhance your college experience:</p>
+                <ul>
+                    <li><a href="#">Student Government</a></li>
+                    <li><a href="#">Cultural Clubs</a></li>
+                    <li><a href="#">Academic Honor Societies</a></li>
+                    <li><a href="#">Sports Teams</a></li>
+                </ul>
+                <h4>Events</h4>
+                <p>Check out our upcoming events:</p>
+                <ul>
+                    <li>Welcome Week: February 29-30</li>
+                    <li>Homecoming: October 15</li>
+                    <li>Spring Fest: April 10-12</li>
+                </ul>
+                <h4>Housing</h4>
+                <p>We offer a range of housing options to fit your needs, including:</p>
+                <ul>
+                    <li>Traditional dorms</li>
+                    <li>Apartment-style living</li>
+                    <li>Off-campus galactic resources</li>
+                </ul>
+                <h4>Support Services</h4>
+                <p>Our college provides numerous resources to support your academic and personal growth:</p>
+                <ul>
+                    <li>Academic advising</li>
+                    <li>Counseling services</li>
+                    <li>Career development center</li>
+                </ul>
+            </div>
+        
+            <div id="contact">
+                <h3>Contact Us</h3>
+                <p>Have questions? Reach out to our admissions team!</p>
+                <h4>Contact Information</h4>
+                <p>Email: <a href="mailto:admissions@ourcollege.edu">AmbotGroup@P0g1i5o.edu</a></p>
+                <p>Phone: (123) 456-7890</p>
+                <p>Office Hours: Monday - Friday, 9 AM - 5 PM</p>
+                <h4>Contact Form</h4>
+                <form action="submit_form.php" method="post">
+                    <label for="name">Name:</label><br>
+                    <input type="text" id="name" name="name" required><br>
+                    <label for="email">Email:</label><br>
+                    <input type="email" id="email" name="email" required><br>
+                    <label for="message">Message:</label><br>
+                    <textarea id="message" name="message" rows="4" required></textarea><br>
+                    <input type="submit" value="Submit">
+                </form>
+                <h4>Location</h4>
+                <p>Visit us at:</p>
+                <p>University of Iloilo,<br>
+                   Biringan City, Hagwards, 555</p>
+                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3920.550981569833!2d122.56701887424148!3d10.691918689451787!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33aee5255345f11b%3A0xb32057bb6b1d39c8!2sPHINMA%20UNIVERSITY%20OF%20ILOILO!5e0!3m2!1sen!2sph!4v1728922985262!5m2!1sen!2sph" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Phinma University of Iloilo. All rights reserved.</p>
+    </footer>
 </body>
 </html>
