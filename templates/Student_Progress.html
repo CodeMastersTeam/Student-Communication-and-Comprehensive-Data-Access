@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/Student_Home_Page.css">
     <link rel="stylesheet" href="/static/css/Student_Progress.css">
+    <script src="/static/javascript/plotly-2.35.2.min.js"></script> 
     <title>Student | Progress</title>
 </head>
 <body>
@@ -19,17 +20,51 @@
         </div>
     </header>
     <br><br><br><br>
-    <h1>First Semester</h1>
-    <form action="/Progress" method="post">
-        
-
-    </form>
     
-    <h1>Second Semester</h1>
+    <h1>First Semester Progress Overview</h1>
 
+    <div class="charts-container">
+        
+        <div class="chart-box">
+            <h2>Grades Distribution - Pie Chart</h2>
+            <div id="firstPieChart"></div> 
+        </div>
 
+        
+        <div class="chart-box">
+            <h2>Average Grades - Bar Chart</h2>
+            <div id="firstBarChart"></div> 
+        </div>
 
+        
+        <div class="chart-box">
+            <h2>Grade Trends - Line Chart</h2>
+            <div id="firstLineChart"></div> 
+        </div>
+    </div>
 
+    <br><br><br><br><br>
+    <h1>Second Semester Progress Overview</h1>
+
+    <div class="charts-container">
+        
+        <div class="chart-box">
+            <h2>Grades Distribution - Pie Chart</h2>
+            <div id="secondPieChart"></div> 
+        </div>
+
+        
+        <div class="chart-box">
+            <h2>Average Grades - Bar Chart</h2>
+            <div id="secondBarChart"></div> 
+        </div>
+
+        
+        <div class="chart-box">
+            <h2>Grade Trends - Line Chart</h2>
+            <div id="secondLineChart"></div> 
+        </div>
+    </div>
 
     <script src="/static/javascript/Student_Home_Page.js"></script>
     <script src="/static/javascript/Student_Progress.js"></script>

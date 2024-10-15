@@ -91,9 +91,16 @@ class Data:
         @self.app.route("/Student_Progress")
         def Student_Progress():
             username = session["username"]
+            if not username:
+                return redirect(url_for("Student_logout"))
+
+            
+
+
+
+
             return render_template("Student_Progress.html")
 
-        # TODO  Goal: Proper Student_Grades Viewing Routing
         @self.app.route("/Student_Grades")
         def Student_Grades():
             username = session.get("username")
@@ -143,8 +150,9 @@ class Data:
     
                 Teacher_Fullname = f'{teacher_name[2]} {teacher_name[3]}' 
 
-                return render_template("Student_Schedule.html",  Student_Subjects1 = Student_Subjects1, 
+                return render_template("Student_Grades.html",  Student_Subjects1 = Student_Subjects1, 
                                                                 Student_Subjects2 = Student_Subjects2, A = Teacher_Fullname)
+            
 
 
 
@@ -711,8 +719,9 @@ class Data:
             
             teacher_ = teacher_user_id(y, department[c])
             teacher_id = teacher_[0]
+            print(f"Teacher ID: {teacher_id}")
 
-            chat_partner_id = teacher_id if user != teacher_id else user_id  
+            chat_partner_id = user_id  if teacher_id != teacher_id else user_id  
 
             if request.method == "POST":
                 action = request.form.get("action")
@@ -723,12 +732,12 @@ class Data:
                         flash("Message cannot be empty", "error")
                         return redirect(url_for("Messenger"))
 
-                    Insert_Text_In_Messenger(user_id, chat_partner_id, message)
+                    Insert_Text_In_Messenger(teacher_id, chat_partner_id, message)
 
                 elif action == "delete":
                     Delete_Text_In_Messenger()
 
-            chat_history = Recieve_Text_In_Messenger(user_id, chat_partner_id)
+            chat_history = Recieve_Text_In_Messenger(teacher_id, chat_partner_id)
 
             return render_template("Student_Messenger.html", x=chat_history, teacher_name=Teacher_Fullname)
 

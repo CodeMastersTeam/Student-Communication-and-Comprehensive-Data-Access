@@ -1,0 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    text-align: center;
+    font-weight: 600;
+}
+
+h1 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.75em;
+    margin-bottom: 10px;
+}
+
+.charts-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 40px 20px 0;
+}
+
+.chart-box {
+    flex: 0 0 30%;
+    padding: 10px;
+    margin: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.chart-box:hover {
+    background-color: #fff;
+}
+
+.chart-box div {
+    width: 100%;
+    height: 350px;
+}
+
+.container {
+    padding: 0;
+    margin: 0;
+}
