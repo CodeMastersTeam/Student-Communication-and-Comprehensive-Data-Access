@@ -345,8 +345,6 @@ def Student_details(username):
     firstname = c['firstname']
     lastname = c['lastname']
     course_id, section_name, year_id = c["course_id"], c["section_name"], c["year_id"]
-
-    print(f'student_ID: {student_ID} \nfirstname: {firstname}\nlastname: {lastname}\ncourse_id: {course_id}\nsection_name: {section_name}\nyear_id: {year_id}')
     
     return student_ID, firstname, lastname, course_id, section_name, year_id
 
@@ -369,10 +367,8 @@ def Teacher_details(year, department):
     
    
 
-    print("\n\n", zz)
     teacher_id, username, firstname, lastname, department, year, semester_id, section_name = zz["teacher_id"], zz['username'], \
     zz['firstname'], zz['lastname'], zz['department'], zz['year'], zz['semester_id'], zz['section_name']
-    print(f'\n\n{username}, {firstname}, {lastname}, {department}, {year}, {semester_id}, {section_name}')
 
     return teacher_id, username, firstname, lastname, department, year, semester_id, section_name
 
@@ -393,8 +389,6 @@ def teacher_user_id(year, department):
     Connect.close()
     return res
 
-X = teacher_user_id(1, "BSIT")
-print(X[0])
 
 def student_id(username):
     Connect = mysql.connector.connect(
@@ -467,3 +461,61 @@ def student_id(username):
     db.close()
     Connect.close()
     return x
+
+
+# TODO for GRADEBOOK
+def Teacher_yearID_Department(username):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+
+
+    db = Connect.cursor()
+    # YEAR (year_id) AND DEPARTMENT (course_id) OF TEACHER FOR STUDENTS
+    q = '''SELECT year, department FROM teachers WHERE username = %s'''
+    db.execute(q, (username, ))
+    res = db.fetchall()
+    year = res[0][0]
+    depp = res[0][1]
+    department = {"BSIT": 1, "NURSING": 2, "Business Administration": 3, "EDUCATION": 4, "Secondary Education": 5}
+    return year, department[depp]
+
+
+def Student_firstname_lastname(year_id, course_id):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+    db = Connect.cursor()
+    
+    q = '''SELECT s.username, s.profile_picture, s.firstname, s.lastname FROM students AS s WHERE year_id = %s AND course_id = %s'''
+    db.execute(q, (year_id, course_id))
+
+    res = db.fetchall()
+    return res
+
+year, dep = Teacher_yearID_Department("SelwynGwapo12A")
+
+Student_firstname_lastname(year, dep)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

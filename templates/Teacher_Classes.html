@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/Teacher_Classes.css">
-    <title>Classes</title>
+    <title>Students</title>
 </head>
 <body>
     <header class="top-nav"> 
         <a href="/Teacher_Home_Page" class="active">Dashboard</a>
-        <a href="/Teacher_Classes" class="active2">Classes</a>
-        <a href="/Teacher_Gradebook">Gradebook</a>
-        <a href="/Teacher_Schedule">Schedule</a>
-        <a href="/Teacher_Messages">Messages</a>
+        <a href="/Teacher_Classes" class="active2">Students</a>
         <a href="/Teacher_Resources">Resources</a>
 
         <div class="top-nav-right">
@@ -20,6 +17,39 @@
             <a href="/logout">Logout</a>
         </div>
     </header>
-    Classes section
+
+    <main class="content">
+        <h1>Student List</h1>
+
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if students %}
+                    {% for i in students %}
+                    <tr>
+                        <td class="student-info">
+                            <img src="/static/uploads/{{i[1]}}" alt="{{ i[-2] }} {{ i[-1] }}'s Profile Picture" class="profile-pic">
+                            <div class="student-name">{{i[-2]}} {{i[-1]}}</div>
+                            <div class="student-actions">
+                                <a href="/Teacher_Gradebook" class="button">View Profile</a>
+                                <a href="/Teacher_Messages" class="button">Message</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="1">No students found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </main>
+    
+    <script src="/static/javascript/Teacher_Classes.js"></script>
 </body>
 </html>

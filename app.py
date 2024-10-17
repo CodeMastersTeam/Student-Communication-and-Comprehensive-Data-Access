@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session, redirect, url_for, flash
+from flask import Flask, render_template, request, session, redirect, url_for, flash, jsonify
 import matplotlib.pyplot as plt
 from Database import *
 import os, random, cv2
@@ -457,12 +457,47 @@ class Data:
         @self.app.route("/Teacher_Classes")
         def Teacher_Classes():
             username = session["username"]
-            return render_template("Teacher_Classes.html")
+            yr, crs = Teacher_yearID_Department(username)
+            students = Student_firstname_lastname(yr, crs)
+            return render_template("Teacher_Classes.html",  students = students)
         
-        @self.app.route("/Teacher_Gradebook")
+        @self.app.route("/Teacher_Gradebook", methods=["GET", "POST"])
         def Teacher_Gradebook():
-            username = session["username"]
-            return render_template("/Teacher_Gradebook.html")
+            username = session.get("username")
+            if not username:
+                return redirect(url_for("Student_logout"))
+        
+            year, dep = Teacher_yearID_Department(username)
+        
+            students = Student_firstname_lastname(year, dep)
+        
+            if request.method == "POST":
+                selected_student_username = request.form.get('student_username')
+            else:
+                selected_student_username = students[0][0] if students else None
+        
+            if not selected_student_username:
+                return "No students found", 404
+        
+            Student_Subjects1 = fetch_student_grades(selected_student_username, 1)
+            Student_Subjects2 = fetch_student_grades(selected_student_username, 2)
+        
+            selected_student = next((student for student in students if student[0] == selected_student_username), None)
+        
+            if not selected_student:
+                return "Student not found", 404
+        
+            return render_template("Teacher_Gradebook.html", 
+                           students=students, 
+                           selected_student=selected_student, 
+                           Student_Subjects1=Student_Subjects1, 
+                           Student_Subjects2=Student_Subjects2)
+
+
+
+
+
+
         
         @self.app.route("/Teacher_Schedule")
         def Teacher_Schedule():

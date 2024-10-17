@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #f4f4f4;
 }
 
 .top-nav {
@@ -32,10 +33,86 @@ body {
     float: right;
 }
 
+.content {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.student-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.student-table th, .student-table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.student-table th {
+    background-color: #3498db;
+    color: white;
+}
+
+.student-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.student-table tr:hover {
+    background-color: #d5f1fa;
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; 
+}
+
+.profile-pic {
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    margin-right: 10px; /* Adjusted spacing */
+}
+
+.student-name {
+    flex-grow: 1; /* Allow name to take available space */
+}
+
+.student-actions {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+.student-actions .button {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.student-actions .button:hover {
+    background-color: #2980b9;
+}
+
 @media screen and (max-width: 600px) {
     .top-nav a, .top-nav-right {
         float: none;
         display: block;
         text-align: left;
+    }
+    
+    .student-table {
+        font-size: 14px;
     }
 }
