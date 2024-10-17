@@ -342,3 +342,41 @@ button[type="submit"]:hover {
 .chart-legend strong {
     margin-right: 5px;
 }
+
+.subject-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.subject-button {
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.subject-button:hover {
+    background-color: #e0e0e0;
+}
+
+.subject-button.active {
+    background-color: #3498db;
+    color: white;
+}
+
+.grade-table tbody tr td:first-child {
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.grade-table tbody tr td:first-child:hover {
+    background-color: #e0e0e0;
+}
+
+.grade-table tbody tr.active-subject {
+    background-color: #d4e6f1;
+}

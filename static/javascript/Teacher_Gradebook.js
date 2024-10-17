@@ -46,12 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
             method: 'POST',
             body: formData
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             console.log('Server response:', data);
             if (data.success) {
@@ -63,14 +58,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Failed to update grade:', data.message);
                 input.style.backgroundColor = '#FFB6C1';
                 setTimeout(() => input.style.backgroundColor = '', 1000);
-                alert('Failed to update grade: ' + data.message);
+                alert(data.message);
             }
         })
         .catch((error) => {
             console.error('Error:', error);
             input.style.backgroundColor = '#FFB6C1';
             setTimeout(() => input.style.backgroundColor = '', 1000);
-            alert('An error occurred while updating the grade: ' + error.message);
+            alert('An error occurred while updating the grade. Please try again.');
         });
     }
 
@@ -81,19 +76,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const fullSubjectNames = {};
 
         document.querySelectorAll('.grade-table tbody tr').forEach(row => {
+            const subjectCode = row.cells[0].textContent;
             const subjectName = row.cells[1].textContent;
-            const shortSubjectName = subjectName.length > 5 ? subjectName.substring(0, 5) + '...' : subjectName;
             const grades = Array.from(row.querySelectorAll('input[type="number"]')).map(input => parseFloat(input.value) || 0);
             const average = grades.reduce((a, b) => a + b, 0) / grades.length;
 
-            subjects.push(shortSubjectName);
+            subjects.push(subjectCode);
             averages.push(average);
-            fullSubjectNames[shortSubjectName] = subjectName;
+            fullSubjectNames[subjectCode] = subjectName;
+            progressionData[subjectCode] = grades;
 
-            if (!progressionData[shortSubjectName]) {
-                progressionData[shortSubjectName] = [];
-            }
-            progressionData[shortSubjectName] = progressionData[shortSubjectName].concat(grades);
+            // Make subject code clickable
+            row.cells[0].style.cursor = 'pointer';
+            row.cells[0].addEventListener('click', () => toggleSubjectLine(subjectCode));
         });
 
         const chartConfig = {
@@ -129,7 +124,8 @@ document.addEventListener('DOMContentLoaded', function() {
             y: grades,
             type: 'scatter',
             mode: 'lines+markers',
-            name: subject
+            name: subject,
+            visible: true // Initially set all lines to visible
         }));
         const lineLayout = {
             height: 400,
@@ -149,9 +145,26 @@ document.addEventListener('DOMContentLoaded', function() {
             legendContainer.innerHTML += `<li><strong>${shortName}</strong>: ${fullName}</li>`;
         }
         legendContainer.innerHTML += '</ul>';
+
+        // Function to toggle subject line visibility
+        function toggleSubjectLine(subjectCode) {
+            const lineChart = document.getElementById('lineChart');
+            const update = {
+                visible: lineTraces.map(trace => trace.name === subjectCode ? true : 'legendonly')
+            };
+            Plotly.restyle(lineChart, update);
+
+            // Highlight the active subject in the table
+            document.querySelectorAll('.grade-table tbody tr').forEach(row => {
+                if (row.cells[0].textContent === subjectCode) {
+                    row.classList.add('active-subject');
+                } else {
+                    row.classList.remove('active-subject');
+                }
+            });
+        }
     }
 
-    // Check if Plotly is loaded before creating charts
     if (typeof Plotly !== 'undefined') {
         createCharts();
     } else {

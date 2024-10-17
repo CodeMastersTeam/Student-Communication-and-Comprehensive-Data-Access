@@ -5,6 +5,7 @@ import os, random, cv2
 import time
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
+import traceback
 
 model = YOLO('yolo11n.pt')
 
@@ -495,6 +496,7 @@ class Data:
 
         @self.app.route('/update_grade', methods=['POST'])
         def update_grade():
+            print("Starting update_grade function")
             try:
                 subject_code = request.form.get('subject_id')
                 grade_type = request.form.get('grade_type')
@@ -503,70 +505,35 @@ class Data:
                 semester_id = request.form.get('semester_id')
                 year_id = request.form.get('year_id')
 
-                print(f"Received update request: Subject Code: {subject_code}, Type: {grade_type}, Value: {grade_value}, Student: {student_username}, Semester: {semester_id}, Year: {year_id}")
+                print(f"Received data: Subject: {subject_code}, Type: {grade_type}, Value: {grade_value}, Student: {student_username}, Semester: {semester_id}, Year: {year_id}")
 
                 db = Database()
-                
-                # Get student_id
-                db.cursor.execute("SELECT student_id FROM students WHERE username = %s", (student_username,))
-                student_result = db.cursor.fetchone()
-                if not student_result:
-                    return jsonify({'success': False, 'message': f'Student not found: {student_username}'})
-                student_id = student_result[0]
+                print("Database connection established")
 
-                # Get subject_id from subject_code
-                db.cursor.execute("SELECT subject_id FROM subjects WHERE subject_code = %s", (subject_code,))
-                subject_result = db.cursor.fetchone()
-                if not subject_result:
-                    return jsonify({'success': False, 'message': f'Subject not found: {subject_code}'})
-                subject_id = subject_result[0]
-
-                # Check if the grade already exists
-                check_query = """
-                SELECT grade_id FROM student_grades 
-                WHERE student_id = %s AND subject_id = %s AND assessment_period = %s AND semester_id = %s AND year_id = %s
+                # Simplified update query
+                update_query = """
+                INSERT INTO student_grades (student_id, subject_id, grade, assessment_period, semester_id, year_id)
+                VALUES ((SELECT student_id FROM students WHERE username = %s),
+                        (SELECT subject_id FROM subjects WHERE subject_code = %s),
+                        %s, %s, %s, %s)
+                ON DUPLICATE KEY UPDATE grade = VALUES(grade)
                 """
-                db.cursor.execute(check_query, (student_id, subject_id, grade_type, semester_id, year_id))
-                existing_grade = db.cursor.fetchone()
-
-                if existing_grade:
-                    # Update existing grade
-                    update_query = """
-                    UPDATE student_grades
-                    SET grade = %s
-                    WHERE grade_id = %s
-                    """
-                    db.cursor.execute(update_query, (grade_value, existing_grade[0]))
-                else:
-                    # Insert new grade
-                    insert_query = """
-                    INSERT INTO student_grades (student_id, subject_id, grade, assessment_period, semester_id, year_id)
-                    VALUES (%s, %s, %s, %s, %s, %s)
-                    """
-                    db.cursor.execute(insert_query, (student_id, subject_id, grade_value, grade_type, semester_id, year_id))
-
+                print("Executing update query")
+                db.cursor.execute(update_query, (student_username, subject_code, grade_value, grade_type, semester_id, year_id))
                 db.connection.commit()
-                
-                # Verify the update
-                verify_query = """
-                SELECT grade FROM student_grades 
-                WHERE student_id = %s AND subject_id = %s AND assessment_period = %s AND semester_id = %s AND year_id = %s
-                """
-                db.cursor.execute(verify_query, (student_id, subject_id, grade_type, semester_id, year_id))
-                result = db.cursor.fetchone()
-                
-                if result and float(result[0]) == float(grade_value):
-                    print(f"Grade verified: {grade_value}")
-                    return jsonify({'success': True, 'message': 'Grade updated and verified'})
-                else:
-                    print(f"Grade verification failed. Expected: {grade_value}, Got: {result[0] if result else 'None'}")
-                    return jsonify({'success': False, 'message': f'Grade update failed verification. Expected: {grade_value}, Got: {result[0] if result else "None"}'})
+                print("Query executed and committed")
+
+                return jsonify({'success': True, 'message': 'Grade updated'})
 
             except Exception as e:
+                print(f"Error in update_grade: {str(e)}")
+                print(traceback.format_exc())
                 return jsonify({'success': False, 'message': f'Error updating grade: {str(e)}'}), 500
+
             finally:
                 if 'db' in locals():
                     db.close()
+                print("update_grade function completed")
 
         @self.app.route("/Teacher_Schedule")
         def Teacher_Schedule():
