@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/Teacher_Gradebook.css">
-    <title>Gradebook</title>
+    <title>Teacher Gradebook</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Teacher_Gradebook.css') }}">
+    <script src="/static/javascript/plotly-2.35.2.min.js"></script> 
 </head>
 <body>
     <header class="top-nav">
@@ -17,15 +18,13 @@
         </div>
     </header>
 
-    
-    
     <div class="box">
         <form method="POST" action="{{ url_for('Teacher_Gradebook') }}">
             <label for="student">Select Student:</label>
             <select name="student_username" id="student">
                 {% for student in students %}
                     <option value="{{ student[0] }}" {% if student[0] == selected_student[0] %}selected{% endif %}>
-                        {{ student[2] }} {{ student[3] }} <!--{{ student[0] }}-->
+                        {{ student[2] }} {{ student[3] }}
                     </option>
                 {% endfor %}
             </select>
@@ -39,6 +38,8 @@
         <hr>
         <div class="grades_plus_message">
             <h1>Grades</h1>
+            
+            <h2>First Semester Grades</h2>
             <table class="grade-table">
                 <thead>
                     <tr>
@@ -52,37 +53,44 @@
                 <tbody>
                     {% for subjects in Student_Subjects1 %}
                     <tr>
-                        <td>{{ subjects[3] }}</td>  <!-- Subject Code -->
-                        <td>{{ subjects[2] }}</td>  <!-- Subject Name -->   
+                        <td>{{ subjects[3] }}</td>
+                        <td>{{ subjects[2] }}</td>
                         <td>
-                            <input type="number" min="0" max="100" step="0.01" name="prelim_{{ subjects[3] }}" value="{{ subjects[4] }}" 
-                                   data-subject-id="{{ subjects[3] }}" 
-                                   data-semester-id="1" 
-                                   data-year-id="1" 
-                                   onblur="saveGrade(event, '{{ subjects[3] }}', 'Prelim')"
-                                   onkeydown="handleKeyDown(event, '{{ subjects[3] }}', 'Prelim')" />
+                            <input type="number" min="0" max="100" step="0.01" 
+                                   class="grade-input"
+                                   data-subject-id="{{ subjects[3] }}"
+                                   data-grade-type="Prelim"
+                                   data-student-id="{{ selected_student[0] }}"
+                                   data-semester-id="1"
+                                   data-year-id="1"
+                                   value="{{ subjects[4] or 0 }}">
                         </td>
                         <td>
-                            <input type="number" min="0" max="100" step="0.01" name="midterm_{{ subjects[3] }}" value="{{ subjects[5] }}" 
-                                   data-subject-id="{{ subjects[3] }}" 
-                                   data-semester-id="1" 
-                                   data-year-id="1" 
-                                   onblur="saveGrade(event, '{{ subjects[3] }}', 'Midterm')"
-                                   onkeydown="handleKeyDown(event, '{{ subjects[3] }}', 'Midterm')" />
+                            <input type="number" min="0" max="100" step="0.01" 
+                                   class="grade-input"
+                                   data-subject-id="{{ subjects[3] }}"
+                                   data-grade-type="Midterm"
+                                   data-student-id="{{ selected_student[0] }}"
+                                   data-semester-id="1"
+                                   data-year-id="1"
+                                   value="{{ subjects[5] or 0 }}">
                         </td>
                         <td>
-                            <input type="number" min="0" max="100" step="0.01" name="finals_{{ subjects[3] }}" value="{{ subjects[6] }}" 
-                                   data-subject-id="{{ subjects[3] }}" 
-                                   data-semester-id="1" 
-                                   data-year-id="1" 
-                                   onblur="saveGrade(event, '{{ subjects[3] }}', 'Finals')"
-                                   onkeydown="handleKeyDown(event, '{{ subjects[3] }}', 'Finals')" />
+                            <input type="number" min="0" max="100" step="0.01" 
+                                   class="grade-input"
+                                   data-subject-id="{{ subjects[3] }}"
+                                   data-grade-type="Finals"
+                                   data-student-id="{{ selected_student[0] }}"
+                                   data-semester-id="1"
+                                   data-year-id="1"
+                                   value="{{ subjects[6] or 0 }}">
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            
+
+            <h2>Second Semester Grades</h2>
             <table class="grade-table">
                 <thead>
                     <tr>
@@ -96,50 +104,60 @@
                 <tbody>
                     {% for subjects in Student_Subjects2 %}
                     <tr>
-                        <td>{{ subjects[3] }}</td>  <!-- Subject Code -->
-                        <td>{{ subjects[2] }}</td>  <!-- Subject Name -->   
+                        <td>{{ subjects[3] }}</td>
+                        <td>{{ subjects[2] }}</td>
                         <td>
-                            <input type="number" min="0" max="100" step="0.01" name="prelim_{{ subjects[3] }}" value="{{ subjects[4] }}" 
-                                   data-subject-id="{{ subjects[3] }}" 
-                                   data-semester-id="1" 
-                                   data-year-id="1" 
-                                   onblur="saveGrade(event, '{{ subjects[3] }}', 'Prelim')"
-                                   onkeydown="handleKeyDown(event, '{{ subjects[3] }}', 'Prelim')" />
+                            <input type="number" min="0" max="100" step="0.01" 
+                                   class="grade-input"
+                                   data-subject-id="{{ subjects[3] }}"
+                                   data-grade-type="Prelim"
+                                   data-student-id="{{ selected_student[0] }}"
+                                   data-semester-id="2"
+                                   data-year-id="1"
+                                   value="{{ subjects[4] or 0 }}">
                         </td>
                         <td>
-                            <input type="number" min="0" max="100" step="0.01" name="midterm_{{ subjects[3] }}" value="{{ subjects[5] }}" 
-                                   data-subject-id="{{ subjects[3] }}" 
-                                   data-semester-id="1" 
-                                   data-year-id="1" 
-                                   onblur="saveGrade(event, '{{ subjects[3] }}', 'Midterm')"
-                                   onkeydown="handleKeyDown(event, '{{ subjects[3] }}', 'Midterm')" />
+                            <input type="number" min="0" max="100" step="0.01" 
+                                   class="grade-input"
+                                   data-subject-id="{{ subjects[3] }}"
+                                   data-grade-type="Midterm"
+                                   data-student-id="{{ selected_student[0] }}"
+                                   data-semester-id="2"
+                                   data-year-id="1"
+                                   value="{{ subjects[5] or 0 }}">
                         </td>
                         <td>
-                            <input type="number" min="0" max="100" step="0.01" name="finals_{{ subjects[3] }}" value="{{ subjects[6] }}" 
-                                   data-subject-id="{{ subjects[3] }}" 
-                                   data-semester-id="1" 
-                                   data-year-id="1" 
-                                   onblur="saveGrade(event, '{{ subjects[3] }}', 'Finals')"
-                                   onkeydown="handleKeyDown(event, '{{ subjects[3] }}', 'Finals')" />
+                            <input type="number" min="0" max="100" step="0.01" 
+                                   class="grade-input"
+                                   data-subject-id="{{ subjects[3] }}"
+                                   data-grade-type="Finals"
+                                   data-student-id="{{ selected_student[0] }}"
+                                   data-semester-id="2"
+                                   data-year-id="1"
+                                   value="{{ subjects[6] or 0 }}">
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
             
-            <a href="#" class="message-btn">Message Selwyn</a>
-        </div>
-        
-        
+            <a href="#" class="message-btn">Message {{ selected_student[2] }}</a>
         </div>
 
-        <div class="charts">
-            <h1>Pie</h1>
-            <h1>Bar</h1>
-            <h1>Line</h1>
+        <div class="charts-container">
+            <div class="charts">
+                <div class="chart-container">
+                    <div id="barChart"></div>
+                </div>
+                <div class="chart-container">
+                    <div id="lineChart"></div>
+                </div>
+            </div>
+            <div id="chartLegend" class="chart-legend"></div>
         </div>
     </div>
 
-    <script src="/static/javascript/Teacher_Gradebook.js"></script>
+    <script src="{{ url_for('static', filename='javascript/chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/Teacher_Gradebook.js') }}"></script>
 </body>
 </html>

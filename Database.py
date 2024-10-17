@@ -11,6 +11,30 @@ Connect = mysql.connector.connect(
 db = Connect.cursor()
 
 
+class Database:
+    def __init__(self):
+        self.connection = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='',
+            database='for_finals_2nd_year_project'
+        )
+        self.cursor = self.connection.cursor()
+
+    def execute_query(self, query, params=None):
+        if params:
+            self.cursor.execute(query, params)
+        else:
+            self.cursor.execute(query)
+
+    def commit(self):
+        self.connection.commit()
+
+    def close(self):
+        self.cursor.close()
+        self.connection.close()
+
+
 def ForStudentRegistration_students(firstname, middlename, lastname, age, address, Sex, 
             cellphone_number, Birth_date, Birth_place, Username, Password, profile_picture, year, course_id, section_name):
     Connect = mysql.connector.connect(
@@ -502,6 +526,32 @@ def Student_firstname_lastname(year_id, course_id):
 year, dep = Teacher_yearID_Department("SelwynGwapo12A")
 
 Student_firstname_lastname(year, dep)
+
+
+def update_grade_in_db2(subject_id, grade_type, grade_value, student_id, semester_id, year_id):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+    db = Connect.cursor()
+    try:
+        update_query = """
+        UPDATE student_grades
+        SET grade = %s
+        WHERE subject_id = %s AND assessment_period = %s AND student_id = %s AND semester_id = %s AND year_id = %s
+        """
+        
+        db.execute(update_query, (grade_value, subject_id, grade_type, student_id, semester_id, year_id))
+        
+        print("Grade updated successfully.")
+        return True
+    except Exception as e:
+        print(f"Error updating grade: {e}")
+        return False
+    finally:
+        db.close()
 
 
 

@@ -466,39 +466,108 @@ class Data:
             username = session.get("username")
             if not username:
                 return redirect(url_for("Student_logout"))
-        
+
             year, dep = Teacher_yearID_Department(username)
-        
+
             students = Student_firstname_lastname(year, dep)
-        
+
             if request.method == "POST":
                 selected_student_username = request.form.get('student_username')
             else:
                 selected_student_username = students[0][0] if students else None
-        
+
             if not selected_student_username:
                 return "No students found", 404
-        
+
             Student_Subjects1 = fetch_student_grades(selected_student_username, 1)
             Student_Subjects2 = fetch_student_grades(selected_student_username, 2)
-        
+
             selected_student = next((student for student in students if student[0] == selected_student_username), None)
-        
+
             if not selected_student:
                 return "Student not found", 404
-        
+
             return render_template("Teacher_Gradebook.html", 
-                           students=students, 
-                           selected_student=selected_student, 
-                           Student_Subjects1=Student_Subjects1, 
-                           Student_Subjects2=Student_Subjects2)
+                                   students=students, 
+                                   selected_student=selected_student, 
+                                   Student_Subjects1=Student_Subjects1, 
+                                   Student_Subjects2=Student_Subjects2)
 
+        @self.app.route('/update_grade', methods=['POST'])
+        def update_grade():
+            try:
+                subject_code = request.form.get('subject_id')
+                grade_type = request.form.get('grade_type')
+                grade_value = request.form.get('grade_value')
+                student_username = request.form.get('student_id')
+                semester_id = request.form.get('semester_id')
+                year_id = request.form.get('year_id')
 
+                print(f"Received update request: Subject Code: {subject_code}, Type: {grade_type}, Value: {grade_value}, Student: {student_username}, Semester: {semester_id}, Year: {year_id}")
 
+                db = Database()
+                
+                # Get student_id
+                db.cursor.execute("SELECT student_id FROM students WHERE username = %s", (student_username,))
+                student_result = db.cursor.fetchone()
+                if not student_result:
+                    return jsonify({'success': False, 'message': f'Student not found: {student_username}'})
+                student_id = student_result[0]
 
+                # Get subject_id from subject_code
+                db.cursor.execute("SELECT subject_id FROM subjects WHERE subject_code = %s", (subject_code,))
+                subject_result = db.cursor.fetchone()
+                if not subject_result:
+                    return jsonify({'success': False, 'message': f'Subject not found: {subject_code}'})
+                subject_id = subject_result[0]
 
+                # Check if the grade already exists
+                check_query = """
+                SELECT grade_id FROM student_grades 
+                WHERE student_id = %s AND subject_id = %s AND assessment_period = %s AND semester_id = %s AND year_id = %s
+                """
+                db.cursor.execute(check_query, (student_id, subject_id, grade_type, semester_id, year_id))
+                existing_grade = db.cursor.fetchone()
 
-        
+                if existing_grade:
+                    # Update existing grade
+                    update_query = """
+                    UPDATE student_grades
+                    SET grade = %s
+                    WHERE grade_id = %s
+                    """
+                    db.cursor.execute(update_query, (grade_value, existing_grade[0]))
+                else:
+                    # Insert new grade
+                    insert_query = """
+                    INSERT INTO student_grades (student_id, subject_id, grade, assessment_period, semester_id, year_id)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    """
+                    db.cursor.execute(insert_query, (student_id, subject_id, grade_value, grade_type, semester_id, year_id))
+
+                db.connection.commit()
+                
+                # Verify the update
+                verify_query = """
+                SELECT grade FROM student_grades 
+                WHERE student_id = %s AND subject_id = %s AND assessment_period = %s AND semester_id = %s AND year_id = %s
+                """
+                db.cursor.execute(verify_query, (student_id, subject_id, grade_type, semester_id, year_id))
+                result = db.cursor.fetchone()
+                
+                if result and float(result[0]) == float(grade_value):
+                    print(f"Grade verified: {grade_value}")
+                    return jsonify({'success': True, 'message': 'Grade updated and verified'})
+                else:
+                    print(f"Grade verification failed. Expected: {grade_value}, Got: {result[0] if result else 'None'}")
+                    return jsonify({'success': False, 'message': f'Grade update failed verification. Expected: {grade_value}, Got: {result[0] if result else "None"}'})
+
+            except Exception as e:
+                return jsonify({'success': False, 'message': f'Error updating grade: {str(e)}'}), 500
+            finally:
+                if 'db' in locals():
+                    db.close()
+
         @self.app.route("/Teacher_Schedule")
         def Teacher_Schedule():
             username = session["username"]
