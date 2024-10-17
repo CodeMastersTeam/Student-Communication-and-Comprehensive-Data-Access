@@ -162,6 +162,60 @@ def fetch_student_grades(username, semester_id):
 
 
 
+def student_CourseID(username):
+    Connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    db = Connect.cursor()
+
+    q = '''SELECT course_id FROM students WHERE username = %s'''
+    db.execute(q, (username, ))
+    res = db.fetchone()
+    db.close()
+    Connect.close()
+    return res
+
+
+
+def student_YearID(username):
+    Connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    db = Connect.cursor()
+
+    q = '''SELECT year_id FROM students WHERE username = %s'''
+    db.execute(q, (username, ))
+    res = db.fetchone()
+    db.close()
+    Connect.close()
+    return res
+
+
+# TODO SUBJECTS
+def subject_student_(year_id, semester_id, course_id):
+
+    Connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    db = Connect.cursor()
+
+    q = '''SELECT subject_name FROM subjects WHERE year_id = %s AND semester_id = %s AND course_id = %s'''
+    db.execute(q, (year_id, semester_id, course_id))
+    ress = db.fetchall()
+
+    db.close()
+    Connect.close()
+    return ress
+
 def Teacher_Sections_View_Students():
     Connect = mysql.connector.connect(
         host="localhost",
@@ -413,5 +467,3 @@ def student_id(username):
     db.close()
     Connect.close()
     return x
-
-

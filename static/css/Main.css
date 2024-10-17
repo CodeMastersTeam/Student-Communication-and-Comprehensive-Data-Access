@@ -56,13 +56,13 @@ nav a {
 }
 
 .hero-content {
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5); 
     padding: 20px;
     border-radius: 10px;
 }
 
 .cta-button {
-    background-color: #ff4081; /* Pink for call to action */
+    background-color: #ff4081; 
     color: #fff;
     padding: 15px 30px;
     text-decoration: none;

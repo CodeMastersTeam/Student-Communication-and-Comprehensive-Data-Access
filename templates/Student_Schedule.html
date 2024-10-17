@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subject & Weekly Schedule</title>
-    <link rel="stylesheet" href="/static/css/Student_Schedule.css">
     <link rel="stylesheet" href="/static/css/Student_Home_Page.css">
-
+    <link rel="stylesheet" href="/static/css/Student_Schedule.css">
+    <title>Student Schedule</title>
 </head>
 <body>
+
     <header class="top-nav">
         <div class="nav-container">
             <a id="Dashboard" href="/Student_Home">Dashboard</a>
@@ -16,66 +16,33 @@
             <a id="Grades" href="/Student_Grades">Grades</a>
             <a id="Schedule" href="/Student_Schedule">Schedule</a>
             <a id="Account" href="/View_Student_Infos">Account</a>
-            <a href="/Student_Settings">Settings</a>
+            <a href="/FreeCourse" target="_blank">More Courses</a>&nbsp;
         </div>
     </header>
-    <br><br><br><br>
-    <!-- Subject Schedule Table -->
-    <h2>Subject Schedule</h2>
+
+    <h1>Student Weekly Schedule</h1>
+
+    <h2>Your Weekly Schedule</h2>
     <table>
         <thead>
             <tr>
                 <th>Subject Code</th>
                 <th>Subject Name</th>
-                <th>Teacher</th>
-                <th>Time</th>
+                <th>Day of Week</th>
+                <th>Time Slot</th>
                 <th>Location</th>
             </tr>
         </thead>
         <tbody>
-            {% for subjects in Student_Subjects1 %}
-            <tr>
-                <td>{{ subjects[3] }}</td>
-                <td>{{ subjects[2] }}</td>
-                <td>{{ subjects[4] }}</td>
-                <td>{{ subjects[5] }}</td>
-                <td>{{ A }}</td>
-            </tr>
+            {% for class in weekly_schedule %}
+                <tr>
+                    <td>{{ class.subject_code }}</td>
+                    <td>{{ class.subject_name }}</td>
+                    <td>{{ class.day_of_week }}</td>
+                    <td>{{ class.time_slot }}</td>
+                    <td>{{ class.location }}</td>
+                </tr>
             {% endfor %}
-        </tbody>
-    </table>
-
-    <!-- Weekly Schedule Table -->
-    <h2>Weekly Schedule</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>08:00 - 09:30</td>
-                <td>Math 101</td>
-                <td class="empty-slot"></td>
-                <td>Science 102</td>
-                <td class="empty-slot"></td>
-                <td>History 103</td>
-            </tr>
-            <tr>
-                <td>10:00 - 11:30</td>
-                <td>Science 102</td>
-                <td>Math 101</td>
-                <td class="empty-slot"></td>
-                <td>History 103</td>
-                <td class="empty-slot"></td>
-            </tr>
-            <!-- Add more rows as needed -->
         </tbody>
     </table>
 

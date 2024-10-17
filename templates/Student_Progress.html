@@ -16,7 +16,6 @@
             <a id="Grades" href="/Student_Grades">Grades</a>
             <a id="Schedule" href="/Student_Schedule">Schedule</a>
             <a id="Account" href="/View_Student_Infos ">Account</a>
-            <a href="/Student_Settings">Settings</a>
         </div>
     </header>
     <br><br><br><br>
@@ -24,46 +23,84 @@
     <h1>First Semester Progress Overview</h1>
 
     <div class="charts-container">
-        
         <div class="chart-box">
-            <h2>Grades Distribution - Pie Chart</h2>
+            <h2>Grades Distribution</h2>
             <div id="firstPieChart"></div> 
         </div>
-
-        
         <div class="chart-box">
-            <h2>Average Grades - Bar Chart</h2>
+            <h2>Average Grades</h2>
             <div id="firstBarChart"></div> 
         </div>
-
-        
         <div class="chart-box">
-            <h2>Grade Trends - Line Chart</h2>
+            <h2>Grade Trends</h2>
             <div id="firstLineChart"></div> 
         </div>
     </div>
 
-    <br><br><br><br><br>
-    <h1>Second Semester Progress Overview</h1>
+    <div id="full-subject-names">
+        <h4>Full Subject Names</h4>
+        <ul id="subject-list"></ul>
+    </div>
 
+    <br><br>
+    
+    {% if show_second_charts %}
     <div class="charts-container">
-        
         <div class="chart-box">
-            <h2>Grades Distribution - Pie Chart</h2>
+            <h2>Grades Distribution</h2>
             <div id="secondPieChart"></div> 
         </div>
-
-        
         <div class="chart-box">
-            <h2>Average Grades - Bar Chart</h2>
+            <h2>Average Grades</h2>
             <div id="secondBarChart"></div> 
         </div>
-
-        
         <div class="chart-box">
-            <h2>Grade Trends - Line Chart</h2>
+            <h2>Grade Trends</h2>
             <div id="secondLineChart"></div> 
         </div>
+    </div>
+    
+    <div id="full-subject-names2">
+        <h4>Full Subject Names</h4>
+        <ul id="subject-list2"></ul>
+    </div>
+    {% endif %}
+
+    <form action="/Student_Progress" id="subjects-form">
+        {% if subjects %}
+        <div id="subjects-data" data-subjects='{{ subjects | tojson }}'></div>
+        {% endif %}
+    </form>
+
+    <form action="/Student_Progress" id="subjects-form2">
+        {% if five_to_last %}
+        <div id="subjects-data2" data-subjects2='{{ five_to_last | tojson }}'></div>
+        {% endif %}
+    </form>
+    
+    <div class="chart-explanation">
+        <h3>First Semester Overview</h3>
+        <p>Welcome! Below is an overview of your performance. Each chart reflects your academic journey. Use the insights to guide your study plan.</p>
+    
+        <h4>Pie Chart: Subject Focus</h4>
+        <p>This chart represents how much time you've dedicated to each subject. Consider how this distribution aligns with your performance.</p>
+    
+        <h4>Bar Chart: Subject Performance</h4>
+        <p>Here, you can see how you've scored in each subject. Compare your scores to identify strengths and areas for improvement. <span id="dynamic-insights"></span></p>
+    
+        <h4>Line Chart: Progress Over Time</h4>
+        <p>This line chart illustrates your progress throughout the semester. Use it to identify trends in your learning. <span id="progress-insights"></span></p>
+    
+        <h3>Personal Reflections</h3>
+        <ul>
+            <li><strong>Reflection Question:</strong> What strategies helped you succeed in Programming Fundamentals this semester?</li>
+            <li><strong>Goal Setting:</strong> Based on your current performance, what is your goal for the next semester?</li>
+        </ul>
+    
+        <h3>Resources for Improvement</h3>
+        <ul id="resource-list">
+        <a href="/FreeCourse">Click here!</a>
+        </ul>
     </div>
 
     <script src="/static/javascript/Student_Home_Page.js"></script>

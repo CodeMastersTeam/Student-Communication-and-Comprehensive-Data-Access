@@ -88,18 +88,25 @@ class Data:
                                                         course=course)
 
 
-        @self.app.route("/Student_Progress")
+        @self.app.route("/Student_Progress", methods=['GET'])
         def Student_Progress():
-            username = session["username"]
+            username = session.get("username")
             if not username:
                 return redirect(url_for("Student_logout"))
-
             
+            course_id = student_CourseID(username)
+            YearID = student_YearID(username)
+        
+            subjects = subject_student_(YearID[0], 1, course_id[0])
+            if not subjects:
+                return render_template("Student_Progress.html", subjects=[], five_to_last=[], show_second_charts=False)
+            
+            first_4 = subjects[:4]  
+            five_to_last = subjects[4:] if len(subjects) > 4 else []  
+            show_second_charts = len(subjects) > 4  # Flag to determine if second charts should be shown
+        
+            return render_template("Student_Progress.html", subjects=first_4, five_to_last=five_to_last, show_second_charts=show_second_charts)
 
-
-
-
-            return render_template("Student_Progress.html")
 
         @self.app.route("/Student_Grades")
         def Student_Grades():
@@ -153,22 +160,64 @@ class Data:
                 return render_template("Student_Grades.html",  Student_Subjects1 = Student_Subjects1, 
                                                                 Student_Subjects2 = Student_Subjects2, A = Teacher_Fullname)
             
-
-
-
-
-
-
-
-
-
-
-
-
         @self.app.route("/Student_Schedule")
         def Student_Schedule():
-            Username = session["username"]
-            return render_template("Student_Schedule.html")
+            username = session["username"]
+
+            db_config = {
+            'user': 'root',
+            'password': '',
+            'host': 'localhost',
+            'database': 'for_finals_2nd_year_project',
+        }       
+            connection = mysql.connector.connect(**db_config)
+            cursor = connection.cursor(dictionary=True)
+
+            cursor.execute("""
+                SELECT year_id, course_id 
+                FROM students 
+                WHERE username = %s
+            """, (username,))
+            student_info = cursor.fetchone()
+
+            if student_info:
+                year_id = student_info['year_id']
+                course_id = student_info['course_id']
+
+                cursor.execute("""
+                    SELECT * 
+                    FROM weekly_schedule 
+                    WHERE year_id = %s AND course_id = %s
+                """, (year_id, course_id))
+                weekly_schedule = cursor.fetchall()
+
+                cursor.execute("""
+                    SELECT 
+                        subject_code, 
+                        subject_name, 
+                        CASE 
+                            WHEN semester_id = 1 THEN 'First Semester'
+                            WHEN semester_id = 2 THEN 'Second Semester'
+                            ELSE 'Unknown'
+                        END AS semester,
+                        year_id AS year,
+                        day_of_week,
+                        time_slot,
+                        location
+                    FROM weekly_schedule  -- Adjusted to pull directly from the updated table
+                """)
+                all_subjects = cursor.fetchall()
+            else:
+                weekly_schedule = []
+                all_subjects = []
+
+            cursor.close()
+            connection.close()
+
+            return render_template('Student_Schedule.html', weekly_schedule=weekly_schedule, all_subjects=all_subjects)
+
+
+
 
         @self.app.route("/Student_Settings", methods = ["POST", "GET"])
         def Student_Settings():

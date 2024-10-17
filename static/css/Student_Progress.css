@@ -45,7 +45,94 @@ h2 {
     height: 350px;
 }
 
+.chart-box h2 {
+    color: rgb(230, 91, 91);
+}
+
 .container {
     padding: 0;
     margin: 0;
+}
+
+#full-subject-names,
+#full-subject-names2 {
+    width: 100%; 
+    max-width: 600px; 
+    margin: 20px auto; 
+    padding: 0;
+}
+
+#full-subject-names ul,
+#full-subject-names2 ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#full-subject-names ul li,
+#full-subject-names2 ul li {
+    background-color: #e0f7fa; 
+    margin: 5px 0; 
+    padding: 10px 15px; 
+    border-radius: 5px; 
+    font-size: 1.1em; 
+    color: #00796b; 
+    transition: background-color 0.3s; 
+}
+
+#full-subject-names ul li:hover,
+#full-subject-names2 ul li:hover {
+    background-color: #b2ebf2; 
+}
+
+.chart-explanation {
+    width: 100%; 
+    max-width: 800px;
+    background-color: #f4f9f4;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px auto; 
+}
+
+.chart-explanation h3 {
+    font-size: 1.6em; 
+    margin-bottom: 10px;
+    color: #00796b; 
+}
+
+
+.chart-explanation h4 {
+    font-size: 1.1em; 
+    margin-bottom: 10px;
+    color: #00796b; 
+}
+
+.chart-explanation p,
+.chart-explanation ul {
+    font-size: 1.1em; 
+    line-height: 1.5em; 
+    color: #555;
+}
+
+
+.chart-explanation ul li {
+    margin: 8px 0; 
+    padding: 8px 12px;
+    border-left: 4px solid #00796b;
+    background-color: #e0f2f1; 
+    border-radius: 5px; 
+}
+
+#resource-list a {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #00796b;
+    color: white; 
+    border-radius: 5px; 
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+#resource-list a:hover {
+    background-color: #004d40;
 }
