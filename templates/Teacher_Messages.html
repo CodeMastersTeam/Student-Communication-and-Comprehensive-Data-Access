@@ -4,26 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/Teacher_Messages.css">
-    <title>Messages</title>
+    <title>Teacher Messages</title>
 </head>
 <body>
     <header class="top-nav">
-        <a class="active" href="/Teacher_Home_Page" class="active">Dashboard</a>
-        <a class="active2" href="/Teacher_Classes">Students</a>
-        <a class="active6" href="/Teacher_Resources">Resources</a>
-
+        <a href="/Teacher_Home_Page">Dashboard</a>
+        <a href="/Teacher_Classes">Students</a>
+        <a href="/Teacher_Resources">Resources</a>
         <div class="top-nav-right">
-            <a class="active7" href="/Teacher_Settings">Settings</a>
+            <a href="/Teacher_Settings">Settings</a>
             <a href="/logout">Logout</a>
         </div>
     </header>
-    <ol>
-        <li><button type="button">Selwyn</button></li>
-        <li>Jayme</li>
-        <li>a</li>
-        <li>b</li>
-        <li>c</li>
-        <hr>
-    </ol>
+
+    <form method="POST" action="{{ url_for('Teacher_Messages') }}">
+        <label for="student">Select Student:</label>
+        <select name="student_username" id="student">
+            {% for student in students %}
+                <option value="{{ student[0] }}" {% if student[0] == selected_student[0] %}selected{% endif %}>
+                    {{ student[2] }} {{ student[3] }}
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit">View Messages</button> 
+    </form>
+
+    <div class="profile">
+        <img src="/static/uploads/{{ selected_student[1] }}" alt="Profile Picture of {{ selected_student[2] }} {{ selected_student[3] }}">
+        <h2>{{ selected_student[2] }} {{ selected_student[3] }}</h2>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="/static//javascript/Teacher_Messages.js"></script>
 </body>
 </html>

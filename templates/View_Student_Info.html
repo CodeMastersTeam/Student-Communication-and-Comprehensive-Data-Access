@@ -45,7 +45,7 @@
                 <p>
                     Firstname: 
                     <span class="editable-field" id="firstname">{{ firstname }}</span>
-                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('firstname')">
+                    <img src="{{ url_for('static', filename='uploads/' ~ profile_picture) }}" alt="Edit" class="edit-icon" onclick="editField('firstname')">
                 </p>
                 <form class="edit-form" id="edit-firstname-form" method="POST" action="/update_student_info">
                     <input type="hidden" name="field_name" value="firstname">

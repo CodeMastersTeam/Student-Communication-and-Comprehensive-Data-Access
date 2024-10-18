@@ -6,8 +6,8 @@ import time
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 import traceback
+from datetime import datetime
 
-model = YOLO('yolo11n.pt')
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'jfif'}
@@ -510,7 +510,6 @@ class Data:
                 db = Database()
                 print("Database connection established")
 
-                # Simplified update query
                 update_query = """
                 INSERT INTO student_grades (student_id, subject_id, grade, assessment_period, semester_id, year_id)
                 VALUES ((SELECT student_id FROM students WHERE username = %s),
@@ -535,15 +534,72 @@ class Data:
                     db.close()
                 print("update_grade function completed")
 
+
+
+        @self.app.route("/Teacher_Messages", methods=["POST", "GET"])
+        def Teacher_Messages():
+            username = session.get("username")
+            if not username:
+                return redirect(url_for("Teacher_login"))
+            
+            username = session.get("username")
+            if not username:
+                return redirect(url_for("Student_logout"))
+
+            year, dep = Teacher_yearID_Department(username)
+
+            students = Student_firstname_lastname(year, dep)
+
+            if request.method == "POST":
+                selected_student_username = request.form.get('student_username')
+            else:
+                selected_student_username = students[0][0] if students else None
+
+            if not selected_student_username:
+                return "No students found", 404
+
+            selected_student = next((student for student in students if student[0] == selected_student_username), None)
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if not selected_student:
+                return "Student not found", 404
+
+            return render_template("Teacher_Messages.html", 
+                                   students=students, 
+                                   selected_student=selected_student)
+
+
+        
+        
         @self.app.route("/Teacher_Schedule")
         def Teacher_Schedule():
             username = session["username"]
             return render_template("/Teacher_Schedule.html")
-
-        @self.app.route("/Teacher_Messages")
-        def Teacher_Messages():
-            username = session["username"]
-            return render_template("/Teacher_Messages.html")
         
         @self.app.route("/Teacher_Resources")
         def Teacher_Resources():
@@ -700,6 +756,7 @@ class Data:
         
         @self.app.route("/camera", methods=['POST', 'GET'])
         def camera():
+            model = YOLO('yolo11n.pt')
             Connect = mysql.connector.connect(
             host = "localhost",
             user = "root",
@@ -841,6 +898,10 @@ class Data:
             teacher_id = teacher_[0]
             print(f"Teacher ID: {teacher_id}")
 
+            teacher_username = Teacher_username(teacher_id)
+            
+            print("Teacher teacher_username: ", teacher_username)
+
             chat_partner_id = user_id  if teacher_id != teacher_id else user_id  
 
             if request.method == "POST":
@@ -851,26 +912,24 @@ class Data:
                     if not message:
                         flash("Message cannot be empty", "error")
                         return redirect(url_for("Messenger"))
-
-                    Insert_Text_In_Messenger(teacher_id, chat_partner_id, message)
+                    
+                    sender_type = "student"
+                    Insert_Text_In_Messenger(teacher_id, chat_partner_id, message, sender_type = sender_type, teacher_username = teacher_username, student_username = user)
 
                 elif action == "delete":
-                    Delete_Text_In_Messenger()
+                    Delete_Text_In_Messenger(teacher_username, user)
 
-            chat_history = Recieve_Text_In_Messenger(teacher_id, chat_partner_id)
+            chat_history = Recieve_Text_In_Messenger(teacher_id, chat_partner_id, teacher_username = teacher_username, student_username = user)
 
             return render_template("Student_Messenger.html", x=chat_history, teacher_name=Teacher_Fullname)
 
-        #TODO 
-        @self.app.route("/Progress")
-        def Progress():
-            pass
 
 
 
 
 
 
+            
     def run(self):
         self.app.run(debug = True)
         

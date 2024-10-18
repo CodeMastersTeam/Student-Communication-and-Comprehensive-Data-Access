@@ -277,7 +277,7 @@ def get_teacher_name(teacher_id):
         print(f"Error: {e}")
         return None
 
-def Insert_Text_In_Messenger(Teacher_ID, Student_ID, message_Text, Message_Date = None):
+def Insert_Text_In_Messenger(Teacher_ID, Student_ID, message_Text, Message_Date = None, sender_type = None, teacher_username = None, student_username = None):
     Connect = mysql.connector.connect(
     host = "localhost",
     user = "root",
@@ -286,16 +286,16 @@ def Insert_Text_In_Messenger(Teacher_ID, Student_ID, message_Text, Message_Date 
 )
 
     db = Connect.cursor()
-    q = '''INSERT INTO messages(teacher_id, student_id, message_text, message_date)
+    q = '''INSERT INTO messages(teacher_id, student_id, message_text, message_date, sender_type, teacher_username, student_username)
            VALUES
-           (%s, %s, %s, %s)'''
-    db.execute(q, (Teacher_ID, Student_ID, message_Text, Message_Date))
+           (%s, %s, %s, %s, %s, %s, %s)'''
+    db.execute(q, (Teacher_ID, Student_ID, message_Text, Message_Date, sender_type, teacher_username, student_username))
     Connect.commit()
 
     db.close()
     Connect.close()
 
-def Recieve_Text_In_Messenger(Teacher_ID, Student_ID, message_Text = None, Message_Date = None):
+def Recieve_Text_In_Messenger(Teacher_ID, Student_ID, message_Text = None, Message_Date = None, sender_type = None, teacher_username = None, student_username = None):
     Connect = mysql.connector.connect(
     host = "localhost",
     user = "root",
@@ -321,8 +321,8 @@ def Delete_Text_In_Messenger(Teacher_ID = None, Student_ID = None, message_Text 
 )
 
     db = Connect.cursor()
-    q = '''DELETE FROM messages'''
-    db.execute(q)
+    q = '''DELETE FROM messages WHERE teacher_username = %s AND student_username = %s'''
+    db.execute(q, (Teacher_ID, Student_ID))
     Connect.commit()
     db.close()
     Connect.close()
@@ -346,7 +346,23 @@ def Teacher_Name(year, department):
         return teacher_names
     
 
-    #TODO
+def Teacher_username(teacher_id)  -> int:
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+
+    db = Connect.cursor()
+    q = '''SELECT username from teachers where teacher_id = %s'''
+    db.execute(q, (teacher_id, ))
+    res = db.fetchone()
+    db.close()
+    Connect.close()
+    return res[0]
+
+
 def Student_details(username):
     Connect = mysql.connector.connect(
     host = "localhost",
@@ -527,31 +543,6 @@ year, dep = Teacher_yearID_Department("SelwynGwapo12A")
 
 Student_firstname_lastname(year, dep)
 
-
-def update_grade_in_db2(subject_id, grade_type, grade_value, student_id, semester_id, year_id):
-    Connect = mysql.connector.connect(
-    host = "localhost",
-    user = "root",
-    password = "",
-    database = "for_finals_2nd_year_project"
-)
-    db = Connect.cursor()
-    try:
-        update_query = """
-        UPDATE student_grades
-        SET grade = %s
-        WHERE subject_id = %s AND assessment_period = %s AND student_id = %s AND semester_id = %s AND year_id = %s
-        """
-        
-        db.execute(update_query, (grade_value, subject_id, grade_type, student_id, semester_id, year_id))
-        
-        print("Grade updated successfully.")
-        return True
-    except Exception as e:
-        print(f"Error updating grade: {e}")
-        return False
-    finally:
-        db.close()
 
 
 
