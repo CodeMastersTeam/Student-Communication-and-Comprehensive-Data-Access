@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/Teacher_Messages.css">
+    <link rel="stylesheet" href="/static/css/Teacher_Gradebook.css">
     <title>Teacher Messages</title>
 </head>
 <body>
@@ -17,42 +17,62 @@
         </div>
     </header>
 
-    <form method="POST" action="{{ url_for('Teacher_Messages') }}">
-        <label for="student">Select Student:</label>
-        <select name="student_username" id="student">
-            {% for student in students %}
-                <option value="{{ student[0] }}" {% if student[0] == selected_student[0] %}selected{% endif %}>
-                    {{ student[2] }} {{ student[3] }}
-                </option>
-            {% endfor %}
-        </select>
-        <button type="submit">View Messages</button> 
-    </form>
+    <div class="box">
+        <form method="POST" action="{{ url_for('Teacher_Messages') }}" class="student-selection">
+            <label for="student">Select Student:</label>
+            <select name="student_username" id="student">
+                {% for student in students %}
+                    <option value="{{ student[0] }}" {% if student[0] == selected_student[0] %}selected{% endif %}>
+                        {{ student[2] }} {{ student[3] }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">View Messages</button>
+        </form>
 
-    <div class="profile">
-        <img src="/static/uploads/{{ selected_student[1] }}" alt="Profile Picture of {{ selected_student[2] }} {{ selected_student[3] }}">
-        <h2>{{ selected_student[2] }} {{ selected_student[3] }}</h2>
+        <!-- Profile Section -->
+        <div class="profile">
+            <img src="/static/uploads/{{ selected_student[1] }}" alt="Profile Picture of {{ selected_student[2] }} {{ selected_student[3] }}">
+            <h2>{{ selected_student[2] }} {{ selected_student[3] }}</h2>
+        </div>
+
+        <!-- Delete Conversation Button -->
+        <button class="delete-conversation-button">Delete Conversation</button>
+
+        <!-- Messages Section -->
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message">
+                    <p>{{ message.content }}</p>
+                    <button class="delete-button" data-message-id="{{ message.id }}">🗑️</button>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Send Message Section -->
+        <div class="send-message">
+            <textarea id="messageContent" placeholder="Type your message here..."></textarea>
+            <button id="sendButton">Send</button>
+        </div>
     </div>
 
+    <script src="/static/javascript/Teacher_Messages.js"></script>
+    <script>
+        document.getElementById('sendButton').addEventListener('click', function() {
+            const messageContent = document.getElementById('messageContent').value;
+            // Logic to send the message (e.g., AJAX request)
+        });
 
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const messageId = this.getAttribute('data-message-id');
+                // Logic to delete the message (e.g., AJAX request)
+            });
+        });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script src="/static//javascript/Teacher_Messages.js"></script>
+        document.querySelector('.delete-conversation-button').addEventListener('click', function() {
+            // Logic to delete the entire conversation
+        });
+    </script>
 </body>
 </html>

@@ -15,6 +15,16 @@ body.dark-mode {
     color: #d1d1d1;
 }
 
+.dashboard-content.light-mode {
+    background-color: #ffffff;
+    color: #333333;
+}
+
+.dashboard-content.dark-mode {
+    background-color: #121212;
+    color: #d1d1d1;
+}
+
 .top-nav {
     width: 100%;
     padding: 1rem;
