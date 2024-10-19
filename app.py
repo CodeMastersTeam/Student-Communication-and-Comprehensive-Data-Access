@@ -104,7 +104,7 @@ class Data:
             
             first_4 = subjects[:4]  
             five_to_last = subjects[4:] if len(subjects) > 4 else []  
-            show_second_charts = len(subjects) > 4  # Flag to determine if second charts should be shown
+            show_second_charts = len(subjects) > 4  
         
             return render_template("Student_Progress.html", subjects=first_4, five_to_last=five_to_last, show_second_charts=show_second_charts)
 
@@ -121,7 +121,7 @@ class Data:
                 
                 department = {1:"BSIT", 2: "NURSING", 3: "Business Administration", 4: "EDUCATION", 5: "Secondary Education"}
             
-                user = session["username"]
+                user = session.get("username")
                 sample = student_year_course_id(user)
                 y, c = sample[0], sample[1]
 
@@ -538,29 +538,14 @@ class Data:
 
         @self.app.route("/Teacher_Messages", methods=["POST", "GET"])
         def Teacher_Messages():
-            username = session.get("username")
-            if not username:
-                return redirect(url_for("Teacher_login"))
             
-            username = session.get("username")
-            if not username:
-                return redirect(url_for("Student_logout"))
-
-            year, dep = Teacher_yearID_Department(username)
-
-            students = Student_firstname_lastname(year, dep)
-
-            if request.method == "POST":
-                selected_student_username = request.form.get('student_username')
-            else:
-                selected_student_username = students[0][0] if students else None
-
-            if not selected_student_username:
-                return "No students found", 404
-
-            selected_student = next((student for student in students if student[0] == selected_student_username), None)
+            teacher_username = session['username']
+            
+            if "username" not in session:
+                return redirect(url_for("Student_Home"))
 
             
+            return render_template("Teacher_Messages.html")
 
 
 
@@ -568,30 +553,6 @@ class Data:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            if not selected_student:
-                return "Student not found", 404
-
-            return render_template("Teacher_Messages.html", 
-                                   students=students, 
-                                   selected_student=selected_student)
 
 
         
@@ -914,14 +875,20 @@ class Data:
                         return redirect(url_for("Messenger"))
                     
                     sender_type = "student"
-                    Insert_Text_In_Messenger(teacher_id, chat_partner_id, message, sender_type = sender_type, teacher_username = teacher_username, student_username = user)
+                    Insert_Text_In_Messenger(teacher_id, user_id, message, sender_type = sender_type, teacher_username = teacher_username, student_username = user)
 
                 elif action == "delete":
-                    Delete_Text_In_Messenger(teacher_username, user)
+                    sender_type = "student"
+                    Delete_Text_In_Messenger(teacher_username, user, sender_type)
+            
+            sender_type = "student"
+            chat_history = Recieve_Text_In_Messenger(teacher_id, user_id, sender_type = sender_type, teacher_username = teacher_username, student_username = user)
 
-            chat_history = Recieve_Text_In_Messenger(teacher_id, chat_partner_id, teacher_username = teacher_username, student_username = user)
+            sender_type2 = "teacher"
+            chat_history2 = Recieve_Text_In_Messenger(teacher_id, user_id, sender_type = sender_type2, teacher_username = teacher_username, student_username = user)
 
-            return render_template("Student_Messenger.html", x=chat_history, teacher_name=Teacher_Fullname)
+
+            return render_template("Student_Messenger.html", x=chat_history, y = chat_history2, teacher_name=Teacher_Fullname)
 
 
 

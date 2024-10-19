@@ -1,104 +1,275 @@
-body {
+/* Base Theme Variables */
+:root {
+    /* Light theme */
+    --light-bg: #ffffff;
+    --light-text: #2c3e50;
+    --light-primary: #3498db;
+    --light-secondary: #2980b9;
+    --light-accent: #e74c3c;
+    --light-surface: #f8f9fa;
+    --light-border: #eaeaea;
+  
+    /* Dark theme */
+    --dark-bg: #1a1b1e;
+    --dark-text: #e0e0e0;
+    --dark-primary: #64b5f6;
+    --dark-secondary: #42a5f5;
+    --dark-accent: #ff5252;
+    --dark-surface: #2d2d2d;
+    --dark-border: #333333;
+  }
+  
+  /* Theme Implementation */
+  body {
+    --bg: var(--light-bg);
+    --text: var(--light-text);
+    --primary: var(--light-primary);
+    --secondary: var(--light-secondary);
+    --accent: var(--light-accent);
+    --surface: var(--light-surface);
+    --border: var(--light-border);
+    
+    background-color: var(--bg);
+    color: var(--text);
     font-family: 'Roboto', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
     line-height: 1.6;
-}
-
-.container {
-    width: 80%;
-    margin: 0 auto;
-}
-
-header {
-    background-color: #0044cc; /* Deep blue for header */
-    color: #fff;
-    padding: 10px 0;
-}
-
-.logo {
-    display: inline-block;
-    font-size: 2em;
     margin: 0;
-}
-
-nav {
-    float: right;
-}
-
-nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin-left: 20px;
-}
-
-nav a {
-    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  
+  body.dark-mode {
+    --bg: var(--dark-bg);
+    --text: var(--dark-text);
+    --primary: var(--dark-primary);
+    --secondary: var(--dark-secondary);
+    --accent: var(--dark-accent);
+    --surface: var(--dark-surface);
+    --border: var(--dark-border);
+  }
+  
+  /* Layout Structure */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  
+  /* Header & Navigation */
+  header {
+    background-color: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .logo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary);
     text-decoration: none;
-    font-weight: bold;
-}
-
-.hero {
-    background-image: url('12.jpg'); /* Ensure this image is high quality */
-    background-size: cover;
-    background-position: center;
-    min-height: 60vh;
+  }
+  
+  nav ul {
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+  }
+  
+  nav a:hover {
+    background-color: var(--surface);
+    color: var(--primary);
+  }
+  
+  /* Hero Section */
+  .hero {
+    background-color: var(--surface);
+    padding: 6rem 0;
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .hero h2 {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+  }
+  
+  .hero p {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    color: var(--text);
+  }
+  
+  /* Main Content Layout */
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+    margin: 4rem 0;
+  }
+  
+  /* About Section */
+  #about {
+    grid-column: span 12;
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  /* Admissions Section */
+  #admissions {
+    grid-column: 1 / 7;
+    background-color: var(--surface);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  
+  /* Student Life Section */
+  #student-life {
+    grid-column: 7 / 13;
+    background-color: var(--surface);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  
+  /* Section Headers */
+  .section-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary);
+  }
+  
+  /* Lists */
+  .content-list {
+    margin: 1.5rem 0;
+    padding-left: 1.25rem;
+  }
+  
+  .content-list li {
+    margin-bottom: 0.75rem;
+  }
+  
+  /* Contact Section */
+  #contact {
+    grid-column: span 12;
+    background-color: var(--surface);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  
+  /* Form Styles */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  input, textarea {
+    padding: 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background-color: var(--bg);
+    color: var(--text);
+  }
+  
+  button {
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+  }
+  
+  button:hover {
+    background-color: var(--secondary);
+  }
+  
+  /* Theme Toggle */
+  .theme-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    padding: 0.75rem;
+    border-radius: 50%;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    color: white;
-}
-
-.hero-content {
-    background-color: rgba(0, 0, 0, 0.5); 
-    padding: 20px;
-    border-radius: 10px;
-}
-
-.cta-button {
-    background-color: #ff4081; 
-    color: #fff;
-    padding: 15px 30px;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.info-section {
-    background-color: #f4f4f4;
-    padding: 20px;
-    margin: 20px 0;
-    border-radius: 8px;
-}
-
-.info-section h2 {
-    margin-top: 0;
-}
-
-.programs-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.programs-list article {
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 10px;
-    flex: 1 1 30%; /* Flexbox for responsive grid */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-footer {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #0044cc;
-    color: #fff;
-}
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    #admissions,
+    #student-life {
+      grid-column: span 12;
+    }
+    
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header-content {
+      flex-direction: column;
+    }
+    
+    nav ul {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .hero h2 {
+      font-size: 2rem;
+    }
+  }

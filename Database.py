@@ -220,6 +220,22 @@ def student_YearID(username):
     Connect.close()
     return res
 
+def teacher_id(username):
+    Connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    db = Connect.cursor()
+
+    q = '''SELECT teacher_id FROM teachers WHERE username = %s'''
+    db.execute(q, (username, ))
+    res = db.fetchone()
+    db.close()
+    Connect.close()
+    return res
+
 
 # TODO SUBJECTS
 def subject_student_(year_id, semester_id, course_id):
@@ -304,13 +320,57 @@ def Recieve_Text_In_Messenger(Teacher_ID, Student_ID, message_Text = None, Messa
 )
 
     db = Connect.cursor()
-    q = '''SELECT message_text, message_date FROM messages WHERE teacher_id = %s AND student_id = %s'''
-    c = (Teacher_ID, Student_ID)
+    q = '''SELECT message_text, message_date FROM messages WHERE teacher_id = %s AND student_id = %s AND sender_type = %s AND student_username = %s'''
+    c = (Teacher_ID, Student_ID, sender_type, student_username)
     db.execute(q, c)
-    ans = db.fetchall()
+    student_ans = db.fetchall()
     db.close()
     Connect.close()
-    return ans
+    return student_ans
+
+
+#TODO
+
+
+def Recieve_Text_In_Messenger_Teacher(Teacher_ID, Student_ID, message_Text = None, Message_Date = None, sender_type = None, teacher_username = None, student_username = None):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+
+    db = Connect.cursor()
+    q = '''SELECT message_text, message_date FROM messages WHERE teacher_id = %s AND student_id = %s AND sender_type = %s AND student_username = %s'''
+    c = (Teacher_ID, Student_ID, sender_type, student_username)
+    db.execute(q, c)
+    student_ans = db.fetchall()
+    db.close()
+    Connect.close()
+    return student_ans
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def Delete_Text_In_Messenger(Teacher_ID = None, Student_ID = None, message_Text = None, Message_Date = None):
     Connect = mysql.connector.connect(
@@ -401,9 +461,10 @@ def Teacher_details(year, department):
     q = '''SELECT * FROM teachers WHERE year = %s AND department = %s'''
     db.execute(q, (year, department, ))
     c = ('teacher_id', 'firstname', 'middlename', 'lastname', 'age', 'address', 'sex', 'cellphone_number', 'birth_date', 'birth_place', 'username', 'password', 'department', 'profile_picture', 'year', 'semester_id', 'section_name')
+    z = db.fetchone() 
     db.close()
     Connect.close()
-    zz = dict(zip(c, db.fetchone()))
+    zz = dict(zip(c, z))
     
    
 
@@ -411,6 +472,79 @@ def Teacher_details(year, department):
     zz['firstname'], zz['lastname'], zz['department'], zz['year'], zz['semester_id'], zz['section_name']
 
     return teacher_id, username, firstname, lastname, department, year, semester_id, section_name
+
+def student_details(year, course_id):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project",
+    buffered=True
+)
+
+
+    db = Connect.cursor(buffered=True)
+    q = '''SELECT student_id FROM students WHERE year_id = %s AND course_id = %s'''
+    db.execute(q, (year, course_id, ))
+    z = db.fetchone()
+    z= z[0]
+    db.close()
+    Connect.close()    
+    return z
+
+
+def student_id(username):
+    # Query to find the student ID based on the username
+    db.execute("SELECT student_id FROM students WHERE username = %s", (username,))
+    result = db.fetchone()
+
+    # Check if a result is found
+    if result is None:
+        return None  # Return None if no student is found
+
+    return result[0]  # Assuming the ID is in the first column
+
+
+def get_students():
+    connection = mysql.connector.connect(
+         host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    
+    cursor = connection.cursor()
+    
+    cursor.execute("SELECT student_id, profile_picture, firstname, lastname FROM students")
+    students = cursor.fetchall()
+    
+    cursor.close()
+    connection.close()
+    
+    return students
+
+#TODO
+def get_selected_student(student_username):
+    connection = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    
+    cursor = connection.cursor()
+    
+    query = "SELECT student_id, profile_picture, first_name, last_name FROM students WHERE username = %s"
+    cursor.execute(query, (student_username,))
+    student = cursor.fetchone()
+    
+    cursor.close()
+    connection.close()
+    
+    return student
+
+
+
 
 def teacher_user_id(year, department):
     Connect = mysql.connector.connect(
@@ -458,6 +592,23 @@ def student_year_course_id(username):
     db = Connect.cursor(buffered=True)
 
     q = '''SELECT year_id, course_id FROM students where username = %s'''
+    db.execute(q, (username, ))
+    x = db.fetchone()
+    db.close()
+    Connect.close()
+    return x
+
+def teacher_year_course_id(username):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project",
+    buffered=True
+)
+    db = Connect.cursor(buffered=True)
+
+    q = '''SELECT year, department FROM teachers where username = %s'''
     db.execute(q, (username, ))
     x = db.fetchone()
     db.close()

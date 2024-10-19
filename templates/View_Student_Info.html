@@ -26,7 +26,7 @@
             {% if profile_picture %}
                 <img src="{{ url_for('static', filename='uploads/' ~ profile_picture) }}" alt="Profile Picture">
             {% else %}
-                <img class="Image_Profile" src="/static/img/clustering-02.png" alt="Profile Picture">
+                <img class="Image_Profile" src="/static/img/successfully-done-4416855-3663892.webp" alt="Profile Picture">
             {% endif %}
             <form method="POST" action="{{ url_for('upload_profile_picture') }}" enctype="multipart/form-data">
                 <input type="file" name="profile_picture" accept="image/*">
@@ -45,7 +45,7 @@
                 <p>
                     Firstname: 
                     <span class="editable-field" id="firstname">{{ firstname }}</span>
-                    <img src="{{ url_for('static', filename='uploads/' ~ profile_picture) }}" alt="Edit" class="edit-icon" onclick="editField('firstname')">
+                    <img src="/static/img/Pen.jpeg" alt="Edit" class="edit-icon" onclick="editField('firstname')">
                 </p>
                 <form class="edit-form" id="edit-firstname-form" method="POST" action="/update_student_info">
                     <input type="hidden" name="field_name" value="firstname">

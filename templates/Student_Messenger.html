@@ -41,6 +41,20 @@
                     {% endif %}
                 {% endfor %}
             {% endif %}
+
+            {% if y %}
+                {% for message in y %}
+                    {% if user == teacher_name %}
+                        <div class="message-right">
+                            <p>{{ message[0] }}</p>
+                        </div>
+                    {% else %}
+                        <div class="message-left">
+                            <p>{{ message[0] }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
         </div>
 
         <form action="/Messenger" method="post" class="message-input-container">
