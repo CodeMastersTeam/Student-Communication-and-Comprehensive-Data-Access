@@ -4,87 +4,190 @@
     <link rel="stylesheet" href="/static/css/Teacher_Home_Page.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/css/Teacher_Home_Page.css">
     <script src="/static/javascript/plotly-2.35.2.min.js"></script>
     <script src="/static/javascript/Teacher_Home_Page.js"></script>
     <title>Teacher's Dashboard</title>
-   
-</head>
-<body>
+
     <style>
-        table, th, td {
-            border: 1px solid black;
+        /* Styling for positioning the charts to match the design */
+        #charts-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .chart-box {
+            width: 30%;
+            padding: 10px;
+        }
+
+        .chart-container {
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .chart-title {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Enhancements */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+        }
+
+        .top-nav {
+            background-color: #004d99;
+            padding: 10px;
+        }
+
+        .top-nav a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .top-nav a:hover {
+            background-color: #00274d;
+        }
+
+        .summary {
+            background-color: #e6f2ff;
+            padding: 20px;
+            margin: 10px 0;
+            border: 1px solid #cce0ff;
+            border-radius: 5px;
+        }
+
+        .filter-container {
+            margin: 20px 0;
+        }
+
+        .actions {
+            margin: 20px 0;
+        }
+
+        .alert {
+            background-color: #ffcccc;
+            padding: 10px;
+            border: 1px solid #ff9999;
+            border-radius: 5px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
         }
     </style>
+</head>
 
+<body>
     <header class="top-nav">
         <a href="/Teacher_Home_Page" class="active">Dashboard</a>
         <a href="/Teacher_Classes" class="active2">Students</a>
         <a href="/Teacher_Resources" class="active6">Resources</a>
-
         <div class="top-nav-right">
             <a href="/Teacher_Settings" class="active7">Settings</a>
             <a href="/logout">Logout</a>
         </div>
     </header>
 
-    <p>Pie chart - Breakdown of class Mastery</p>
-    <small>pie labels - Mastery, Approaching, Needs help, Failing</small>
-    <p>bar graph - Class standard performance</p>
-    <p>Line chart - Class mastery over time</p>
-
-    <table>
-        <tbody>
-            <tr>
-                <th>Top performers</th>
-                <th>Need help</th>
-                <th>Approaching Mastery</th>
-            </tr>
-            <tr>
-                <td>student_1- Top performer</td>
-                <td>student_1 - Need help</td>
-                <td>student_1 - approaching master</td>
-            </tr>
-            <tr>
-                <td>student_2 - Top performer</td>
-                <td>student_2 - Need help</td>
-                <td>student_2 - approaching master</td>
-            </tr>
-        </tbody>
-    </table>
-
-
-
-
-
-
-
-
-    <div class="chart-explanation">
-        <h3>First Semester Overview</h3>
-        <p>Welcome! Below is an overview of your performance. Each chart reflects your academic journey. Use the insights to guide your study plan.</p>
-    
-        <h4>Pie Chart: Subject Focus</h4>
-        <p>This chart represents how much time you've dedicated to each subject. Consider how this distribution aligns with your performance.</p>
-    
-        <h4>Bar Chart: Subject Performance</h4>
-        <p>Here, you can see how you've scored in each subject. Compare your scores to identify strengths and areas for improvement. <span id="dynamic-insights"></span></p>
-    
-        <h4>Line Chart: Progress Over Time</h4>
-        <p>This line chart illustrates your progress throughout the semester. Use it to identify trends in your learning. <span id="progress-insights"></span></p>
-    
-        <h3>Personal Reflections</h3>
-        <ul>
-            <li><strong>Reflection Question:</strong> What strategies helped you succeed in Programming Fundamentals this semester?</li>
-            <li><strong>Goal Setting:</strong> Based on your current performance, what is your goal for the next semester?</li>
-        </ul>
-    
-        <h3>Resources for Improvement</h3>
-        <ul id="resource-list">
-        <a href="/FreeCourse">Click here!</a>
-        </ul>
+    <!-- Performance Summary -->
+    <div class="summary">
+        <h2>Class Performance Summary</h2>
+        <p><strong>Average Class Score:</strong> 78%</p>
+        <p><strong>Best-Performing Student:</strong> Jane Doe (95%)</p>
+        <p><strong>Lowest-Performing Learning Objective:</strong> Writing Skills (70%)</p>
     </div>
-    
 
+    <!-- Filter Classes -->
+    <div class="filter-container">
+        <label for="class-select">Select Class:</label>
+        <select id="class-select">
+            <option value="class1">Class 1</option>
+            <option value="class2">Class 2</option>
+            <option value="class3">Class 3</option>
+        </select>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="actions">
+        <button onclick="alert('Emailing parents...')">Email Parents of Struggling Students</button>
+        <button onclick="alert('Assigning extra resources...')">Assign Extra Resources</button>
+    </div>
+
+    <!-- Alert -->
+    <div class="alert">
+        <p><strong>Alert:</strong> 5 students are at risk of failing the next assessment.</p>
+    </div>
+
+    <!-- Charts -->
+    <div id="charts-container">
+        <div class="chart-box">
+            <div class="chart-container">
+                <div class="chart-title">Breakdown of Class Mastery</div>
+                <div id="pie-chart"></div>
+            </div>
+        </div>
+
+        <div class="chart-box">
+            <div class="chart-container">
+                <div class="chart-title">Class Standard Performance</div>
+                <div id="bar-chart"></div>
+            </div>
+        </div>
+
+        <div class="chart-box">
+            <div class="chart-container">
+                <div class="chart-title">Class Mastery Over Time</div>
+                <div id="line-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Need help? <a href="/Teacher_FAQ">Visit the FAQ</a> or <a href="/Teacher_Resources">Browse Resources</a></p>
+    </footer>
+
+    <script>
+        // Pie chart data
+        const pieData = [{
+            values: [40, 30, 15, 10],
+            labels: ['Mastery', 'Approaching', 'Needs Help', 'Failing'],
+            type: 'pie'
+        }];
+        const pieLayout = { height: 400, width: 400 };
+        Plotly.newPlot('pie-chart', pieData, pieLayout);
+
+        // Bar chart data
+        const barData = [{
+            x: ['Math Proficiency', 'Reading Comprehension', 'Writing Skills', 'Critical Thinking'],
+            y: [85, 70, 90, 80],
+            type: 'bar'
+        }];
+        const barLayout = {
+            height: 400,
+            width: 400,
+            title: 'Class Standard Performance'
+        };
+        Plotly.newPlot('bar-chart', barData, barLayout);
+
+        // Line chart data
+        const lineData = [{
+            x: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+            y: [60, 65, 70, 75, 80],
+            type: 'scatter'
+        }];
+        const lineLayout = {
+            height: 400,
+            width: 400,
+            title: 'Class Mastery Over Time'
+        };
+        Plotly.newPlot('line-chart', lineData, lineLayout);
+    </script>
 </body>
 </html>
