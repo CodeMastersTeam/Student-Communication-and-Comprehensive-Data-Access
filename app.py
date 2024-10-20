@@ -542,21 +542,66 @@ class Data:
 
         @self.app.route("/Teacher_Messages", methods=["POST", "GET"])
         def Teacher_Messages():
-            
-            teacher_username = session['username']
-            
             if "username" not in session:
                 return redirect(url_for("Student_Home"))
 
-            
-            return render_template("Teacher_Messages.html")
+            teacher_username = session['username']
+            yr, crs = Teacher_yearID_Department(teacher_username)
+            student_users = Student_firstname_lastname(yr, crs)
 
+            selected_username = request.args.get("selected_username") or request.form.get("usernamess")
 
+            if not selected_username:
+                return render_template("Teacher_Messages.html",  
+                                       x=None, y=None, 
+                                       teacher_name=None, 
+                                       student_userss=student_users,
+                                       profile_pic_student=None,
+                                       student_firstname=None, 
+                                       student_lastname=None)
 
+            selected_username_id = student_id(selected_username)
+            if selected_username_id is None:
+                flash("Student not found", "error")
+                return redirect(url_for("Teacher_Messages"))
 
+            profile_pic_student = Student_profile_picture(selected_username)
+            teacher_id = Teacher_id(teacher_username)[0]
+            student_firstname, student_lastname = student_first_last(selected_username)
+            student_fullname = f"{student_firstname} {student_lastname}"
 
+            if request.method == "POST":
+                action = request.form.get("action")
 
+                if action == "send":
+                    message = request.form.get("INpts", "").strip()
+                    if not message:
+                        flash("Message cannot be empty", "error")
+                        return redirect(url_for("Teacher_Messages", selected_username=selected_username))
 
+                    sender_type = "teacher"
+                    Insert_Text_In_Messenger(teacher_id, selected_username_id, message, sender_type=sender_type,
+                                             teacher_username=teacher_username, student_username=selected_username)
+
+                elif action == "delete":
+                    sender_type = "teacher"
+                    Delete_Text_In_Messenger(teacher_username, selected_username, sender_type)
+
+                return redirect(url_for("Teacher_Messages", selected_username=selected_username))
+
+            chat_history = Recieve_Text_In_Messenger(teacher_id, selected_username_id, sender_type="teacher",
+                                                     teacher_username=teacher_username, student_username=selected_username)
+            chat_history2 = Recieve_Text_In_Messenger(teacher_id, selected_username_id, sender_type="student",
+                                                      teacher_username=teacher_username, student_username=selected_username)
+
+            return render_template("Teacher_Messages.html",  
+                                   x=chat_history, y=chat_history2, 
+                                   teacher_name=student_fullname,
+                                   student_userss=student_users, 
+                                   profile_pic_student=profile_pic_student,
+                                   selected_username=selected_username,  
+                                   student_firstname=student_firstname, 
+                                   student_lastname=student_lastname)
 
 
         

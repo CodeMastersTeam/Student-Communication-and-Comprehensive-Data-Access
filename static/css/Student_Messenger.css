@@ -1,25 +1,22 @@
-/* General Dark Mode Body Background */
 body.dark-mode {
-    background-color: #1e1e1e;  /* Darken the background */
+    background-color: #1e1e1e;
     color: #d1d1d1;
 }
 
-/* Chat Container */
 .chat-container {
     max-width: 800px;
     margin: 5% auto 2rem auto;
     background-color: var(--chat-bg-color);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);  /* Softer shadow for dark mode */
-    border-radius: 10px;  /* Adding subtle rounding for a more modern feel */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);  
+    border-radius: 10px;  
     padding: 20px;
     transition: background-color 0.3s, color 0.3s;
 }
 
 body.dark-mode .chat-container {
-    --chat-bg-color: #2C2C2C;  /* Darken the chat container */
+    --chat-bg-color: #2C2C2C;  
 }
 
-/* Chat Header */
 .chat-header {
     display: flex;
     align-items: center;
@@ -27,62 +24,57 @@ body.dark-mode .chat-container {
     padding: 15px;
     background-color: var(--chat-header-bg-color);
     color: var(--chat-header-text-color);
-    border-bottom: 1px solid #444;  /* Add border for better separation */
+    border-bottom: 1px solid #444;  
     transition: background-color 0.3s, color 0.3s;
 }
 
 body.dark-mode .chat-header {
-    --chat-header-bg-color: #444444;  /* Darken chat header */
+    --chat-header-bg-color: #444444;  
     --chat-header-text-color: #f1f1f1;
 }
 
-/* Profile Image in Chat Header */
 .profile-pic {
     width: 50px;
     height: 50px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
-    border: 2px solid #ffcc00; /* Restore image border for better visibility */
+    border: 2px solid #ffcc00; 
 }
 
-/* Messages */
 .message-left, .message-right {
     max-width: 60%;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 20px;
-    position: relative; /* For positioning the chat bubbles */
+    position: relative;
     transition: background-color 0.3s, color 0.3s;
 }
 
-/* Left-side Message (Teacher) */
 .message-left {
-    background-color: #f1f1f1; /* Lighter for contrast */
+    background-color: #f1f1f1;
     color: #333;
     text-align: left;
     margin-right: auto;
 }
 
 body.dark-mode .message-left {
-    background-color: #333333; /* Adjust for dark mode */
+    background-color: #333333; 
     color: #d1d1d1;
 }
 
-/* Right-side Message (Student) */
 .message-right {
-    background-color: #60c2ec; /* Distinct color for the student messages */
+    background-color: #60c2ec; 
     color: #121212;
     text-align: right;
     margin-left: auto;
 }
 
 body.dark-mode .message-right {
-    background-color: #555555; /* Slightly lighter for contrast in dark mode */
+    background-color: #555555; 
     color: #f1f1f1;
 }
 
-/* Add Arrow Effect to Messages */
 .message-left::before, .message-right::before {
     content: '';
     position: absolute;
@@ -91,7 +83,6 @@ body.dark-mode .message-right {
     border-style: solid;
 }
 
-/* Left Message Arrow */
 .message-left::before {
     border-width: 10px 10px 10px 0;
     border-color: transparent #f1f1f1 transparent transparent;
@@ -103,7 +94,6 @@ body.dark-mode .message-left::before {
     border-color: transparent #333333 transparent transparent;
 }
 
-/* Right Message Arrow */
 .message-right::before {
     border-width: 10px 0 10px 10px;
     border-color: transparent transparent transparent #60c2ec;
@@ -115,7 +105,6 @@ body.dark-mode .message-right::before {
     border-color: transparent transparent transparent #555555;
 }
 
-/* Chat Window (Scrolling Area) */
 .chat-window {
     max-height: 400px;
     overflow-y: auto;
@@ -127,7 +116,6 @@ body.dark-mode .chat-window {
     --chat-window-bg-color: #2c2c2c;
 }
 
-/* Message Input Area */
 .message-input-container {
     display: flex;
     align-items: center;
@@ -154,7 +142,6 @@ body.dark-mode .message-input-wrapper {
     --input-wrapper-bg-color: #444;
 }
 
-/* Input Field */
 #message-box {
     width: 90%;
     border: none;
@@ -169,7 +156,6 @@ body.dark-mode #message-box {
     --message-text-color: #d1d1d1;
 }
 
-/* Send Button */
 #send-btn {
     background-color: var(--send-btn-bg-color);
     color: var(--send-btn-text-color);

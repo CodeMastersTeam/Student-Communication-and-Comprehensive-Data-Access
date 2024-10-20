@@ -5,21 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/Teacher_Gradebook.css">
     <link rel="stylesheet" href="/static/css/Teacher_Messages.css">
+    <link rel="stylesheet" href="/static/css/Student_Messenger.css">
     <title>Teacher Messages</title>
 </head>
 <body>
     <header class="top-nav">
-        <a href="/Teacher_Home_Page" class="active">Dashboard</a>
-        <a href="/Teacher_Classes" class="active2">Students</a>
-        <a href="/Teacher_Resources" class="active6">Resources</a>
-
+        <div class="nav-container">
+            <a href="/Teacher_Home_Page" class="active">Dashboard</a>
+            <a href="/Teacher_Classes" class="active2">Students</a>
+            <a href="/Teacher_Resources" class="active6">Resources</a>
+        </div>
         <div class="top-nav-right">
             <a href="/Teacher_Settings" class="active7">Settings</a>
             <a href="/logout">Logout</a>
         </div>
     </header>
 
-    
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="header-content">
+                {% if profile_pic_student %}
+                    <img src="/static/uploads/{{ profile_pic_student }}" alt="Student Profile" class="profile-pic">
+                {% else %}
+                    <img src="/static/img/message.gif" alt="Student Profile" class="profile-pic">
+                {% endif %}
+                <span class="teacher-name">{{ student_firstname }} {{ student_lastname }}</span>
+            </div>
+        </div>
+
+        <div class="chat-window">
+            {% if x %}
+                {% for message in x %}
+                    <div class="message-container">
+                        {% if user == teacher_name %}
+                            <div class="message-left teacher-message">
+                                <p>{{ message[0] }}</p>
+                            </div>
+                        {% else %}
+                            <div class="message-right student-message">
+                                <p>{{ message[0] }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if y %}
+                {% for message in y %}
+                    <div class="message-container">
+                        {% if user == teacher_name %}
+                            <div class="message-right teacher-message">
+                                <p>{{ message[0] }}</p>
+                            </div>
+                        {% else %}
+                            <div class="message-left student-message">
+                                <p>{{ message[0] }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <form action="/Teacher_Messages" method="post" class="message-input-container">
+            <label for="teacher_messenger">Select students:</label>
+            {% if student_userss %}
+            <div class="select-container">
+                <select name="usernamess" id="teacher_messenger">
+                    {% for i in student_userss %}
+                    <option value="{{ i[0] }}" {% if selected_username == i[0] %} selected {% endif %}>{{ i[2] }} {{i[3]}}</option>
+                    {% endfor %}
+                </select>        
+                <button type="submit" class="submit-btn">Submit</button>
+            </div>
+            {% endif %}
+
+            <div class="message-input-wrapper">
+                <input type="text" name="INpts" id="message-box" placeholder="Type your message..." maxlength="250">
+                <div class="button-container">
+                    <button id="send-btn" name="action" value="send" type="submit" class="highlighted-btn">Send</button>
+                    <button id="send-btn2" type="submit" name="action" value="delete" class="highlighted-btn">Delete conversation</button>
+                </div>
+            </div>
+        </form>   
+    </div>
 
     <script src="/static/javascript/Teacher_Messages.js"></script>
 </body>

@@ -320,7 +320,7 @@ def Recieve_Text_In_Messenger(Teacher_ID, Student_ID, message_Text = None, Messa
 )
 
     db = Connect.cursor()
-    q = '''SELECT message_text, message_date FROM messages WHERE teacher_id = %s AND student_id = %s AND sender_type = %s AND student_username = %s'''
+    q = '''SELECT message_text, message_date FROM messages WHERE teacher_id = %s AND student_id = %s AND sender_type = %s AND student_username = %s ORDER BY message_id ASC'''
     c = (Teacher_ID, Student_ID, sender_type, student_username)
     db.execute(q, c)
     student_ans = db.fetchall()
@@ -563,6 +563,22 @@ def teacher_user_id(year, department):
     Connect.close()
     return res
 
+def Teacher_id(username):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project",
+    buffered=True
+)
+
+    db = Connect.cursor(buffered=True)
+    q = '''SELECT teacher_id FROM teachers WHERE username = %s'''
+    db.execute(q, (username, ))
+    res = db.fetchone()
+    db.close()
+    Connect.close()
+    return res
 
 def student_id(username):
     Connect = mysql.connector.connect(
@@ -675,6 +691,63 @@ def Teacher_yearID_Department(username):
     return year, department[depp]
 
 
+
+
+
+
+
+
+
+
+
+def student_usernames(year_id, course_id):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+    db = Connect.cursor()                  
+
+    q = '''SELECT username from students WHERE year_id = %s AND course_id = %s'''
+    db.execute(q, (year_id, course_id))
+    res = db.fetchall()
+    db.close()
+    Connect.close()
+    return res
+
+
+
+def student_first_last(username):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+    db = Connect.cursor()
+
+    q = '''SELECT firstname, lastname from students WHERE username = %s'''
+    db.execute(q, (username, ))
+    res = db.fetchone()
+    db.close()
+    Connect.close()
+    return res
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def Student_firstname_lastname(year_id, course_id):
     Connect = mysql.connector.connect(
     host = "localhost",
@@ -683,27 +756,12 @@ def Student_firstname_lastname(year_id, course_id):
     database = "for_finals_2nd_year_project"
 )
     db = Connect.cursor()
-    
+
     q = '''SELECT s.username, s.profile_picture, s.firstname, s.lastname FROM students AS s WHERE year_id = %s AND course_id = %s'''
     db.execute(q, (year_id, course_id))
 
     res = db.fetchall()
     return res
-
-year, dep = Teacher_yearID_Department("SelwynGwapo12A")
-
-Student_firstname_lastname(year, dep)
-
-
-
-
-
-
-
-
-
-
-
 
 
 
