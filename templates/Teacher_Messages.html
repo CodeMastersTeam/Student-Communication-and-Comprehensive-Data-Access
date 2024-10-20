@@ -34,22 +34,6 @@
         </div>
 
         <div class="chat-window">
-            {% if x %}
-                {% for message in x %}
-                    <div class="message-container">
-                        {% if user == teacher_name %}
-                            <div class="message-left teacher-message">
-                                <p>{{ message[0] }}</p>
-                            </div>
-                        {% else %}
-                            <div class="message-right student-message">
-                                <p>{{ message[0] }}</p>
-                            </div>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            {% endif %}
-
             {% if y %}
                 {% for message in y %}
                     <div class="message-container">
@@ -59,6 +43,22 @@
                             </div>
                         {% else %}
                             <div class="message-left student-message">
+                                <p>{{ message[0] }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+                        {% if x %}
+                {% for message in x %}
+                    <div class="message-container">
+                        {% if user == teacher_name %}
+                            <div class="message-left teacher-message">
+                                <p>{{ message[0] }}</p>
+                            </div>
+                        {% else %}
+                            <div class="message-right student-message">
                                 <p>{{ message[0] }}</p>
                             </div>
                         {% endif %}
