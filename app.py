@@ -595,7 +595,7 @@ class Data:
                                                       teacher_username=teacher_username, student_username=selected_username)
 
             return render_template("Teacher_Messages.html",  
-                                   x=chat_history, y=chat_history2, 
+                                   x=chat_history, y=chat_history2,
                                    teacher_name=student_fullname,
                                    student_userss=student_users, 
                                    profile_pic_student=profile_pic_student,
@@ -935,7 +935,6 @@ class Data:
 
             sender_type2 = "teacher"
             chat_history2 = Recieve_Text_In_Messenger(teacher_id, user_id, sender_type = sender_type2, teacher_username = teacher_username, student_username = user)
-
 
             return render_template("Student_Messenger.html", x=chat_history, y = chat_history2, teacher_name=Teacher_Fullname)
 

@@ -762,10 +762,3 @@ def Student_firstname_lastname(year_id, course_id):
 
     res = db.fetchall()
     return res
-
-
-
-
-
-
-
