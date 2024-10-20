@@ -5,19 +5,305 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/Teacher_Resources.css">
     <title>Resources</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-nav {
+            background-color: #2c3e50;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .top-nav a:hover {
+            background-color: #34495e;
+        }
+
+        .top-nav a.active6 {
+            background-color: #e74c3c;
+        }
+
+        .top-nav-right {
+            float: right;
+        }
+
+        @media screen and (max-width: 600px) {
+            .top-nav a, .top-nav-right {
+                float: none;
+                display: block;
+                text-align: left;
+            }
+        }
+
+        /* Search bar */
+        .search-container {
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #search-bar {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #004d99;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #00274d;
+        }
+
+        /* Resource categories */
+        .resource-categories {
+            margin: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-categories ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .resource-categories ul li {
+            margin: 10px 0;
+        }
+
+        .resource-categories ul li a {
+            text-decoration: none;
+            color: #004d99;
+            font-size: 18px;
+        }
+
+        .resource-categories ul li a:hover {
+            color: #00274d;
+        }
+
+        /* Featured resources */
+        .featured-resources {
+            margin: 20px;
+        }
+
+        .featured-resources h2 {
+            margin-bottom: 15px;
+        }
+
+        .resource-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-item h3 {
+            margin-top: 0;
+        }
+
+        .resource-item a {
+            text-decoration: none;
+            color: #004d99;
+        }
+
+        .resource-item a:hover {
+            color: #00274d;
+        }
+
+        /* Upload section */
+        .upload-section {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .upload-section form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .upload-section input, .upload-section textarea {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .upload-section button {
+            padding: 10px;
+            background-color: #004d99;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .upload-section button:hover {
+            background-color: #00274d;
+        }
+
+        /* Resource table */
+        #resource-table {
+            width: 100%;
+            margin: 20px;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #resource-table th, #resource-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #resource-table th {
+            background-color: #004d99;
+            color: white;
+        }
+
+        #resource-table td a {
+            color: #004d99;
+            text-decoration: none;
+        }
+
+        #resource-table td a:hover {
+            color: #00274d;
+        }
+
+        #resource-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    </style>
 </head>
 <body>
-    <header class="top-nav"> 
-        <a class="active" href="/Teacher_Home_Page" class="active">Dashboard</a>
+    <header class="top-nav">
+        <a class="active" href="/Teacher_Home_Page">Dashboard</a>
         <a class="active2" href="/Teacher_Classes">Students</a>
         <a class="active6" href="/Teacher_Resources">Resources</a>
-        
 
         <div class="top-nav-right">
             <a class="active7" href="/Teacher_Settings">Settings</a>
             <a href="/logout">Logout</a>
         </div>
     </header>
-    Resources section 
+
+    <!-- Search bar -->
+    <div class="search-container">
+        <input type="text" placeholder="Search resources..." id="search-bar">
+        <button onclick="searchResources()">Search</button>
+    </div>
+
+    <!-- Resource Categories -->
+    <div class="resource-categories">
+        <h2>Resource Categories</h2>
+        <ul>
+            <li><a href="/Teacher_Resources/Lesson_Plans">Lesson Plans</a></li>
+            <li><a href="/Teacher_Resources/Worksheets">Worksheets</a></li>
+            <li><a href="/Teacher_Resources/Quizzes">Quizzes</a></li>
+            <li><a href="/Teacher_Resources/External_Links">External Links</a></li>
+        </ul>
+    </div>
+
+    <!-- Featured Resources -->
+    <div class="featured-resources">
+        <h2>Featured Resources</h2>
+        <div class="resource-item">
+            <h3>Interactive Math Lessons</h3>
+            <p>An engaging set of math lessons for grades 5-8, complete with interactive activities.</p>
+            <a href="/Teacher_Resources/Math_Lessons">View Resource</a>
+        </div>
+        <div class="resource-item">
+            <h3>Comprehensive Grammar Worksheets</h3>
+            <p>A collection of printable worksheets that cover various grammar rules and exercises.</p>
+            <a href="/Teacher_Resources/Grammar_Worksheets">View Resource</a>
+        </div>
+    </div>
+
+    <!-- Upload Resources Section -->
+    <div class="upload-section">
+        <h2>Upload Your Own Resources</h2>
+        <form action="/upload_resource" method="post" enctype="multipart/form-data">
+            <input type="file" name="resource_file" id="resource_file">
+            <input type="text" name="resource_title" placeholder="Resource Title">
+            <textarea name="resource_description" placeholder="Resource Description"></textarea>
+            <button type="submit">Upload Resource</button>
+        </form>
+    </div>
+
+    <!-- Resource Table -->
+    <table id="resource-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Grade Level</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><a href="/Teacher_Resources/Math_Lessons">Interactive Math Lessons</a></td>
+                <td>Math</td>
+                <td>5-8</td>
+                <td>Engaging math lessons with interactive activities.</td>
+            </tr>
+            <tr>
+                <td><a href="/Teacher_Resources/Grammar_Worksheets">Comprehensive Grammar Worksheets</a></td>
+                <td>English</td>
+                <td>6-12</td>
+                <td>Printable worksheets covering grammar rules and exercises.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Search functionality
+        function searchResources() {
+            const input = document.getElementById('search-bar').value.toLowerCase();
+            const table = document.getElementById('resource-table');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName('td');
+                let matchFound = false;
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j].innerText.toLowerCase().includes(input)) {
+                        matchFound = true;
+                        break;
+                    }
+                }
+                rows[i].style.display = matchFound ? '' : 'none';
+            }
+        }
+    </script>
 </body>
 </html>

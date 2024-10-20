@@ -39,3 +39,111 @@ body {
         text-align: left;
     }
 }
+
+
+
+
+
+
+
+
+/* General page layout */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+/* Resource categories */
+.resource-categories {
+    margin: 20px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.resource-categories ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.resource-categories ul li {
+    margin: 10px 0;
+}
+
+.resource-categories ul li a {
+    text-decoration: none;
+    color: #004d99;
+    font-size: 18px;
+}
+
+.resource-categories ul li a:hover {
+    color: #00274d;
+}
+
+/* Featured resources */
+.featured-resources {
+    margin: 20px;
+}
+
+.featured-resources h2 {
+    margin-bottom: 15px;
+}
+
+.resource-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.resource-item h3 {
+    margin-top: 0;
+}
+
+.resource-item a {
+    text-decoration: none;
+    color: #004d99;
+}
+
+.resource-item a:hover {
+    color: #00274d;
+}
+
+/* Upload section */
+.upload-section {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.upload-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.upload-section input, .upload-section textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.upload-section button {
+    padding: 10px;
+    background-color: #004d99;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.upload-section button:hover {
+    background-color: #00274d;
+}
