@@ -30,7 +30,7 @@ class Data:
 
         @self.app.route("/")
         def Home(): 
-            return render_template("Home.html") # Home page
+            return render_template("Main.html") # Home page
 
         @self.app.route("/Register")
         def Teacher_Register():
@@ -281,6 +281,10 @@ class Data:
         def Mharby():
             return render_template("Mharby-Portfolio.html")
         
+        @self.app.route('/home')
+        def home():
+            return render_template("Home.html")
+        
         @self.app.route("/Registration_links", methods = ["POST", "GET"])
         def Registration():
             link = request.form.get("link")
@@ -291,7 +295,7 @@ class Data:
                 elif link == "Main":
                     return render_template("Main.html")
             else:
-                return render_template("Home.html")
+                return render_template("Main.html")
 
 
         @self.app.route("/Inputs", methods=["GET", "POST"])
@@ -727,7 +731,7 @@ class Data:
 
             db = Connect.cursor()
             username = session.get("username")
-            cam = cv2.VideoCapture(1)
+            cam = cv2.VideoCapture(0)
 
             while cv2.waitKey(1) & 0xFF != ord('q'):
                 ret, frame = cam.read()
