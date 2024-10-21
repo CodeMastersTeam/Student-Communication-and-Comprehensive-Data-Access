@@ -48,10 +48,31 @@ class Data:
         def Teacher_login(): 
             return render_template("ForTeachersLogin.html") # Teacher Log In Page
 
-        @self.app.route("/Teacher_Home_Page")
+        @self.app.route("/Teacher_Home_Page", methods = ["POST", "GET"])
         def Teacher_Home_Page(): 
-            username = session["username"]
-            return render_template("Teacher_Home_Page.html")
+            teacher_username = session['username']
+
+            yr, crs = Teacher_yearID_Department(teacher_username)
+            first_semester = 1
+            second_semester = 2
+            Mastery_Prelim, Approaching, Needs_help, Failing = Mastery_Approaching_NeedsHelp_Failing(first_semester, yr)
+            name_first_sem = Top_Student(yr, first_semester)
+            avg_clss_scr = f'{float(Average_Class_Score(first_semester, yr)[0]):.2f}'
+
+            total_math_confidence, total_reading_confidence, total_writing_confidence, total_critical_thinking_confidence = Class_Performance_Survey_Result()
+
+            return render_template("Teacher_Home_Page.html", 
+                                   Mastery_Prelim = Mastery_Prelim, 
+                                   Approaching = Approaching, 
+                                   Needs_help = Needs_help, 
+                                   Failing = Failing,
+                                   name_first_sem = name_first_sem,
+                                   avg_clss_scr = avg_clss_scr,
+                                   total_math_confidence = total_math_confidence, 
+                                   total_reading_confidence = total_reading_confidence, 
+                                   total_writing_confidence = total_writing_confidence, 
+                                   total_critical_thinking_confidence = total_critical_thinking_confidence
+                                   )
 
         @self.app.route('/logout') # Log out
         def Student_logout():
@@ -87,7 +108,35 @@ class Data:
                                                         lastname=lastname, 
                                                         year=year, 
                                                         course=course)
+        
+        
+        @self.app.route("/Student_Survey", methods=['GET', 'POST'])
+        def student_Survey():
+            username = session.get("username")
+            if not username:
+                return redirect(url_for("Student_logout"))
+            
+            if request.method == 'POST':
+                Student_id = student_id(username)
+                math_confidence = request.form.get("math_confidence") 
+                reading_confidence = request.form.get('reading_confidence')
+                writing_confidence = request.form.get('writing_confidence')
+                critical_thinking_confidence = request.form.get('critical_thinking_confidence')
+                improvement_areas = request.form.get('improvement_areas')
+                learning_methods = request.form.get('learning_methods')
 
+                Student_Survey(Student_id, math_confidence, reading_confidence, writing_confidence, critical_thinking_confidence, 
+                                                                                                   improvement_areas, 
+                                                                                                   learning_methods)
+                
+                return render_template("Student_Survey.html", math_confidence = math_confidence, 
+                                                              reading_confidence = reading_confidence, 
+                                                              writing_confidence = writing_confidence, 
+                                                              critical_thinking_confidence = critical_thinking_confidence,
+                                                              improvement_areas = improvement_areas, 
+                                                              learning_methods = learning_methods)
+
+            return render_template("Student_Survey.html")
 
         @self.app.route("/Student_Progress", methods=['GET'])
         def Student_Progress():

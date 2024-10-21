@@ -5,112 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/Teacher_Settings.css">
     <title>Settings</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-
-        .top-nav {
-            background-color: #2c3e50;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .top-nav a {
-            float: left;
-            display: block;
-            color: white;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-
-        .top-nav a:hover {
-            background-color: #34495e;
-        }
-
-        .top-nav a.active7 {
-            background-color: #e74c3c;
-        }
-
-        .top-nav-right {
-            float: right;
-        }
-
-        @media screen and (max-width: 600px) {
-            .top-nav a, .top-nav-right {
-                float: none;
-                display: block;
-                text-align: left;
-            }
-        }
-
-        /* Settings page layout */
-        .settings-container {
-            margin: 20px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .settings-container h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .settings-section {
-            margin-bottom: 20px;
-        }
-
-        .settings-section h3 {
-            color: #004d99;
-            margin-bottom: 10px;
-        }
-
-        .settings-section p {
-            font-size: 16px;
-            color: #555;
-        }
-
-        .settings-section button {
-            padding: 10px 20px;
-            background-color: #004d99;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .settings-section button:hover {
-            background-color: #00274d;
-        }
-
-        .settings-section input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        
-        .settings-section textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-        
-    </style>
 </head>
 <body>
     <header class="top-nav">
@@ -125,14 +19,11 @@
     </header>
 
     <div class="settings-container">
-        <h2>Settings</h2>
-
-        
         <div class="settings-section">
             <h3>Personal Information</h3>
             <p>Update your name, email, and contact information here.</p>
-            <input type="text" placeholder="Full Name" name="full_name" value="">
-            <input type="email" placeholder="Email" name="email" value="ambotgroup@gmail.com">
+            <input type="text" placeholder="Firstame" name="Firstame" value="">
+            <input type="text" placeholder="Lastname" name="Lastname" value="">
             <input type="tel" placeholder="Phone Number" name="phone" value="">
             <button>Save Changes</button>
         </div>

@@ -494,15 +494,13 @@ def student_details(year, course_id):
 
 
 def student_id(username):
-    # Query to find the student ID based on the username
     db.execute("SELECT student_id FROM students WHERE username = %s", (username,))
     result = db.fetchone()
 
-    # Check if a result is found
     if result is None:
-        return None  # Return None if no student is found
+        return None  
 
-    return result[0]  # Assuming the ID is in the first column
+    return result[0] 
 
 
 def get_students():
@@ -690,16 +688,6 @@ def Teacher_yearID_Department(username):
     department = {"BSIT": 1, "NURSING": 2, "Business Administration": 3, "EDUCATION": 4, "Secondary Education": 5}
     return year, department[depp]
 
-
-
-
-
-
-
-
-
-
-
 def student_usernames(year_id, course_id):
     Connect = mysql.connector.connect(
     host = "localhost",
@@ -715,8 +703,6 @@ def student_usernames(year_id, course_id):
     db.close()
     Connect.close()
     return res
-
-
 
 def student_first_last(username):
     Connect = mysql.connector.connect(
@@ -734,20 +720,6 @@ def student_first_last(username):
     Connect.close()
     return res
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def Student_firstname_lastname(year_id, course_id):
     Connect = mysql.connector.connect(
     host = "localhost",
@@ -762,3 +734,163 @@ def Student_firstname_lastname(year_id, course_id):
 
     res = db.fetchall()
     return res
+
+
+def Mastery_Approaching_NeedsHelp_Failing(semester_id, year_id):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+    db = Connect.cursor()
+    
+    Mastery_Prelim = 0
+    Approaching = 0
+    Needs_help = 0
+    Failing = 0
+
+    q1 = '''SELECT COUNT(DISTINCT student_id) FROM student_grades 
+            WHERE grade >= 90 AND semester_id = %s AND year_id = %s AND assessment_period = "Prelim";'''
+    db.execute(q1, (semester_id, year_id))
+    Mastery_Prelim += db.fetchone()[0]
+
+    q2 = '''SELECT COUNT(DISTINCT student_id) FROM student_grades 
+            WHERE grade >= 75 AND grade < 90 AND semester_id = %s AND year_id = %s AND assessment_period = "Prelim";'''
+    db.execute(q2, (semester_id, year_id))
+    Approaching += db.fetchone()[0]
+
+    q3 = '''SELECT COUNT(DISTINCT student_id) FROM student_grades 
+            WHERE grade >= 60 AND grade < 75 AND semester_id = %s AND year_id = %s AND assessment_period = "Prelim";'''
+    db.execute(q3, (semester_id, year_id))
+    Needs_help += db.fetchone()[0]
+
+    q4 = '''SELECT COUNT(DISTINCT student_id) FROM student_grades 
+            WHERE grade < 60 AND semester_id = %s AND year_id = %s AND assessment_period = "Prelim";'''
+    db.execute(q4, (semester_id, year_id))
+    Failing += db.fetchone()[0]
+
+    db.close()
+    Connect.close()
+
+    return Mastery_Prelim, Approaching, Needs_help, Failing
+
+def Top_Student(semester_id, year_id):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+    db = Connect.cursor()
+
+    q = '''SELECT s.firstname, s.lastname
+        FROM students AS s
+        JOIN (
+            SELECT student_id, SUM(grade) AS total_grades
+            FROM student_grades
+            WHERE semester_id = %s AND year_id = %s
+            GROUP BY student_id
+        ) AS g ON s.student_id = g.student_id
+        WHERE g.total_grades = (
+            SELECT MAX(total_grades)
+            FROM (
+                SELECT SUM(grade) AS total_grades
+                FROM student_grades
+                WHERE year_id = 1 AND semester_id = 1 
+                GROUP BY student_id
+            ) AS subquery
+        );
+        '''
+    
+    db.execute(q, (semester_id, year_id, ))
+    res = db.fetchall()
+    db.close()
+    Connect.close()
+    return res
+
+
+def Average_Class_Score(semester_id, year_id):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+)
+    db = Connect.cursor()
+
+    q = 'SELECT AVG(grade) FROM student_grades WHERE semester_id = %s AND year_id = %s'
+    db.execute(q, (semester_id, year_id))
+    res = db.fetchone()
+    db.close()
+    Connect.close()
+    return res
+
+def Student_Survey(student_id, math_confidence, reading_confidence, writing_confidence, critical_thinking_confidence, 
+                   improvement_areas, learning_methods):
+    Connect = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "",
+    database = "for_finals_2nd_year_project"
+    )
+    
+    db = Connect.cursor()
+
+    query = '''
+    INSERT INTO student_surveys (student_id, math_confidence, reading_confidence, writing_confidence, 
+                                  critical_thinking_confidence, improvement_areas, learning_methods)
+    VALUES (%s, %s, %s, %s, %s, %s, %s)
+    ON DUPLICATE KEY UPDATE
+        student_id = VALUES(student_id),
+        math_confidence = VALUES(math_confidence),
+        reading_confidence = VALUES(reading_confidence),
+        writing_confidence = VALUES(writing_confidence),
+        critical_thinking_confidence = VALUES(critical_thinking_confidence),
+        improvement_areas = VALUES(improvement_areas),
+        learning_methods = VALUES(learning_methods)
+    '''
+    
+    values = (student_id, math_confidence, reading_confidence, writing_confidence, 
+              critical_thinking_confidence, improvement_areas, learning_methods)
+    
+    db.execute(query, values)
+    Connect.commit()
+    db.close()
+    Connect.close()
+
+    return math_confidence, reading_confidence, writing_confidence, critical_thinking_confidence, improvement_areas, learning_methods
+
+
+def Class_Performance_Survey_Result():
+    Connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    
+    db = Connect.cursor()
+
+    q_math = 'SELECT SUM(math_confidence) FROM student_surveys'
+    q_reading = 'SELECT SUM(reading_confidence) FROM student_surveys'
+    q_writing = 'SELECT SUM(writing_confidence) FROM student_surveys'
+    q_critical_thinking = 'SELECT SUM(critical_thinking_confidence) FROM student_surveys'
+
+    db.execute(q_math)
+    total_math_confidence = db.fetchone()[0] or 0 
+
+    db.execute(q_reading)
+    total_reading_confidence = db.fetchone()[0] or 0 
+
+    db.execute(q_writing)
+    total_writing_confidence = db.fetchone()[0] or 0  
+
+    db.execute(q_critical_thinking)
+    total_critical_thinking_confidence = db.fetchone()[0] or 0  
+
+    db.close()
+    Connect.close()
+
+    return total_math_confidence, total_reading_confidence, total_writing_confidence, total_critical_thinking_confidence
+

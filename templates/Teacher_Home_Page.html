@@ -4,68 +4,7 @@
     <link rel="stylesheet" href="/static/css/Teacher_Home_Page.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="/static/javascript/plotly-2.35.2.min.js"></script>
-    <script src="/static/javascript/Teacher_Home_Page.js"></script>
     <title>Teacher's Dashboard</title>
-
-    <style>
-        /* Styling for positioning the charts to match the design */
-        #charts-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .chart-box {
-            width: 30%;
-            padding: 10px;
-        }
-
-        .chart-container {
-            border: 1px solid #ccc;
-            padding: 10px;
-            background-color: #f9f9f9;
-        }
-
-        .chart-title {
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        /* Enhancements */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-        }
-        .summary {
-            background-color: #e6f2ff;
-            padding: 20px;
-            margin: 10px 0;
-            border: 1px solid #cce0ff;
-            border-radius: 5px;
-        }
-
-        .filter-container {
-            margin: 20px 0;
-        }
-
-        .actions {
-            margin: 20px 0;
-        }
-
-        .alert {
-            background-color: #ffcccc;
-            padding: 10px;
-            border: 1px solid #ff9999;
-            border-radius: 5px;
-        }
-
-        footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -79,21 +18,34 @@
         </div>
     </header>
 
-    <!-- Performance Summary -->
     <div class="summary">
         <h2>Class Performance Summary</h2>
-        <p><strong>Average Class Score:</strong> 78%</p>
-        <p><strong>Best-Performing Student:</strong> Jane Doe (95%)</p>
-        <p><strong>Lowest-Performing Learning Objective:</strong> Writing Skills (70%)</p>
+        <p><strong>Average Class Score:</strong> {{ avg_clss_scr }}</p>
+        <p><strong>Best-Performing Student:</strong> {{ name_first_sem[0][0] }} {{ name_first_sem[0][1] }}</p>
+        <p id="lowest-performing-objective"><strong>Lowest-Performing Learning Objective:</strong></p>
+    </div>    
+
+    <div id="data-holder" 
+        data-mastery="{{ Mastery_Prelim }}" 
+        data-approaching="{{ Approaching }}" 
+        data-needshelp="{{ Needs_help }}" 
+        data-failing="{{ Failing }}" 
+        data-total-math="{{ total_math_confidence }}"
+        data-total-reading="{{ total_reading_confidence }}"
+        data-total-writing="{{ total_writing_confidence }}"
+        data-total-critical-thinking="{{ total_critical_thinking_confidence }}">
     </div>
 
 
-    <!-- Alert -->
+
     <div class="alert">
-        <p><strong>Alert:</strong> 5 students are at risk of failing the next assessment.</p>
+        {% if Failing == 1 %}
+        <p><strong>Alert:</strong> {{ Failing }} student are at risk of failing the next assessment.</p>
+        {% else %}
+        <p><strong>Alert:</strong> {{ Failing }} students are at risk of failing the next assessment.</p>
+        {% endif %}
     </div>
 
-    <!-- Charts -->
     <div id="charts-container">
         <div class="chart-box">
             <div class="chart-container">
@@ -104,7 +56,7 @@
 
         <div class="chart-box">
             <div class="chart-container">
-                <div class="chart-title">Class Standard Performance</div>
+                <div class="chart-title">Class Performance Survey Result</div>
                 <div id="bar-chart"></div>
             </div>
         </div>
@@ -118,44 +70,10 @@
     </div>
 
     <footer>
-        <p>Need help? <a href="/Teacher_FAQ">Visit the FAQ</a> or <a href="/Teacher_Resources">Browse Resources</a></p>
+        <p><b><a href="/Teacher_Resources">Browse Resources</a></b></p>
     </footer>
 
-    <script>
-        // Pie chart data
-        const pieData = [{
-            values: [40, 30, 15, 10],
-            labels: ['Mastery', 'Approaching', 'Needs Help', 'Failing'],
-            type: 'pie'
-        }];
-        const pieLayout = { height: 400, width: 400 };
-        Plotly.newPlot('pie-chart', pieData, pieLayout);
-
-        // Bar chart data
-        const barData = [{
-            x: ['Math Proficiency', 'Reading Comprehension', 'Writing Skills', 'Critical Thinking'],
-            y: [85, 70, 90, 80],
-            type: 'bar'
-        }];
-        const barLayout = {
-            height: 400,
-            width: 400,
-            title: 'Class Standard Performance'
-        };
-        Plotly.newPlot('bar-chart', barData, barLayout);
-
-        // Line chart data
-        const lineData = [{
-            x: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-            y: [60, 65, 70, 75, 80],
-            type: 'scatter'
-        }];
-        const lineLayout = {
-            height: 400,
-            width: 400,
-            title: 'Class Mastery Over Time'
-        };
-        Plotly.newPlot('line-chart', lineData, lineLayout);
-    </script>
+    <script src="/static/javascript/plotly-2.35.2.min.js"></script>
+    <script src="/static/javascript/Teacher_Home_Page.js"></script>
 </body>
 </html>

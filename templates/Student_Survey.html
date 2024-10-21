@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Confidence Survey</title>
+    <link rel="stylesheet" href="/static/css/Student_Survey.css">
+    <link rel="stylesheet" href="/static/css/Student_Home_Page.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-container">
+            <a id="Dashboard" href="/Student_Home">Dashboard</a>
+            <a id="Progress" href="/Student_Progress">Progress</a>
+            <a id="Grades" href="/Student_Grades">Grades</a>
+            <a id="Schedule" href="/Student_Schedule">Schedule</a>
+            <a id="Account" href="/View_Student_Infos ">Account</a>
+        </div>
+    </header>
+    <br><br><br><br>
+
+        <h1>Student Confidence Survey</h1>
+
+        <form id="survey-form" action="/Student_Survey" method="POST">
+            <h2>Confidence Levels</h2>
+    
+            <!-- Math Confidence Fieldset -->
+            <fieldset>
+                <legend>Math Confidence:</legend>
+                <label><input type="radio" name="math_confidence" value="1" required> 1</label>
+                <label><input type="radio" name="math_confidence" value="2"> 2</label>
+                <label><input type="radio" name="math_confidence" value="3"> 3</label>
+                <label><input type="radio" name="math_confidence" value="4"> 4</label>
+                <label><input type="radio" name="math_confidence" value="5"> 5</label>
+            </fieldset>
+    
+            <!-- Reading Confidence Fieldset -->
+            <fieldset>
+                <legend>Reading Confidence:</legend>
+                <label><input type="radio" name="reading_confidence" value="1" required> 1</label>
+                <label><input type="radio" name="reading_confidence" value="2"> 2</label>
+                <label><input type="radio" name="reading_confidence" value="3"> 3</label>
+                <label><input type="radio" name="reading_confidence" value="4"> 4</label>
+                <label><input type="radio" name="reading_confidence" value="5"> 5</label>
+            </fieldset>
+    
+            <!-- Writing Confidence Fieldset -->
+            <fieldset>
+                <legend>Writing Confidence:</legend>
+                <label><input type="radio" name="writing_confidence" value="1" required> 1</label>
+                <label><input type="radio" name="writing_confidence" value="2"> 2</label>
+                <label><input type="radio" name="writing_confidence" value="3"> 3</label>
+                <label><input type="radio" name="writing_confidence" value="4"> 4</label>
+                <label><input type="radio" name="writing_confidence" value="5"> 5</label>
+            </fieldset>
+    
+            <!-- Critical Thinking Confidence Fieldset -->
+            <fieldset>
+                <legend>Critical Thinking Confidence:</legend>
+                <label><input type="radio" name="critical_thinking_confidence" value="1" required> 1</label>
+                <label><input type="radio" name="critical_thinking_confidence" value="2"> 2</label>
+                <label><input type="radio" name="critical_thinking_confidence" value="3"> 3</label>
+                <label><input type="radio" name="critical_thinking_confidence" value="4"> 4</label>
+                <label><input type="radio" name="critical_thinking_confidence" value="5"> 5</label>
+            </fieldset>
+    
+            <h2>Perceived Areas for Improvement</h2>
+            <label for="improvement-areas">Please list areas you feel you need to improve:</label>
+            <textarea id="improvement-areas" name="improvement_areas" rows="4" placeholder="e.g., Math, Writing, etc."></textarea>
+    
+            <h2>Preferred Learning Methods</h2>
+            <label for="learning-methods">What learning methods do you find most effective? (e.g., group work, hands-on activities):</label>
+            <textarea id="learning-methods" name="learning_methods" rows="4" placeholder="e.g., Group work, Videos, etc."></textarea>
+    
+            <button type="submit">Submit Survey</button>
+        </form>
+    
+        {% if math_confidence %}
+            <div class="response">
+                <h2>Your Responses:</h2>
+                <p><strong>Math Confidence:</strong> {{ math_confidence }}</p>
+                <p><strong>Reading Confidence:</strong> {{ reading_confidence }}</p>
+                <p><strong>Writing Confidence:</strong> {{ writing_confidence }}</p>
+                <p><strong>Critical Thinking Confidence:</strong> {{ critical_thinking_confidence }}</p>
+                {% if improvement_areas %}
+                    <h3>Areas for Improvement:</h3>
+                    <p>{{ improvement_areas }}</p>
+                {% endif %}
+                <h3>Preferred Learning Methods:</h3>
+                <p>{{ learning_methods }}</p>
+            </div>
+        {% endif %}
+    
+    <script src="/static/javascript/Student_Home_Page.js"></script>
+</body>
+</html>
