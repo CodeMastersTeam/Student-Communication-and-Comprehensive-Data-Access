@@ -6,8 +6,6 @@ import time
 from werkzeug.utils import secure_filename
 from ultralytics import YOLO
 import traceback
-from datetime import datetime
-
 
 UPLOAD_FOLDER = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'jfif'}
@@ -18,13 +16,11 @@ if not os.path.exists(UPLOAD_FOLDER):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
     
-
 class Data:
     def __init__(self, name):
         self.app = Flask(name)
         self.app.config['uploads'] = UPLOAD_FOLDER
         self.app.secret_key = "Gwapo"
-
 
     def Direct_links(self):
 
@@ -51,7 +47,6 @@ class Data:
         @self.app.route("/Teacher_Home_Page", methods = ["POST", "GET"])
         def Teacher_Home_Page(): 
             teacher_username = session['username']
-
             yr, crs = Teacher_yearID_Department(teacher_username)
             first_semester = 1
             second_semester = 2
@@ -78,8 +73,7 @@ class Data:
         def Student_logout():
             session.pop('username',None)
             return redirect(url_for("Home"))
-
-    
+        
         @self.app.route("/Student_Home")
         def Student_Home():
             
@@ -109,7 +103,6 @@ class Data:
                                                         year=year, 
                                                         course=course)
         
-        
         @self.app.route("/Student_Survey", methods=['GET', 'POST'])
         def student_Survey():
             username = session.get("username")
@@ -135,7 +128,6 @@ class Data:
                                                               critical_thinking_confidence = critical_thinking_confidence,
                                                               improvement_areas = improvement_areas, 
                                                               learning_methods = learning_methods)
-
             return render_template("Student_Survey.html")
 
         @self.app.route("/Student_Progress", methods=['GET'])
@@ -156,7 +148,6 @@ class Data:
             show_second_charts = len(subjects) > 4  
         
             return render_template("Student_Progress.html", subjects=first_4, five_to_last=five_to_last, show_second_charts=show_second_charts)
-
 
         @self.app.route("/Student_Grades")
         def Student_Grades():
@@ -181,12 +172,6 @@ class Data:
                 return render_template("Student_Grades.html",  Student_Subjects1 = Student_Subjects1, 
                                                                 Student_Subjects2 = Student_Subjects2, A = Teacher_Fullname)
             
-        
-
-
-
-
-        #TODO  Continue here immediatly
         @self.app.route("/Student_Schdule")
         def Student_Schdule():
             username = session.get("username")
@@ -266,9 +251,6 @@ class Data:
 
             return render_template('Student_Schedule.html', weekly_schedule=weekly_schedule, all_subjects=all_subjects)
 
-
-
-
         @self.app.route("/Student_Settings", methods = ["POST", "GET"])
         def Student_Settings():
             Username = session["username"]
@@ -346,7 +328,6 @@ class Data:
             else:
                 return render_template("Main.html")
 
-
         @self.app.route("/Inputs", methods=["GET", "POST"])
         def StudentRegistration():
             if request.method == "POST":
@@ -398,7 +379,6 @@ class Data:
 
                 course_id = course_data[0]
 
-
                 try:
                     ForStudentRegistration_students(
                         firstname, middlename, lastname, age, address, sex, 
@@ -412,8 +392,6 @@ class Data:
                 return render_template("ForStudentRegistration.html")
 
             return render_template("ForStudentRegistration.html")
-
-
 
         @self.app.route("/TeacherInputs", methods = ["GET", "POST"])
         def TeacherRegistration():
@@ -450,7 +428,6 @@ class Data:
                 if len(Password1) < 8:
                     flash("Password should be more than 8 characters!", "error")
                     return render_template("ForTeacherRegistration.html")
-
                 else:
                     ForTeacherRegistration(firstname, middlename, lastname, age, address, sex, 
                 cellphone_number, Birth_date, Birth_place, Username, Password1, Department, Profile_Picture, Year, semester_id, section_name)
@@ -507,7 +484,6 @@ class Data:
                 flash("These credentials do not match our records.", "error")
                 return redirect(url_for("Teacher_login"))
         
-
         @self.app.route("/Teacher_Classes")
         def Teacher_Classes():
             username = session["username"]
@@ -587,8 +563,6 @@ class Data:
                     db.close()
                 print("update_grade function completed")
 
-
-
         @self.app.route("/Teacher_Messages", methods=["POST", "GET"])
         def Teacher_Messages():
             if "username" not in session:
@@ -652,9 +626,6 @@ class Data:
                                    student_firstname=student_firstname, 
                                    student_lastname=student_lastname)
 
-
-        
-        
         @self.app.route("/Teacher_Schedule")
         def Teacher_Schedule():
             username = session["username"]
@@ -665,16 +636,11 @@ class Data:
             username = session["username"]
             return render_template("/Teacher_Resources.html")
         
-
         @self.app.route("/Teacher_Settings")
         def Teacher_Settings():
             username = session["username"]
             return render_template("/Teacher_Settings.html")
-
-
-
-
-
+        
         @self.app.route("/updatepass",methods=["POST","GET"])
         def updatepass():
             if request.method == "POST":
@@ -710,8 +676,6 @@ class Data:
             else:
                 flash("Username not found! Please create a new account instead", "error")
                 return redirect(url_for("Forgot_Pass"))
-
-
 
         @self.app.route("/delete_account", methods=["POST"])
         def delete_account():
@@ -796,7 +760,6 @@ class Data:
                                    year=year,
                                    course_name=course_name)
 
-
         @self.app.route('/update_student_info', methods=['POST', 'GET'])
         def update_student_info():
             username = session.get('username')
@@ -822,7 +785,6 @@ class Data:
             password = "",
             database = "for_finals_2nd_year_project"
         )
-
             db = Connect.cursor()
             username = session.get("username")
             cam = cv2.VideoCapture(0)
@@ -861,8 +823,6 @@ class Data:
 
             return redirect(url_for("Student_Home"))
 
-
-
         @self.app.route('/upload_profile_picture', methods=['POST'])
         def upload_profile_picture():
             Connect = mysql.connector.connect(
@@ -887,7 +847,6 @@ class Data:
                 Connect.commit()
                 db.close()
                 Connect.close()
-
 
                 flash("Profile picture updated successfully!", "success")
             else:
@@ -920,7 +879,6 @@ class Data:
         def Student_Forgot_Pass():
             return render_template("Student_Forgot_Pass.html")
 
-
         @self.app.route("/Student_RecoverPass", methods = ["POST"])
         def Student_RecoverPass():
             userrname = request.form["username"]
@@ -933,7 +891,6 @@ class Data:
                 flash("Username not found! Please create a new account instead", "error")
                 return redirect(url_for("Student_Forgot_Pass"))
 
-    
         @self.app.route("/Messenger", methods=["POST", "GET"])
         def Messenger():
             username = session['username']
@@ -961,8 +918,6 @@ class Data:
             
             print("Teacher teacher_username: ", teacher_username)
 
-            chat_partner_id = user_id  if teacher_id != teacher_id else user_id  
-
             if request.method == "POST":
                 action = request.form.get("action")
 
@@ -986,17 +941,8 @@ class Data:
             chat_history2 = Recieve_Text_In_Messenger(teacher_id, user_id, sender_type = sender_type2, teacher_username = teacher_username, student_username = user)
 
             return render_template("Student_Messenger.html", x=chat_history, y = chat_history2, teacher_name=Teacher_Fullname)
-
-
-
-
-
-
-
-            
-    def run(self):
-        self.app.run(debug = True)
         
+    def run(self): self.app.run(debug = True)
 
 x = Data(__name__)
 x.Direct_links()

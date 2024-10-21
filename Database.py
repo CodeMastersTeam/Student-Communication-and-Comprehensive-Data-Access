@@ -10,7 +10,6 @@ Connect = mysql.connector.connect(
 
 db = Connect.cursor()
 
-
 class Database:
     def __init__(self):
         self.connection = mysql.connector.connect(
@@ -33,7 +32,6 @@ class Database:
     def close(self):
         self.cursor.close()
         self.connection.close()
-
 
 def ForStudentRegistration_students(firstname, middlename, lastname, age, address, Sex, 
             cellphone_number, Birth_date, Birth_place, Username, Password, profile_picture, year, course_id, section_name):
@@ -77,8 +75,6 @@ def ForStudentRegistration_course(course_id, Course):
     Connect.close()
     return
     
-
-
 def ForTeacherRegistration(firstname, middlename, lastname, age, address, Sex, 
             cellphone_number, Birth_date, Birth_place, Username, Password, Department, Profile_Picture, Year, semester_id, section_name):
 
@@ -137,9 +133,7 @@ def Student_Profiles(username):
     db.close()
     Connect.close()
    
-
     return first_name, last_name, year, course
-
 
 def fetch_student_grades(username, semester_id):
     Connect = mysql.connector.connect(
@@ -184,8 +178,6 @@ def fetch_student_grades(username, semester_id):
 
     return results
 
-
-
 def student_CourseID(username):
     Connect = mysql.connector.connect(
         host="localhost",
@@ -201,8 +193,6 @@ def student_CourseID(username):
     db.close()
     Connect.close()
     return res
-
-
 
 def student_YearID(username):
     Connect = mysql.connector.connect(
@@ -236,8 +226,6 @@ def teacher_id(username):
     Connect.close()
     return res
 
-
-# TODO SUBJECTS
 def subject_student_(year_id, semester_id, course_id):
 
     Connect = mysql.connector.connect(
@@ -328,10 +316,6 @@ def Recieve_Text_In_Messenger(Teacher_ID, Student_ID, message_Text = None, Messa
     Connect.close()
     return student_ans
 
-
-#TODO
-
-
 def Recieve_Text_In_Messenger_Teacher(Teacher_ID, Student_ID, message_Text = None, Message_Date = None, sender_type = None, teacher_username = None, student_username = None):
     Connect = mysql.connector.connect(
     host = "localhost",
@@ -348,29 +332,6 @@ def Recieve_Text_In_Messenger_Teacher(Teacher_ID, Student_ID, message_Text = Non
     db.close()
     Connect.close()
     return student_ans
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def Delete_Text_In_Messenger(Teacher_ID = None, Student_ID = None, message_Text = None, Message_Date = None):
     Connect = mysql.connector.connect(
@@ -405,7 +366,6 @@ def Teacher_Name(year, department):
         teacher_names = f'{i[0]} {i[-1]}'
         return teacher_names
     
-
 def Teacher_username(teacher_id)  -> int:
     Connect = mysql.connector.connect(
     host = "localhost",
@@ -421,7 +381,6 @@ def Teacher_username(teacher_id)  -> int:
     db.close()
     Connect.close()
     return res[0]
-
 
 def Student_details(username):
     Connect = mysql.connector.connect(
@@ -456,7 +415,7 @@ def Teacher_details(year, department):
     database = "for_finals_2nd_year_project",
     buffered=True
 )
-
+    
     db = Connect.cursor(buffered=True)
     q = '''SELECT * FROM teachers WHERE year = %s AND department = %s'''
     db.execute(q, (year, department, ))
@@ -466,8 +425,6 @@ def Teacher_details(year, department):
     Connect.close()
     zz = dict(zip(c, z))
     
-   
-
     teacher_id, username, firstname, lastname, department, year, semester_id, section_name = zz["teacher_id"], zz['username'], \
     zz['firstname'], zz['lastname'], zz['department'], zz['year'], zz['semester_id'], zz['section_name']
 
@@ -482,7 +439,6 @@ def student_details(year, course_id):
     buffered=True
 )
 
-
     db = Connect.cursor(buffered=True)
     q = '''SELECT student_id FROM students WHERE year_id = %s AND course_id = %s'''
     db.execute(q, (year, course_id, ))
@@ -492,7 +448,6 @@ def student_details(year, course_id):
     Connect.close()    
     return z
 
-
 def student_id(username):
     db.execute("SELECT student_id FROM students WHERE username = %s", (username,))
     result = db.fetchone()
@@ -501,7 +456,6 @@ def student_id(username):
         return None  
 
     return result[0] 
-
 
 def get_students():
     connection = mysql.connector.connect(
@@ -521,7 +475,6 @@ def get_students():
     
     return students
 
-#TODO
 def get_selected_student(student_username):
     connection = mysql.connector.connect(
         host="localhost",
@@ -540,9 +493,6 @@ def get_selected_student(student_username):
     connection.close()
     
     return student
-
-
-
 
 def teacher_user_id(year, department):
     Connect = mysql.connector.connect(
@@ -629,7 +579,6 @@ def teacher_year_course_id(username):
     Connect.close()
     return x
 
-
 def Student_profile_picture(username):
     Connect = mysql.connector.connect(
     host = "localhost",
@@ -646,7 +595,6 @@ def Student_profile_picture(username):
     db.close()
     Connect.close()
     return x
-
 
 def student_id(username):
     Connect = mysql.connector.connect(
@@ -667,8 +615,7 @@ def student_id(username):
     Connect.close()
     return x
 
-
-# TODO for GRADEBOOK
+#  for GRADEBOOK
 def Teacher_yearID_Department(username):
     Connect = mysql.connector.connect(
     host = "localhost",
@@ -676,7 +623,6 @@ def Teacher_yearID_Department(username):
     password = "",
     database = "for_finals_2nd_year_project"
 )
-
 
     db = Connect.cursor()
     # YEAR (year_id) AND DEPARTMENT (course_id) OF TEACHER FOR STUDENTS
@@ -734,7 +680,6 @@ def Student_firstname_lastname(year_id, course_id):
 
     res = db.fetchall()
     return res
-
 
 def Mastery_Approaching_NeedsHelp_Failing(semester_id, year_id):
     Connect = mysql.connector.connect(
@@ -809,7 +754,6 @@ def Top_Student(semester_id, year_id):
     Connect.close()
     return res
 
-
 def Average_Class_Score(semester_id, year_id):
     Connect = mysql.connector.connect(
     host = "localhost",
@@ -861,7 +805,6 @@ def Student_Survey(student_id, math_confidence, reading_confidence, writing_conf
 
     return math_confidence, reading_confidence, writing_confidence, critical_thinking_confidence, improvement_areas, learning_methods
 
-
 def Class_Performance_Survey_Result():
     Connect = mysql.connector.connect(
         host="localhost",
@@ -893,4 +836,3 @@ def Class_Performance_Survey_Result():
     Connect.close()
 
     return total_math_confidence, total_reading_confidence, total_writing_confidence, total_critical_thinking_confidence
-
