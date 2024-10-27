@@ -836,3 +836,129 @@ def Class_Performance_Survey_Result():
     Connect.close()
 
     return total_math_confidence, total_reading_confidence, total_writing_confidence, total_critical_thinking_confidence
+
+def Top_5_Students(semester_id, year_id):
+    Connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    db = Connect.cursor()
+
+    q = '''
+        SELECT s.firstname, s.lastname
+        FROM students s
+        JOIN student_grades g ON s.student_id = g.student_id
+        WHERE g.semester_id = %s
+        AND g.year_id = %s
+        GROUP BY s.student_id, s.firstname
+        ORDER BY SUM(g.grade) DESC
+        LIMIT 5;
+        '''
+    
+    db.execute(q, (semester_id, year_id, ))
+    res = db.fetchall()
+    db.close()
+    Connect.close()
+    return res
+
+def Upload_Resources_Teacher(resource_file, resource_title, resource_description, username) -> None:
+    Connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    db = Connect.cursor()
+
+    q = '''INSERT INTO upload_resources(resource_file, resource_title, resource_description, username)
+           VALUES (%s, %s, %s, %s)'''
+    
+    vals = resource_file, resource_title, resource_description, username
+
+    db.execute(q, vals)
+    Connect.commit()
+    db.close()
+    Connect.close()
+    return None
+    
+def View_Resources_Teacher(username):
+    Connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    db = Connect.cursor()
+
+    q = '''SELECT resource_file, resource_title, resource_description FROM upload_resources WHERE username = %s'''
+    db.execute(q, (username, ))
+    res = db.fetchall()
+    db.close()
+    Connect.close()
+    return res
+
+def Teacher_Update_Profile(username, Firstname=None, Lastname=None, phone=None, 
+                           current_password=None, new_password=None, confirm_password=None):
+    Connect = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="for_finals_2nd_year_project"
+    )
+    db = Connect.cursor()
+
+    # Fetch current profile details
+    db.execute("SELECT firstname, lastname, cellphone_number, password FROM teachers WHERE username = %s", (username,))
+    current_data = db.fetchone()  
+    
+    current_firstname = current_data[0]
+    current_lastname = current_data[1]
+    current_phone = current_data[2]
+    current_password_db = current_data[3]
+    
+    # Check and use current values if form fields are empty
+    if Firstname is None or Firstname == "":
+        Firstname = current_firstname
+    if Lastname is None or Lastname == "":
+        Lastname = current_lastname
+    if phone is None or phone == "":
+        phone = current_phone
+    
+    # Update fields only if changed
+    if Firstname != current_firstname:
+        db.execute('''UPDATE teachers SET firstname = %s WHERE username = %s''', (Firstname, username))
+        Connect.commit()
+
+    if Lastname != current_lastname:
+        db.execute('''UPDATE teachers SET lastname = %s WHERE username = %s''', (Lastname, username))
+        Connect.commit()
+
+    if phone != current_phone:
+        db.execute('''UPDATE teachers SET cellphone_number = %s WHERE username = %s''', (phone, username))
+        Connect.commit()
+
+    # Password update logic
+    if current_password:
+        if current_password == current_password_db:  # Ensure current password matches
+            if new_password and confirm_password and new_password == confirm_password:
+                db.execute('''UPDATE teachers SET password = %s WHERE username = %s''', (new_password, username))
+                Connect.commit()
+
+                # Fetch the updated profile after password update
+                db.execute('''SELECT firstname, lastname, cellphone_number FROM teachers WHERE username = %s''', (username,))
+                res = db.fetchone()
+                return res
+            else:
+                return "New passwords do not match."
+        else:
+            return "Incorrect current password."
+    
+    # Fetch updated profile after any update
+    db.execute('''SELECT firstname, lastname, cellphone_number FROM teachers WHERE username = %s''', (username,))
+    updated_profile = db.fetchone()
+
+    db.close()
+    Connect.close()
+    return updated_profile

@@ -18,32 +18,33 @@
         </div>
     </header>
 
-    <div class="settings-container">
-        <div class="settings-section">
-            <h3>Personal Information</h3>
-            <p>Update your name, email, and contact information here.</p>
-            <input type="text" placeholder="Firstame" name="Firstame" value="">
-            <input type="text" placeholder="Lastname" name="Lastname" value="">
-            <input type="tel" placeholder="Phone Number" name="phone" value="">
-            <button>Save Changes</button>
+    <form action="/Teacher_Settings" method="post">
+        <div class="settings-container">
+            <div class="settings-section">
+                <h3>Personal Information</h3>
+                {% if cellphone_number %}
+                    <h3>{{ firstname }} {{ lastname }}</h3>
+                    <h3>{{ cellphone_number }}</h3>
+                {% endif %}
+                <p>Update your name, email, and contact information here.</p>
+                <input type="text" placeholder="Firstname" name="Firstname" value="">
+                <input type="text" placeholder="Lastname" name="Lastname" value="">
+                <input type="tel" placeholder="Phone Number" name="phone" value="">
+                <button type="submit">Save Changes</button>
+            </div>
+    
+            <div class="settings-section">
+                <h3>Account Settings</h3>
+                <p>Change your password or manage your login credentials.</p>
+                <input type="password" placeholder="Current Password" name="current_password">
+                <input type="password" placeholder="New Password" name="new_password">
+                <input type="password" placeholder="Confirm New Password" name="confirm_password">
+                <button type="submit">Update Password</button>
+            </div>
         </div>
+    </form>
+    
 
-        <div class="settings-section">
-            <h3>Account Settings</h3>
-            <p>Change your password or manage your login credentials.</p>
-            <input type="password" placeholder="Current Password" name="current_password">
-            <input type="password" placeholder="New Password" name="new_password">
-            <input type="password" placeholder="Confirm New Password" name="confirm_password">
-            <button>Update Password</button>
-        </div>
-
-        <div class="settings-section">
-            <h3>Notification Preferences</h3>
-            <p>Choose how you'd like to receive notifications about important updates.</p>
-            <textarea placeholder="E.g. Receive email notifications for new resources or class updates..."></textarea>
-            <button>Save Preferences</button>
-        </div>
-    </div>
-
+    <script src="/static/javascript/Teacher_Settings.js"></script>
 </body>
 </html>

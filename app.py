@@ -53,8 +53,8 @@ class Data:
             Mastery_Prelim, Approaching, Needs_help, Failing = Mastery_Approaching_NeedsHelp_Failing(first_semester, yr)
             name_first_sem = Top_Student(yr, first_semester)
             avg_clss_scr = f'{float(Average_Class_Score(first_semester, yr)[0]):.2f}'
-
             total_math_confidence, total_reading_confidence, total_writing_confidence, total_critical_thinking_confidence = Class_Performance_Survey_Result()
+            top_5_students_first_semester = Top_5_Students(1, 1)
 
             return render_template("Teacher_Home_Page.html", 
                                    Mastery_Prelim = Mastery_Prelim, 
@@ -66,8 +66,8 @@ class Data:
                                    total_math_confidence = total_math_confidence, 
                                    total_reading_confidence = total_reading_confidence, 
                                    total_writing_confidence = total_writing_confidence, 
-                                   total_critical_thinking_confidence = total_critical_thinking_confidence
-                                   )
+                                   total_critical_thinking_confidence = total_critical_thinking_confidence,
+                                   top_5_students_first_semester = top_5_students_first_semester)
 
         @self.app.route('/logout') # Log out
         def Student_logout():
@@ -631,14 +631,86 @@ class Data:
             username = session["username"]
             return render_template("/Teacher_Schedule.html")
         
+        
         @self.app.route("/Teacher_Resources")
         def Teacher_Resources():
             username = session["username"]
-            return render_template("/Teacher_Resources.html")
+            uploaded_resources = View_Resources_Teacher(username)
+            if isinstance(uploaded_resources, list):
+                uploaded_resources = tuple(uploaded_resources)
+                return render_template("/Teacher_Resources.html", uploaded_resources = uploaded_resources)
+            return render_template("/Teacher_Resources.html", uploaded_resources = uploaded_resources)
         
-        @self.app.route("/Teacher_Settings")
+        @self.app.route("/upload_resource", methods = ["GET", "POST"])
+        def upload_resource():
+            username = session["username"]
+            # TODO handle uploads
+            if request.method == "POST":
+                resource_file = str(request.files.get("resource_file"))
+                resource_title = request.form.get("resource_title")
+                resource_description = request.form.get("resource_description")
+                # Upload Own Resources
+
+                Upload_Resources_Teacher(resource_file, resource_title, resource_description, username)
+
+
+            return render_template("Teacher_Resources.html", 
+                                   resource_file = resource_file,
+                                   resource_title = resource_title,
+                                   resource_description = resource_description)
+
+        @self.app.route("/Teacher_Resources/<category>")
+        def Teacher_Resources_cats(category):
+            username = session["username"]
+            if category == "lesson_plans":
+                selected = "Lesson Plans"
+                s = "computer"
+                s2 = "FoT_Lesson_Plan-Internet_of_Things"
+            elif category == "Worksheets":
+                selected = "Worksheets"
+                s = "Introduction-to-Computing-1st-year-1st-semester"
+                s2 = None
+            elif category == "Quizzes":
+                selected = "Quizzes"
+                s = "it-quiz-question-and-answer"
+                s2 = None
+            elif category == "External_Links":
+                selected = "External links"
+                s = "Don't click!"
+                s2 = None
+            elif category == "Math_Lessons":
+                selected = "Math Lessons"
+                s = "Python for Programmers with Big Data and Artificial Intelligence Case Studies"
+                s2 = "Statistical Methods for Machine Learning Discover How to Transform Data into Knowledge with Python"
+
+            elif category == "ComputerVision":
+                selected = "Computer Vision"
+                s = "Deep learning book"
+                s2 = "Modern Computer Vision with Pytorch"
+
+            return render_template("/Teacher_Resources.html", s=s, s2 = s2, category=category, 
+                                   selected = selected)
+
+        @self.app.route("/Teacher_Resources/<category>/<cat2>")
+        def Teacher_Resources_cats2(category, cat2):
+            username = session["username"]
+            return render_template("/Teacher_Resources.html", category=category, cat2=cat2)
+
+        @self.app.route("/Teacher_Settings", methods = ['GET', 'POST'])
         def Teacher_Settings():
             username = session["username"]
+            if request.method == "POST":
+                Firstname = request.form.get("Firstname")
+                Lastname = request.form.get("Lastname")
+                phone = str(request.form.get("phone"))
+                current_password = request.form.get("current_password")
+                new_password = request.form.get("new_password")
+                confirm_password = request.form.get("confirm_password")
+
+                res = Teacher_Update_Profile(username, Firstname, Lastname, phone, current_password, new_password, confirm_password)
+                
+                return render_template("/Teacher_Settings.html", firstname = res[0], lastname = res[1], cellphone_number = res[2])
+            
             return render_template("/Teacher_Settings.html")
         
         @self.app.route("/updatepass",methods=["POST","GET"])
@@ -663,7 +735,6 @@ class Data:
         @self.app.route("/Forgot_Pass")
         def Forgot_Pass():
             return render_template("Forgot_Pass.html")
-
 
         @self.app.route("/TeacherRecoverPass", methods = ["POST"])
         def TeacherRecoverPass():
@@ -941,7 +1012,7 @@ class Data:
             chat_history2 = Recieve_Text_In_Messenger(teacher_id, user_id, sender_type = sender_type2, teacher_username = teacher_username, student_username = user)
 
             return render_template("Student_Messenger.html", x=chat_history, y = chat_history2, teacher_name=Teacher_Fullname)
-        
+
     def run(self): self.app.run(debug = True)
 
 x = Data(__name__)

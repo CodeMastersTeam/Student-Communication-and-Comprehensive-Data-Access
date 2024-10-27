@@ -33,16 +33,19 @@
         data-total-math="{{ total_math_confidence }}"
         data-total-reading="{{ total_reading_confidence }}"
         data-total-writing="{{ total_writing_confidence }}"
-        data-total-critical-thinking="{{ total_critical_thinking_confidence }}">
+        data-total-critical-thinking="{{ total_critical_thinking_confidence }}"
+        top_5_students_first_semester = "{{ top_5_students_first_semester }}">
     </div>
 
 
 
     <div class="alert">
         {% if Failing == 1 %}
-        <p><strong>Alert:</strong> {{ Failing }} student are at risk of failing the next assessment.</p>
+        <p><strong>Alert:</strong> {{ Failing }} student are at risk of failing the assessment.</p>
+        {% elif Failing == 0 %}
+        <p><strong>Good news:</strong> All students are expected to pass assessment.</p>
         {% else %}
-        <p><strong>Alert:</strong> {{ Failing }} students are at risk of failing the next assessment.</p>
+        <p><strong>Alert:</strong> {{ Failing }} students are at risk of failing the assessment.</p>
         {% endif %}
     </div>
 
